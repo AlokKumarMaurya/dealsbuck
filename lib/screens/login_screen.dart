@@ -100,7 +100,7 @@ class _bottomWidgetState extends State<bottomWidget> with InputValidationMixin {
           context,
           MaterialPageRoute(builder: (context) => PersistentTab()),
         );
-
+        HelperFunction.saveuserLoggedInSharedPreference(true);
         var token = res["token"].toString();
         var username = res["user"]["name"];
         var email = res["user"]["email"];

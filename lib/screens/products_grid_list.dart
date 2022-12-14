@@ -175,12 +175,12 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                       (MediaQuery.of(context).size.height / 1.4),
                   crossAxisSpacing: 14,
                   crossAxisCount: 3),
-              itemCount: widget.topDealsModel.data.length,
+              itemCount: widget.topDealsModel.data!.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => ProductScreen(id: widget.topDealsModel.data[index].id,)));                  },
+                        context, MaterialPageRoute(builder: (_) => ProductScreen(id: widget.topDealsModel.data![index].id!,)));                  },
                   child: Container(
                     child: Card(
                       elevation: 1,
@@ -205,7 +205,7 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
                                 "https://dealsbuck.com/" +
-                                    widget.topDealsModel.data[index].featuredImagePath,
+                                    widget.topDealsModel.data![index].featuredImagePath!,
                                 fit: BoxFit.fill,
                                   errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
                                     return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
@@ -214,7 +214,7 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                             ),
                           ),
                           Text(
-                            widget.topDealsModel.data[index].productName,
+                            widget.topDealsModel.data![index].productName!,
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -230,7 +230,7 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              widget.topDealsModel.data[index].description,
+                              widget.topDealsModel.data![index].description!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 10,

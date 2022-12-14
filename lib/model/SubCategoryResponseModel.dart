@@ -45,14 +45,14 @@ class Data {
     required this.products,
   });
 
-  int id;
-  String brandName;
-  String brandImagePath;
-  String city;
-  String state;
-  int pinCode;
-  String latitude;
-  String longitude;
+  int? id;
+  String? brandName;
+  String? brandImagePath;
+  String? city;
+  String? state;
+  int? pinCode;
+  String? latitude;
+  String? longitude;
   List<Product> products;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -87,9 +87,9 @@ class Product {
     required this.featuredImagePath,
   });
 
-  int id;
-  String productName;
-  String featuredImagePath;
+  int? id;
+  String? productName;
+  String? featuredImagePath;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],

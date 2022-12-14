@@ -17,7 +17,7 @@ class TopDealsModel {
 
   bool status;
   String message;
-  List<Datum> data;
+  List<Datum>? data;
 
   factory TopDealsModel.fromJson(Map<String, dynamic> json) => TopDealsModel(
     status: json["status"],
@@ -28,7 +28,7 @@ class TopDealsModel {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
@@ -41,11 +41,11 @@ class Datum {
     required this.distance,
   });
 
-  int id;
-  String productName;
-  String description;
-  String featuredImagePath;
-  double distance;
+  int? id;
+  String? productName;
+  String? description;
+  String? featuredImagePath;
+  double? distance;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],

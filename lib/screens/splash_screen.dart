@@ -5,7 +5,6 @@ import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/screens/signup_screen.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter_circular_text/circular_text.dart';
-import 'package:dealsbuck/screens/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,10 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool isuserLog = false;
 
   void isLog() async{
-    isuserLog = (await HelperFunction.getuserLoggedInSharedPreference())!;
-    // setState(()  {
-    //   print('isuserLog+++++++++++#$isuserLog');
-    // });
+    isuserLog =await HelperFunction().getuserLoggedInSharedPreference();
   }
 
   @override

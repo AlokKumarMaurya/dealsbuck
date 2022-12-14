@@ -104,7 +104,7 @@ class _SubCategoryState extends State<SubCategory> {
                 Visibility(
                     visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
                     child: InternetNotAvailable()),
-                loader==false? GridView.builder(
+                loader==false? (_subCategoryModel!.data.products.isNotEmpty)?GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -137,7 +137,7 @@ class _SubCategoryState extends State<SubCategory> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Text(
-                              _subCategoryModel!.data.products[index].productName,
+                              _subCategoryModel!.data.products[index].productName!,
                               style: TextStyle(
                                   fontSize: 12,
                                   color: Color(0xff001527),
@@ -146,7 +146,23 @@ class _SubCategoryState extends State<SubCategory> {
                           )
                         ],
                       );
-                    }):  Center(child: Container(
+                    }):
+
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height-100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/no_data_found.jfif",scale: 1,),
+                      SizedBox(height: 20,),
+                      Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
+                    ],
+                  ),)
+
+
+
+                    :  Center(child: Container(
                     child: CircularProgressIndicator()),
                 ),
               ],

@@ -22,6 +22,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as Http;
+import '../../location_getter/get_usser_current_location.dart';
 import '../../model/categoriesResponseModel.dart';
 import '../../model/popularBrandsResponseModel.dart';
 import '../persistent_tab.dart';
@@ -44,6 +45,7 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   CarouselController buttonCarouselController = CarouselController();
   final homeController = Get.put(HomeController());
+  GetLocaton _getLocaton=Get.put(GetLocaton());
   int itemIndex = 0;
   CategoriesModel? _categoriesModel;
   TopDealsModel? _topDealsModel;
@@ -124,7 +126,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
-            _currentPosition!.latitude, _currentPosition!.longitude)
+            _getLocaton.lat.value, _getLocaton.long.value)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
@@ -139,7 +141,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         print("addressssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$_currentAddress");
       });
     }).catchError((e) {
-      debugPrint(e);
+      debugPrint(e.toString());
     });
   }
 
@@ -167,29 +169,33 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   Future<TopDealsModel?> getTopDeals() async {
-    var response = await Http.get(Uri.parse(topDealsUrl+"30.71937720/76.71289250"));
+    print("222222222222222222222222222222222");
+    var response = await Http.get(Uri.parse(topDealsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
-
+var temp=jsonDecode(response.body);
+var message=temp["message"];
     setState(() {
+      if(message !="No Top Deals")
       _topDealsModel = TopDealsModel.fromJson(jsonDecode(response.body));
     });
-    print("_topDealsModel${_topDealsModel!}");
+
     return _topDealsModel;
   }
 
   Future<NearByDealsModel?> getNearByDeals() async {
-    var response = await Http.get(Uri.parse(nearByDealsUrl+"30.71937720/76.71289250"));
+    var response = await Http.get(Uri.parse(nearByDealsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
-
+    var temp=jsonDecode(response.body);
+    var message=temp["message"];
     setState(() {
+      if(message != "No Nearby Deals")
       _nearByDealsModel = NearByDealsModel.fromJson(jsonDecode(response.body));
     });
-    print("_nearByDealsModel${_nearByDealsModel!}");
     return _nearByDealsModel;
   }
 
   Future<PopularBrandsResponseModel?> getPopularBrands() async {
-    var response = await Http.get(Uri.parse(popularBrandsUrl+"30.71937720/76.71289250"));
+    var response = await Http.get(Uri.parse(popularBrandsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
 
     setState(() {
@@ -246,11 +252,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           children: [
                             InkWell(
                                 onTap: () {
+                                  _getLocaton.getLocation();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         backgroundColor: Color(0xff001527),
                                           content:
-                                              Text("${address.toString()}")));
+                                              Text("Location Updated")));
                                 },
                                 child: Icon(
                                   Icons.place_outlined,
@@ -320,9 +327,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       SizedBox(height: 10),
                       _categoriesModel != null ? Categories() : shimmer(),
                       SizedBox(height: 5),
-                      _topDealsModel != null ? Recommended() : shimmer(),
+                      _topDealsModel != null ? Recommended() : Container(),
                       SizedBox(height: 5),
-                      _nearByDealsModel != null ? NearByDeals() : shimmer(),
+                      _nearByDealsModel != null ? NearByDeals() : Container(),
                       SizedBox(height: 5),
                       _popularBrandsResponseModel != null
                           ? PopularDeals()
@@ -338,7 +345,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   Widget Categories() {
-    print("0000000000 ${homeController.isSearch.value}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -474,7 +480,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       (MediaQuery.of(context).size.height / 1.4),
                   crossAxisSpacing: 14,
                   crossAxisCount: 3),
-              itemCount: _topDealsModel!.data.length,
+              itemCount: _topDealsModel!.data!.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
@@ -482,7 +488,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (_) => ProductScreen(
-                                  id: _topDealsModel!.data[index].id,
+                                  id: _topDealsModel!.data![index].id!,
                                 )));
                   },
                   child: Container(
@@ -510,7 +516,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               child: Image.network(
                                 "https://dealsbuck.com/" +
                                     _topDealsModel!
-                                        .data[index].featuredImagePath,
+                                        .data![index].featuredImagePath!,
                                 fit: BoxFit.fill,
                                   errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
                                     return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
@@ -522,7 +528,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           //   height: 2,
                           // ),
                           Text(
-                            _topDealsModel!.data[index].productName,
+                            _topDealsModel!.data![index].productName!,
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -545,7 +551,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              _topDealsModel!.data[index].description,
+                              _topDealsModel!.data![index].description!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 9.9,
@@ -705,7 +711,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   Widget PopularDeals() {
-    return Column(
+    return (_popularBrandsResponseModel!.data.length!=0)?Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
@@ -770,7 +776,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         )
       ],
-    );
+    ):Container();
   }
 
   BannerModel? _bannerModel;
@@ -778,7 +784,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget Slider() {
     return CarouselSlider.builder(
       carouselController: buttonCarouselController,
-      //itemCount: Bannerimages.length,
       itemCount: _bannerModel!.data.isNotEmpty ? _bannerModel!.data.length : 0,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Container(

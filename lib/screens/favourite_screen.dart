@@ -6,6 +6,7 @@ import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +93,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         Visibility(
             visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
             child: InternetNotAvailable()),
-        SingleChildScrollView(
+            (_getFavModel!.data.length!=0 && !_getFavModel!.data.length.isNull)?
+    SingleChildScrollView(
           child: ListView.builder(itemCount:_getFavModel!.data.length, shrinkWrap: true,itemBuilder: (BuildContext context,int index){
             return  InkWell(
               onTap: (){
@@ -137,8 +139,21 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 ),
               ),
             );
-          }),
-        ),
+          })
+        ):Container(
+    height: MediaQuery.of(context).size.height/1.5,
+    alignment: Alignment.center,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset("assets/no_data_found.jfif"),
+        SizedBox(height: 15,),
+        Text("Sorry No record found",style: TextStyle(
+          fontSize: 20
+        ),)
+      ],
+    ),
+    ),
       ],
     );
   }
