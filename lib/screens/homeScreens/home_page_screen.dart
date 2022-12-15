@@ -305,6 +305,7 @@ var message=temp["message"];
                     visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
                     child: InternetNotAvailable()),
                 SizedBox(height: 15),
+
                 _bannerModel != null
                     ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -320,6 +321,8 @@ var message=temp["message"];
                     color: Colors.white,
                   ),
                 ),
+
+
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
