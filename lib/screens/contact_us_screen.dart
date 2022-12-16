@@ -4,6 +4,7 @@ import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dealsbuck/utils/urlsConstant.dart';
 
@@ -24,6 +25,9 @@ class _ContactUsState extends State<ContactUs> with InputValidationMixin {
   final TextEditingController message = TextEditingController();
 
   contactUs() async{
+    Get.dialog(
+      Center(child: CircularProgressIndicator())
+    );
     Map data = {
       "name": name.text.toString(),
       "email": email.text.toString(),
@@ -43,6 +47,7 @@ class _ContactUsState extends State<ContactUs> with InputValidationMixin {
       company.clear();
       category.clear();
       message.clear();
+      Get.back();
     }
     else
       Fluttertoast.showToast(msg: msg);
@@ -51,6 +56,7 @@ class _ContactUsState extends State<ContactUs> with InputValidationMixin {
       company.clear();
       category.clear();
       message.clear();
+    Get.back();
   }
 
   @override

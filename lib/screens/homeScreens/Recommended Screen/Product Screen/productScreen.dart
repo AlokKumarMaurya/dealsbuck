@@ -297,7 +297,8 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     Text(
                       _productDetailsResponseModel!=null?_productDetailsResponseModel!.data.productName:"",
-                      style: TextStyle(color: Color(0xff001527), fontSize: 22),
+                      softWrap: true,
+                      style: TextStyle(color: Color(0xff001527), fontSize: 22,overflow: TextOverflow.ellipsis),
                     ),
                     IconButton(
                       onPressed: () {},
@@ -475,39 +476,24 @@ class _ProductScreenState extends State<ProductScreen> {
                     fontSize: 17,
                     fontWeight: FontWeight.w500),
               ),
-              SizedBox(
-                width: 140,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        side: BorderSide(color: Color(0xffed1b24), width: 1),
-                        backgroundColor: Colors.white,
-                        fixedSize: Size(100, 40),
-                        padding: const EdgeInsets.fromLTRB(20, 10, 10, 10)),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 5,
-                        ),
-                        Text(
-                          _productDetailsResponseModel!.data.city,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: Color(0xffed1b24),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
-                          Icons.arrow_drop_down_sharp,
-                          color: Color(0xffed1b24),
-                        ),
-                      ],
-                    )),
-              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      side: BorderSide(color: Color(0xffed1b24), width: 1),
+                      backgroundColor: Colors.white,
+                      // fixedSize: Size(100, 40),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10)),
+                  onPressed: () {},
+                  child: Text(
+                    _productDetailsResponseModel!.data.city,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        color: Color(0xffed1b24),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
           sizeBox(),

@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:dealsbuck/location_getter/get_usser_current_location.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../model/getNotificationResponseModel.dart';
 import '../utils/convertTimeToAgo.dart';
@@ -19,7 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   GetNotificationModel? _getNotificationModel;
   String dropdownvalue = 'Short by time';
-
+  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
   // List of items in our dropdown menu
   var items = [
     'Short by time',
@@ -36,7 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       //   'Authorization': 'Bearer $token'
       // });
 
-      var response = await http.get(Uri.parse(getNotificationUrl+"28.55254900/77.35286600"), headers: {
+      var response = await http.get(Uri.parse(getNotificationUrl+"${_getLocaton.lat}/${_getLocaton.long}"), headers: {
         'Authorization': 'Bearer $token'
       });
 

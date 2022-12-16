@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-class GetLocaton extends GetxController{
+class GetUserCurrentLocaton extends GetxController{
   var lat=0.0.obs;
   var long=0.0.obs;
 

@@ -45,7 +45,7 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   CarouselController buttonCarouselController = CarouselController();
   final homeController = Get.put(HomeController());
-  GetLocaton _getLocaton=Get.put(GetLocaton());
+  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
   int itemIndex = 0;
   CategoriesModel? _categoriesModel;
   TopDealsModel? _topDealsModel;
@@ -715,7 +715,7 @@ var message=temp["message"];
 
   Widget PopularDeals() {
     return (_popularBrandsResponseModel!.data.length!=0)?Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Popular Brands",
