@@ -68,12 +68,13 @@ void refresh(){
 
   void initState() {
     print(homeController.isSearch.value);
+    _getCurrentPosition().then((value) => refresh());
     getbanner();
     getcategories();
     getTopDeals();
     getNearByDeals();
     getPopularBrands();
-    _getCurrentPosition();
+
     super.initState();
   }
 
