@@ -4,19 +4,17 @@ import 'dart:io';
 import 'package:dealsbuck/model/nearByDealsResponseModel.dart';
 import 'package:dealsbuck/model/topDealsResponseModel.dart';
 import 'package:dealsbuck/screens/drawer_screen.dart';
-import 'package:dealsbuck/screens/homeScreens/Recommended%20Screen/recommendedScreen.dart';
 import 'package:dealsbuck/screens/homeScreens/homeScreen_controller.dart';
 import 'package:dealsbuck/screens/homeScreens/search_widget.dart';
 
-import 'package:dealsbuck/screens/notifications_screen.dart';
-import 'package:dealsbuck/screens/wallet_screen.dart';
+
 import 'package:dealsbuck/utils/internetNotConnected.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_indicator/carousel_indicator.dart';
+
 import 'package:dealsbuck/model/bannerResponseModel.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -25,7 +23,7 @@ import 'package:http/http.dart' as Http;
 import '../../location_getter/get_usser_current_location.dart';
 import '../../model/categoriesResponseModel.dart';
 import '../../model/popularBrandsResponseModel.dart';
-import '../persistent_tab.dart';
+
 import '../products_grid_list.dart';
 import '../store_screen.dart';
 import '../subCategory.dart';
@@ -33,8 +31,7 @@ import 'Recommended Screen/Product Screen/productScreen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
+List? address;
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({Key? key}) : super(key: key);
 
@@ -57,7 +54,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   String? _currentAddress;
   Position? _currentPosition;
-  List? address;
+
+void refresh(){
+  print(homeController.isSearch.value);
+  getbanner();
+  getcategories();
+  getTopDeals();
+  getNearByDeals();
+  getPopularBrands();
+  _getCurrentPosition();
+}
+
 
   void initState() {
     print(homeController.isSearch.value);
@@ -114,7 +121,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
         HelperFunction.saveLatitude(_currentPosition!.latitude.toString());
       } );
       _getAddressFromLatLng(_currentPosition!);
-
     }).catchError((e) {
       debugPrint(e);
     });
@@ -268,8 +274,10 @@ var message=temp["message"];
                             ),
                             address != null
                                 ? Text(
-                                    address![2],
+                                    address![1].toString(),
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
                                         fontSize: 18,
                                         color: Color(0xff001527),
                                         fontWeight: FontWeight.w500),
@@ -298,49 +306,55 @@ var message=temp["message"];
                   ],
                 )),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Visibility(
-                    visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
-                    child: InternetNotAvailable()),
-                SizedBox(height: 15),
+          body: RefreshIndicator(
+            onRefresh:() async{
+                  refresh();
+            } ,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Visibility(
+                      visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
+                      child: InternetNotAvailable()),
+                  SizedBox(height: 15),
 
-                _bannerModel != null
-                    ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Slider(),
-                )
-                    : Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                    height: 150,
-                    color: Colors.white,
+                  _bannerModel != null
+                      ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Slider(),
+                  )
+                      : Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                      height: 150,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
 
 
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      _categoriesModel != null ? Categories() : shimmer(),
-                      SizedBox(height: 5),
-                      _topDealsModel != null ? Recommended() : Container(),
-                      SizedBox(height: 5),
-                      _nearByDealsModel != null ? NearByDeals() : Container(),
-                      SizedBox(height: 5),
-                      _popularBrandsResponseModel != null
-                          ? PopularDeals()
-                          : Container(),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        _categoriesModel != null ? Categories() : shimmer(),
+                        SizedBox(height: 5),
+                        _topDealsModel != null ? Recommended() : Container(),
+                        SizedBox(height: 5),
+                        _nearByDealsModel != null ? NearByDeals() : Container(),
+                        SizedBox(height: 5),
+                        _popularBrandsResponseModel != null
+                            ? PopularDeals()
+                            : Container(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           drawer: DrawerScreen()),
@@ -741,8 +755,8 @@ var message=temp["message"];
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ShopScreen()));
+                    print(_popularBrandsResponseModel!.data[index].id.toString());
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShopScreen(popularBrandsResponseModel: _popularBrandsResponseModel!.data[index])));
                   },
                   child: Container(
                     height: 55,
