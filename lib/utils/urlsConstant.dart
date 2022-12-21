@@ -24,3 +24,10 @@ const String getFavUrl = '${baseUrl}favorite/show';
 const String getNotificationUrl = '${baseUrl}notification/';
 const String searchUrl = '${baseUrl}search/';
 const String subCategoryUrl = '${baseUrl}brands/products/';
+const String categoryBrand="${baseUrl}category/brands";
+const String showPopularBarndDataList="${baseUrl}brands/products";
+const String getCategoryDataList="${baseUrl}category/brands/";
+
+
+
+const String imagePath="https://dealsbuck.com/";

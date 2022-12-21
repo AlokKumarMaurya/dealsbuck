@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as Http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,8 @@ import '../../../../model/productDetailsModel.dart';
 
 import '../../../../utils/internetNotConnected.dart';
 import '../../../../utils/urlsConstant.dart';
+import '../api_config/api_config.dart';
+import '../model/category/particular_category_list.dart';
 
 class SubCategory extends StatefulWidget {
   SubCategory({Key? key, required this.id, required this.title}) : super(key: key);
@@ -31,7 +34,7 @@ class SubCategory extends StatefulWidget {
 class _SubCategoryState extends State<SubCategory> {
   SubCategoryModel? _subCategoryModel;
   bool loader = true;
-
+RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
   Future<SubCategoryModel?> getSubCategory() async{
     try{
       print("0000000212$_subCategoryModel");
@@ -52,6 +55,7 @@ class _SubCategoryState extends State<SubCategory> {
   }
 
   void initState() {
+    getdata();
     getSubCategory();
   }
 
@@ -104,50 +108,61 @@ class _SubCategoryState extends State<SubCategory> {
                 Visibility(
                     visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
                     child: InternetNotAvailable()),
-                loader==false? (_subCategoryModel!.data.products.isNotEmpty)?GridView.builder(
+                Obx(()=>((dataList.value.length!=0)?GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 2 / 2.1,
                         crossAxisSpacing: 0,
                         crossAxisCount: 4),
-                    itemCount: _subCategoryModel!.data.products.isNotEmpty?_subCategoryModel!.data.products.length:0,
+                    itemCount: dataList.value.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.width*0.2,
-                            width: MediaQuery.of(context).size.width*0.2,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red, width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
+                      return InkWell(
+                        onTap: (){
+                          Get.showSnackbar(GetSnackBar(
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                            messageText: Text(
+                              "No api implemented",
+                              style: TextStyle(color: Colors.white),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network("https://dealsbuck.com/${_subCategoryModel!.data.products[index].featuredImagePath}",
-                                errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                                  return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                                },),
+                          ));
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.width*0.2,
+                              width: MediaQuery.of(context).size.width*0.2,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network("https://dealsbuck.com/${dataList.value[index].brandImagePath}",
+                                  errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
+                                    return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
+                                  },),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Text(
-                              _subCategoryModel!.data.products[index].productName!,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff001527),
-                                  fontWeight: FontWeight.w500),
+                            SizedBox(
+                              height: 4,
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Text(
+                                dataList.value[index].brandName,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xff001527),
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            )
+                          ],
+                        ),
                       );
                     }):
-
                 Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height-100,
@@ -158,15 +173,22 @@ class _SubCategoryState extends State<SubCategory> {
                       SizedBox(height: 20,),
                       Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
                     ],
-                  ),)
+                  ),))
 
 
 
-                    :  Center(child: Container(
-                    child: CircularProgressIndicator()),
+
                 ),
               ],
             ),
           )));
+  }
+
+  void getdata() async{
+    var response=await ApiConfig().getParticularCategoryList(widget.id.toString());
+    if(response!=null){
+      ParticularCategoryList modal=response;
+      dataList.value=modal.data.vendors;
+    }
   }
 }

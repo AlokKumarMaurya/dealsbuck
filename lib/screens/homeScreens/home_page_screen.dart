@@ -90,7 +90,6 @@ void refresh(){
           content: Text(
               "Location services are disabled. Please enable the services")));
     }
-
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -167,7 +166,6 @@ void refresh(){
   Future<CategoriesModel?> getcategories() async {
     var response = await Http.get(Uri.parse(categoriesUrl));
     print(response.body);
-
     setState(() {
       _categoriesModel = CategoriesModel.fromJson(jsonDecode(response.body));
     });

@@ -1,29 +1,44 @@
 import 'dart:async';
+import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import "package:http/http.dart" as http;
+import '../api_config/api_config.dart';
+import '../location_getter/get_usser_current_location.dart';
 import '../model/popularBrandsResponseModel.dart';
+import '../model/popular_brand/particular_brand_list.dart';
+import 'homeScreens/Recommended Screen/Product Screen/productScreen.dart';
 import 'homeScreens/home_page_screen.dart';
 
 class ShopScreen extends StatefulWidget {
-   ShopScreen({Key? key,required this.popularBrandsResponseModel}) : super(key: key);
+  ShopScreen({Key? key, required this.popularBrandsResponseModel})
+      : super(key: key);
   Datum popularBrandsResponseModel;
+
   @override
   State<ShopScreen> createState() => _ShopScreenState();
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-bool isLoading=true;
-bool isDataPresent=true;////api not implemented
+  RxList<Product> dataList = List<Product>.empty(growable: true).obs;
+  bool isLoading = true;
+  bool isDataPresent = true; ////api not implemented
+  GetUserCurrentLocaton _getUserCurrentLocaton =
+      Get.put(GetUserCurrentLocaton());
 
-@override
+  @override
   void initState() {
-  Timer(Duration(seconds: 2), () {setState(() {
-    isLoading=false;
-  }); });
+    getData();
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,105 +118,132 @@ bool isDataPresent=true;////api not implemented
                     ],
                   ),
                 ),
-                (isLoading)?Center(child: CircularProgressIndicator(),):(isDataPresent)?Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Image.network(
-                            "https://dealsbuck.com/" +
-                                widget.popularBrandsResponseModel.brandImagePath,
-                            height: 90,
-                            width: 100,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                (isLoading)
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : (isDataPresent)
+                        ? Column(
                             children: [
-                              Text(
-                                widget.popularBrandsResponseModel.name,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                widget.popularBrandsResponseModel.brandName,
-                                style: TextStyle(
-                                  fontSize: 12,
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+                                  children: [
+                                    Image.network(
+                                      "https://dealsbuck.com/" +
+                                          widget.popularBrandsResponseModel
+                                              .brandImagePath,
+                                      height: 90,
+                                      width: 100,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          widget
+                                              .popularBrandsResponseModel.name,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          widget.popularBrandsResponseModel
+                                              .brandName,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          "Open Now 10 am - 10 pm (Today)",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff108038)),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Container(
+                                          height: 20,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: 5,
+                                              itemBuilder: (BuildContext contex,
+                                                  int index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  color: Colors.orange,
+                                                  size: 18,
+                                                );
+                                              }),
+                                        )
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
                               SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                "Open Now 10 am - 10 pm (Today)",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff108038)),
-                              ),
-                              SizedBox(
-                                height: 3,
+                                height: 10,
                               ),
                               Container(
-                                height: 20,
-                                child:
-                                ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: 5,
-                                    itemBuilder:
-                                        (BuildContext contex, int index) {
-                                      return Icon(
-                                        Icons.star,
-                                        color: Colors.orange,
-                                        size: 18,
-                                      );
-                                    }),
-                              )
+                                height: 30,
+                                child: TabBar(
+                                  labelColor: Color(0xff001527),
+                                  labelStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                  indicatorColor: Color(0xffed1b24),
+                                  tabs: [
+                                    Tab(text: "Offers"),
+                                    Tab(text: "About")
+                                  ],
+                                ),
+                              ),
+                              SingleChildScrollView(
+                                physics: NeverScrollableScrollPhysics(),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: TabBarView(children: [
+                                    offers(),
+                                    about(),
+                                  ]),
+                                ),
+                              ),
                             ],
                           )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 30,
-                      child: TabBar(
-                        labelColor: Color(0xff001527),
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                        indicatorColor: Color(0xffed1b24),
-                        tabs: [Tab(text: "Offers"), Tab(text: "About")],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      physics: NeverScrollableScrollPhysics(),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: TabBarView(children: [
-                          offers(),
-                          about(),
-                        ]),
-                      ),
-                    ),
-                  ],
-                ):  Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height-100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("assets/no_data_found.jfif",scale: 1,),
-                      SizedBox(height: 20,),
-                      Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
-                    ],
-                  ),),
+                        : Container(
+                            alignment: Alignment.center,
+                            height: MediaQuery.of(context).size.height - 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/no_data_found.jfif",
+                                  scale: 1,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Sorry no data found",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
 
                 // DefaultTabController(
                 //   length: 5,
@@ -239,133 +281,193 @@ bool isDataPresent=true;////api not implemented
   }
 
   Widget offers() {
-    return Container(
-      height: 100,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [SizedBox(height: 100,),
-          Image.asset("assets/no_data_found.jfif",scale: 1,),
-          SizedBox(height: 20,),
-          Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
-        ],
-      ),);
+    debugPrint(dataList.value.length.toString());
+    debugPrint("dataList.value.length.toString()");
+    return Obx(() => (dataList.value == null || dataList.value.length == 0
+        ? Container(
+            height: 100,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 100,
+                ),
+                Image.asset(
+                  "assets/no_data_found.jfif",
+                  scale: 1,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Sorry no data found",
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
+                )
+              ],
+            ),
+          )
+        : ListView.builder(
+            itemCount: dataList.value.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  Get.showSnackbar(GetSnackBar(
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 2),
+                    messageText: Text(
+                      "No api implemented",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ));
+                  //Navigator.push(context,MaterialPageRoute(builder: (context)=>ProductScreen(id: dataList.value[index].id,)));
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x29000000),
+                          blurRadius: 4.0,
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Image.network(
+                            imagePath + dataList.value[index].featuredImagePath,
+                            width: MediaQuery.of(context).size.width * 0.20,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.67,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      dataList.value[index].productName,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Icon(
+                                      Icons.favorite,
+                                      color: Color(0xffC60808),
+                                      size: 16,
+                                    )
+                                  ],
+                                ),
+                                Text(
+                                  "Any Menu Item.",
+                                  style: TextStyle(fontSize: 12),
+                                  textAlign: TextAlign.start,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "BUY 1 GET 1 FREE",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xffC60808)),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.all(5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      height: 14,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Colors.black),
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: 5,
+                                          itemBuilder:
+                                              (BuildContext contex, int index) {
+                                            return Icon(
+                                              Icons.star,
+                                              color: Colors.orange,
+                                              size: 12,
+                                            );
+                                          }),
+                                    )
+                                  ],
+                                ),
+                                Text(
+                                  "Dine - in Only",
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.end,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            })));
+    ;
 
-
-        /// as no api is integrated
-      // ListView.builder(
-      //   itemCount: 10,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return Padding(
-      //       padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 10),
-      //       child: Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         decoration: BoxDecoration(
-      //           boxShadow: const [
-      //             BoxShadow(
-      //               color: Color(0x29000000),
-      //               blurRadius: 4.0,
-      //             ),
-      //           ],
-      //           color: Colors.white,
-      //         ),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //           children: [
-      //             Padding(
-      //               padding: const EdgeInsets.symmetric(vertical: 8.0),
-      //               child: Image.asset(
-      //                 'assets/pizza.png',
-      //                 width:MediaQuery.of(context).size.width*0.20,
-      //               ),
-      //             ),
-      //             Padding(
-      //               padding: const EdgeInsets.symmetric(vertical: 8.0),
-      //               child: SizedBox(
-      //                 width:MediaQuery.of(context).size.width*0.67,
-      //                 child: Column(
-      //                   crossAxisAlignment: CrossAxisAlignment.start,
-      //                   children: [
-      //                     Row(
-      //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                       children: [
-      //                         Text(
-      //                           "EL GREECO A 24 HOURS",
-      //                           style: TextStyle(fontWeight: FontWeight.bold),
-      //                         ),
-      //                         Icon(
-      //                           Icons.favorite,
-      //                           color: Color(0xffC60808),
-      //                           size: 16,
-      //                         )
-      //                       ],
-      //                     ),
-      //                     Text(
-      //                       "Any Menu Item.",
-      //                       style: TextStyle(fontSize: 12),
-      //                       textAlign: TextAlign.start,
-      //                     ),
-      //                     Row(
-      //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                       children: [
-      //                         Text(
-      //                           "BUY 1 GET 1 FREE",
-      //                           style: TextStyle(
-      //                               fontWeight: FontWeight.bold,
-      //                               color: Color(0xffC60808)),
-      //                         ),
-      //                         Container(
-      //                           margin: EdgeInsets.all(5),
-      //                           padding: EdgeInsets.symmetric(horizontal: 5),
-      //                           height: 14,
-      //                           decoration: BoxDecoration(
-      //                               borderRadius: BorderRadius.circular(15),
-      //                               color: Colors.black),
-      //                           child: ListView.builder(
-      //                               scrollDirection: Axis.horizontal,
-      //                               shrinkWrap: true,
-      //                               physics: NeverScrollableScrollPhysics(),
-      //                               itemCount: 5,
-      //                               itemBuilder:
-      //                                   (BuildContext contex, int index) {
-      //                                 return Icon(
-      //                                   Icons.star,
-      //                                   color: Colors.orange,
-      //                                   size: 12,
-      //                                 );
-      //                               }),
-      //                         )
-      //                       ],
-      //                     ),
-      //                     Text(
-      //                       "Dine - in Only",
-      //                       style: TextStyle(
-      //                           fontSize: 10, fontWeight: FontWeight.bold),
-      //                       textAlign: TextAlign.end,
-      //                     )
-      //                   ],
-      //                 ),
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     );
-      //   });
+    /// as no api is integrated
   }
 
   Widget about() {
     return Container(
       alignment: Alignment.center,
-      height:100,
+      height: 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: 100,),
-          Image.asset("assets/no_data_found.jfif",scale: 1,),
-          SizedBox(height: 20,),
-          Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
+          SizedBox(
+            height: 100,
+          ),
+          Image.asset(
+            "assets/no_data_found.jfif",
+            scale: 1,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Sorry no data found",
+            style: TextStyle(
+              fontSize: 22,
+            ),
+          )
         ],
-      ),);
+      ),
+    );
+  }
+
+  void getData() async {
+    var response = await ApiConfig().getParticularBrandList(
+        widget.popularBrandsResponseModel.id.toString());
+    if (response != null) {
+      ParticularBrandList modal = response;
+      dataList.value = modal.data.products;
+    }
   }
 }

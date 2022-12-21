@@ -30,7 +30,6 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
   }
 
