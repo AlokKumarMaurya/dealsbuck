@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:dealsbuck/model/bannerResponseModel.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -55,26 +56,30 @@ class _HomePageScreenState extends State<HomePageScreen> {
   String? _currentAddress;
   Position? _currentPosition;
 
-void refresh(){
-  print(homeController.isSearch.value);
-  getbanner();
-  getcategories();
-  getTopDeals();
-  getNearByDeals();
-  getPopularBrands();
-  _getCurrentPosition();
+void refresh(bool test){
+  print("homeController.isSearch.value");
+  if(test){
+    getPopularBrands();
+    _getCurrentPosition();
+    getbanner();
+    getcategories();
+    getTopDeals();
+    getNearByDeals();
+
+  }
+
 }
 
 
   void initState() {
     print(homeController.isSearch.value);
-    _getCurrentPosition().then((value) => refresh());
+    _getCurrentPosition().then((value) => refresh(true));
+    _getLocaton.getLocation().then((val)=>refresh(true));
     getbanner();
     getcategories();
     getTopDeals();
     getNearByDeals();
     getPopularBrands();
-
     super.initState();
   }
 
@@ -94,6 +99,7 @@ void refresh(){
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        SystemNavigator.pop();
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Location permissions are denied")));
         _getCurrentPosition();
@@ -110,9 +116,9 @@ void refresh(){
     return true;
   }
 
-  Future<void> _getCurrentPosition() async {
+  Future<bool> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
+    if (!hasPermission) return false;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       setState(() {
@@ -128,11 +134,12 @@ void refresh(){
     print("${_currentPosition!.longitude}");
     print("getLongitude>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${await HelperFunction.getLongitude()}");
     print("getLatitude>>>>>>>>>>>>>>>>>>>>>>>>>>>>${await HelperFunction.getLatitude()}");
+    return true;
   }
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
-            _getLocaton.lat.value, _getLocaton.long.value)
+        _getLocaton.lat.value, _getLocaton.long.value)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
@@ -307,7 +314,7 @@ var message=temp["message"];
           ),
           body: RefreshIndicator(
             onRefresh:() async{
-                  refresh();
+                  refresh(true);
             } ,
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
@@ -342,13 +349,13 @@ var message=temp["message"];
                         SizedBox(height: 10),
                         _categoriesModel != null ? Categories() : shimmer(),
                         SizedBox(height: 5),
-                        _topDealsModel != null ? Recommended() : Container(),
+                        _topDealsModel != null ? Recommended() : shimmer(),
                         SizedBox(height: 5),
-                        _nearByDealsModel != null ? NearByDeals() : Container(),
+                        _nearByDealsModel != null ? NearByDeals() : shimmer(),
                         SizedBox(height: 5),
                         _popularBrandsResponseModel != null
                             ? PopularDeals()
-                            : Container(),
+                            : shimmer(),
                       ],
                     ),
                   ),

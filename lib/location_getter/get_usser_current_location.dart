@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -14,12 +15,12 @@ class GetUserCurrentLocaton extends GetxController{
     super.onInit();
   }
 
-  void getLocation()async{
+  Future<bool> getLocation()async{
     var permission=await Geolocator.checkPermission();
     if(permission == LocationPermission.denied){
       permission=await Geolocator.requestPermission();
       if(permission == LocationPermission.denied){
-        Geolocator.openAppSettings();
+        SystemNavigator.pop();
     }
     }
     if(permission != LocationPermission.denied && permission !=LocationPermission.deniedForever){
@@ -30,6 +31,7 @@ class GetUserCurrentLocaton extends GetxController{
       debugPrint(long.value.toString());
       debugPrint("long.value.toString()long.value.toString()");
     }
+    return true;
   }
 
 }

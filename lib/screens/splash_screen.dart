@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:dealsbuck/screens/homeScreens/home_page_screen.dart';
 import 'package:dealsbuck/screens/login_screen.dart';
 import 'package:dealsbuck/screens/persistent_tab.dart';
-import 'package:dealsbuck/screens/signup_screen.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../location_getter/get_usser_current_location.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,13 +17,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isuserLog = false;
-
+  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
   void isLog() async{
     isuserLog =await HelperFunction().getuserLoggedInSharedPreference();
   }
 
   @override
   void initState() {
+    _getLocaton.getLocation();
+
     isLog();
     // TODO: implement initState
     super.initState();
@@ -37,7 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Padding(
