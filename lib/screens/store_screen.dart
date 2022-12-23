@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dealsbuck/screens/popular_brand/popular_barnd_details_page.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -314,15 +315,17 @@ class _ShopScreenState extends State<ShopScreen> {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  Get.showSnackbar(GetSnackBar(
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 2),
-                    messageText: Text(
-                      "No api implemented",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ));
-                  //Navigator.push(context,MaterialPageRoute(builder: (context)=>ProductScreen(id: dataList.value[index].id,)));
+                  // Get.showSnackbar(GetSnackBar(
+                  //   backgroundColor: Colors.red,
+                  //   duration: Duration(seconds: 2),
+                  //   messageText: Text(
+                  //     "No api implemented",
+                  //     style: TextStyle(color: Colors.white),
+                  //   ),
+                  // ));
+                  Navigator.push(context,MaterialPageRoute(builder:
+                      (context)=>
+                          PopularBrandDetailsPage(id:dataList.value[index].id.toString(),title: dataList.value[index].productName,)));
                 },
                 child: Padding(
                   padding:

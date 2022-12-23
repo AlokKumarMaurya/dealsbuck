@@ -27,6 +27,7 @@ const String subCategoryUrl = '${baseUrl}brands/products/';
 const String categoryBrand="${baseUrl}category/brands";
 const String showPopularBarndDataList="${baseUrl}brands/products";
 const String getCategoryDataList="${baseUrl}category/brands/";
+const String getParticularPopularProductDetailApi="${baseUrl}product/show/";
 
 
 

@@ -264,7 +264,9 @@ var message=temp["message"];
                           children: [
                             InkWell(
                                 onTap: () {
+                                  _getLocaton.searchLoacation().then((r)=>refresh(true));
                                   _getLocaton.getLocation();
+                                  refresh(true);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         backgroundColor: Color(0xff001527),

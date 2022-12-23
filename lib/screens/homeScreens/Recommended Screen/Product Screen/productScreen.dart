@@ -412,6 +412,104 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
 
+
+
+  Widget sizeBox() {
+    return SizedBox(
+      height: 12,
+    );
+  }
+
+  CarouselController buttonCarouselController = CarouselController();
+
+  // List<String> images = [
+  //   "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
+  //   "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
+  //   "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
+  // ];
+
+  int itemIndex = 0;
+  // bool isFav = _productDetailsResponseModel!.data.favorites;
+  Widget Slider() {
+    return Stack(
+      children: [
+        CarouselSlider.builder(
+          carouselController: buttonCarouselController,
+          itemCount: _productDetailsResponseModel!.data.images.length,
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  Container(
+            height: 100,
+            width: 100,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image.network(
+                  "https://dealsbuck.com/" +
+                      _productDetailsResponseModel!
+                          .data.images[itemIndex].productImagePath,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrase) {
+                return Image.asset(
+                  "assets/defaultImage.png",
+                  fit: BoxFit.cover,
+                );
+              }),
+            ),
+          ),
+          options: CarouselOptions(
+            height: 250.0,
+            onPageChanged: (index, pageViewIndex) {
+              setState(() {
+                itemIndex = index;
+              });
+            },
+            enlargeCenterPage: true,
+            autoPlay: true,
+            aspectRatio: 16 / 9,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enableInfiniteScroll: true,
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            viewportFraction: 0.95,
+          ),
+        ),
+        Positioned(
+          bottom: 5,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: CarouselIndicator(
+              width: 6,
+              height: 6,
+              space: 15,
+              count: _productDetailsResponseModel!.data.images.length,
+              index: itemIndex,
+              activeColor: Color(0xffed1b24),
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        Positioned(
+          top: MediaQuery.of(context).size.width*0.05,
+            right: MediaQuery.of(context).size.width*0.1,
+            child: InkWell(
+              onTap: (){
+                setState(() {
+                  _productDetailsResponseModel!.data.favorites = !_productDetailsResponseModel!.data.favorites;
+                  if(_productDetailsResponseModel!.data.favorites){
+                    addFav();
+                  }
+                  else{
+                    removeFav();
+                  }
+                });
+              },
+          child: _productDetailsResponseModel!.data.favorites? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
+        ))
+      ],
+    );
+  }
+
+
   Widget bodyWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -573,98 +671,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget sizeBox() {
-    return SizedBox(
-      height: 12,
-    );
-  }
 
-  CarouselController buttonCarouselController = CarouselController();
 
-  List<String> images = [
-    "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
-    "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
-    "https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg&fm=jpg",
-  ];
 
-  int itemIndex = 0;
-  // bool isFav = _productDetailsResponseModel!.data.favorites;
-  Widget Slider() {
-    return Stack(
-      children: [
-        CarouselSlider.builder(
-          carouselController: buttonCarouselController,
-          itemCount: _productDetailsResponseModel!.data.images.length,
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  Container(
-            height: 100,
-            width: 100,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: Image.network(
-                  "https://dealsbuck.com/" +
-                      _productDetailsResponseModel!
-                          .data.images[itemIndex].productImagePath,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrase) {
-                return Image.asset(
-                  "assets/defaultImage.png",
-                  fit: BoxFit.cover,
-                );
-              }),
-            ),
-          ),
-          options: CarouselOptions(
-            height: 250.0,
-            onPageChanged: (index, pageViewIndex) {
-              setState(() {
-                itemIndex = index;
-              });
-            },
-            enlargeCenterPage: true,
-            autoPlay: true,
-            aspectRatio: 16 / 9,
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enableInfiniteScroll: true,
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            viewportFraction: 0.95,
-          ),
-        ),
-        Positioned(
-          bottom: 5,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: CarouselIndicator(
-              width: 6,
-              height: 6,
-              space: 15,
-              count: _productDetailsResponseModel!.data.images.length,
-              index: itemIndex,
-              activeColor: Color(0xffed1b24),
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.width*0.05,
-            right: MediaQuery.of(context).size.width*0.1,
-            child: InkWell(
-              onTap: (){
-                setState(() {
-                  _productDetailsResponseModel!.data.favorites = !_productDetailsResponseModel!.data.favorites;
-                  if(_productDetailsResponseModel!.data.favorites){
-                    addFav();
-                  }
-                  else{
-                    removeFav();
-                  }
-                });
-              },
-          child: _productDetailsResponseModel!.data.favorites? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
-        ))
-      ],
-    );
-  }
 }
