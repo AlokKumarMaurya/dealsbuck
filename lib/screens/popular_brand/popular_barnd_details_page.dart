@@ -95,7 +95,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                 Visibility(
                     visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
                     child: InternetNotAvailable()),
-                _populareBrandParticularProductDeatil != null
+                _populareBrandParticularProductDeatil != null && _populareBrandParticularProductDeatil!.data.images.length>0
                     ? Slider()
                     : Shimmer.fromColors(
                   baseColor: Colors.grey.shade300,
@@ -343,7 +343,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
           ),
           sizeBox(),
           Text(
-            _populareBrandParticularProductDeatil!.data.productName,
+            _populareBrandParticularProductDeatil!.data.productName??"",
             style: TextStyle(
                 color: Color(0xff001527),
                 fontSize: 22,

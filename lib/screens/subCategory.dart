@@ -21,7 +21,7 @@ import '../../../../utils/internetNotConnected.dart';
 import '../../../../utils/urlsConstant.dart';
 import '../api_config/api_config.dart';
 import '../model/category/particular_category_list.dart';
-
+import 'package:dealsbuck/screens/popular_brand/popular_barnd_details_page.dart';
 class SubCategory extends StatefulWidget {
   SubCategory({Key? key, required this.id, required this.title}) : super(key: key);
   final int id;
@@ -127,6 +127,9 @@ RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
                               style: TextStyle(color: Colors.white),
                             ),
                           ));
+                          // Navigator.push(context,MaterialPageRoute(builder:
+                          //     (context)=>
+                          //     PopularBrandDetailsPage(id:dataList.value[index].id.toString(),title: dataList.value[index].brandName,)));
                         },
                         child: Column(
                           children: [

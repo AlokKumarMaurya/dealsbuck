@@ -259,6 +259,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // debugPrint(_productDetailsResponseModel!.data.images.length.toString());
+    // debugPrint("_productDetailsResponseModel!.data.images.length.toString()");
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -312,9 +314,9 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
             Visibility(
-                visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
+                visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected??false,
                 child: InternetNotAvailable()),
-            _productDetailsResponseModel != null
+            _productDetailsResponseModel != null && _productDetailsResponseModel!.data.images.length>=1
                 ? Slider()
                 : Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
@@ -494,7 +496,7 @@ class _ProductScreenState extends State<ProductScreen> {
             child: InkWell(
               onTap: (){
                 setState(() {
-                  _productDetailsResponseModel!.data.favorites = !_productDetailsResponseModel!.data.favorites;
+                  _productDetailsResponseModel!.data.favorites = !(_productDetailsResponseModel!.data.favorites??true);
                   if(_productDetailsResponseModel!.data.favorites){
                     addFav();
                   }
@@ -503,7 +505,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   }
                 });
               },
-          child: _productDetailsResponseModel!.data.favorites? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
+          child: _productDetailsResponseModel!.data.favorites??false ? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
         ))
       ],
     );
