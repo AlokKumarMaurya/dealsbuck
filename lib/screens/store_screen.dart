@@ -1,17 +1,16 @@
 import 'dart:async';
+
 import 'package:dealsbuck/screens/popular_brand/popular_barnd_details_page.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import "package:http/http.dart" as http;
+
 import '../api_config/api_config.dart';
 import '../location_getter/get_usser_current_location.dart';
 import '../model/popularBrandsResponseModel.dart';
 import '../model/popular_brand/particular_brand_list.dart';
-import 'homeScreens/Recommended Screen/Product Screen/productScreen.dart';
 import 'homeScreens/home_page_screen.dart';
 
 class ShopScreen extends StatefulWidget {
@@ -29,8 +28,9 @@ class _ShopScreenState extends State<ShopScreen> {
   bool isDataPresent = true; ////api not implemented
   GetUserCurrentLocaton _getUserCurrentLocaton =
       Get.put(GetUserCurrentLocaton());
-var lat;
-var long;
+  var lat;
+  var long;
+
   @override
   void initState() {
     getData();
@@ -141,7 +141,9 @@ var long;
                                       height: 90,
                                       width: 100,
                                     ),
-                                    SizedBox(width: 8,),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -327,9 +329,13 @@ var long;
                   //     style: TextStyle(color: Colors.white),
                   //   ),
                   // ));
-                  Navigator.push(context,MaterialPageRoute(builder:
-                      (context)=>
-                          PopularBrandDetailsPage(id:dataList.value[index].id.toString(),title: dataList.value[index].productName,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PopularBrandDetailsPage(
+                                id: dataList.value[index].id.toString(),
+                                title: dataList.value[index].productName,
+                              )));
                 },
                 child: Padding(
                   padding:
@@ -450,95 +456,135 @@ var long;
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Image.network(
                 "https://dealsbuck.com/" +
-                    widget.popularBrandsResponseModel
-                        .brandImagePath,
-                fit: BoxFit.fill,
-                errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                  return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                }
+                    widget.popularBrandsResponseModel.brandImagePath,
+                fit: BoxFit.fill, errorBuilder: (BuildContext context,
+                    Object exception, StackTrace? stackTrase) {
+              return Image.asset(
+                "assets/defaultImage.png",
+                fit: BoxFit.cover,
+              );
+            }),
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.start,
-             children: [
-               SizedBox(width: 30,),
-               Text("Brand : ",style: TextStyle(
-                   color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold,
-                   overflow: TextOverflow.ellipsis
-               )),
-               Text(widget.popularBrandsResponseModel.name,style: TextStyle(
-                 color: Colors.red,fontSize: 18,fontWeight: FontWeight.bold,
-                 overflow: TextOverflow.ellipsis
-               ),),
-             ],
-           ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
+                Text("Brand : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis)),
+                Text(
+                  widget.popularBrandsResponseModel.name,
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ],
+            ),
 
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 30,),
-                Text("Product name : ",style: TextStyle(
-                    color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis
-                )),
-                Text(widget.popularBrandsResponseModel
-                    .brandName,style: TextStyle(
-                    color: Colors.red,fontSize: 18,fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis
-                ),),
+                SizedBox(
+                  width: 30,
+                ),
+                Text("Product name : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis)),
+                Text(
+                  widget.popularBrandsResponseModel.brandName,
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
+                ),
               ],
             ),
 
-
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 30,),
-                Text("Address : ",style: TextStyle(
-                    color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis
-                )),
+                SizedBox(
+                  width: 30,
+                ),
+                Text("Address : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis)),
                 Expanded(
-                  child: Text(long??"-",
+                  child: Text(
+                    long ?? "-",
                     maxLines: 4,
                     style: TextStyle(
-                      color: Colors.red,fontSize: 18,fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis
-                  ),),
+                        color: Colors.red,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
 
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 30,),
-                Text("Total Products : ",style: TextStyle(
-                    color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis
-                )),
+                SizedBox(
+                  width: 30,
+                ),
+                Text("Total Products : ",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis)),
                 Expanded(
-                  child: Text("${dataList.value.length}",
+                  child: Text(
+                    "${dataList.value.length}",
                     maxLines: 4,
                     style: TextStyle(
-                        color: Colors.red,fontSize: 18,fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis
-                    ),),
+                        color: Colors.red,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
               ],
             ),
-SizedBox(height: 350,)
+            SizedBox(
+              height: 350,
+            )
             // SizedBox(
             //   height: 100,
             // ),
@@ -571,19 +617,13 @@ SizedBox(height: 350,)
     }
   }
 
-  void getAddrress(ParticularBrandList modal) async{
-    await placemarkFromCoordinates(
-        double.parse(modal.data.latitude), double.parse(modal.data.longitude))
+  void getAddrress(ParticularBrandList modal) async {
+    await placemarkFromCoordinates(double.parse(modal.data.latitude),
+            double.parse(modal.data.longitude))
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
-      long="${place.street},${place.subLocality},${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
-  });
-}
-
-
-
-
-
-
-
+      long =
+          "${place.street},${place.subLocality},${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
+    });
+  }
 }

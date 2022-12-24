@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-BannerModel bannerModelFromJson(String str) => BannerModel.fromJson(json.decode(str));
+BannerModel bannerModelFromJson(String str) =>
+    BannerModel.fromJson(json.decode(str));
 
 String bannerModelToJson(BannerModel data) => json.encode(data.toJson());
 
@@ -20,16 +21,16 @@ class BannerModel {
   List<Datum> data;
 
   factory BannerModel.fromJson(Map<String, dynamic> json) => BannerModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -42,12 +43,12 @@ class Datum {
   String bannerImagePath;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    bannerImageName: json["banner_image_name"],
-    bannerImagePath: json["banner_image_path"],
-  );
+        bannerImageName: json["banner_image_name"],
+        bannerImagePath: json["banner_image_path"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "banner_image_name": bannerImageName,
-    "banner_image_path": bannerImagePath,
-  };
+        "banner_image_name": bannerImageName,
+        "banner_image_path": bannerImagePath,
+      };
 }

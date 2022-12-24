@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-CategoriesModel categoriesModelFromJson(String str) => CategoriesModel.fromJson(json.decode(str));
+CategoriesModel categoriesModelFromJson(String str) =>
+    CategoriesModel.fromJson(json.decode(str));
 
-String categoriesModelToJson(CategoriesModel data) => json.encode(data.toJson());
+String categoriesModelToJson(CategoriesModel data) =>
+    json.encode(data.toJson());
 
 class CategoriesModel {
   CategoriesModel({
@@ -19,17 +21,18 @@ class CategoriesModel {
   String message;
   List<Datum> data;
 
-  factory CategoriesModel.fromJson(Map<String, dynamic> json) => CategoriesModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) =>
+      CategoriesModel(
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -44,14 +47,14 @@ class Datum {
   String imagePath;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    name: json["name"],
-    imagePath: json["image_path"],
-  );
+        id: json["id"],
+        name: json["name"],
+        imagePath: json["image_path"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "image_path": imagePath,
-  };
+        "id": id,
+        "name": name,
+        "image_path": imagePath,
+      };
 }

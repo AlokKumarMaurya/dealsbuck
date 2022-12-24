@@ -4,11 +4,11 @@ import 'package:dealsbuck/screens/login_screen.dart';
 import 'package:dealsbuck/screens/verify_account_screen.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
+import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:dealsbuck/validation_check/validationCheck.dart';
+import 'package:intl/intl.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -30,11 +30,16 @@ class _SignUpState extends State<SignUp> {
                 children: [
                   Text(
                     "Create new",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500, color: Color(0xff001527)),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff001527)),
                   ),
                   Text("Account",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500, color: Color(0xff001527))),
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff001527))),
                   SizedBox(
                     height: 25,
                   ),
@@ -44,7 +49,8 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         Text(
                           "Already Registered?",
-                          style: TextStyle(fontSize: 15, color: Color(0xff001527)),
+                          style:
+                              TextStyle(fontSize: 15, color: Color(0xff001527)),
                         ),
                         TextButton(
                           onPressed: () {
@@ -95,14 +101,17 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
   final TextEditingController UserName = TextEditingController();
   final TextEditingController Password = TextEditingController();
   final regFormGlobalKey = GlobalKey<FormState>();
-  bool loader=false;
+  bool loader = false;
+
   void initState() {
     Dateinput.text = ""; //set the initial value of text field
     super.initState();
   }
 
   register(String username, email, birthdate, password, phone) async {
-    setState((){ loader=true;});
+    setState(() {
+      loader = true;
+    });
 
     Map data = {
       'name': username,
@@ -116,7 +125,7 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
     print("response>>>>>>>>>>>${response.body}");
     var res = await json.decode(response.body);
     var msg = res["message"].toString();
-    try{
+    try {
       if (msg == "User Created & OTP sent successfully") {
         Fluttertoast.showToast(msg: "Otp sent Successfully");
         var token = res["token"].toString();
@@ -124,14 +133,22 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
         await HelperFunction.saveUserName(username);
         await HelperFunction.saveEmailId(email);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) =>  VerifyAccount( isFromForgetScreen: false,phone: phone,)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => VerifyAccount(
+                      isFromForgetScreen: false,
+                      phone: phone,
+                    )));
         // requestOtp();
-      }else {
-        res["errors"]["mobile_no"]!=null?Fluttertoast.showToast(msg: res["errors"]["mobile_no"].toString()):Container();
-        res["errors"]["email"]!=null?Fluttertoast.showToast(msg: res["errors"]["email"].toString()):Container();
+      } else {
+        res["errors"]["mobile_no"] != null
+            ? Fluttertoast.showToast(msg: res["errors"]["mobile_no"].toString())
+            : Container();
+        res["errors"]["email"] != null
+            ? Fluttertoast.showToast(msg: res["errors"]["email"].toString())
+            : Container();
       }
-    }
-    finally{
+    } finally {
       setState(() {
         loader = false;
       });
@@ -183,7 +200,10 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("NAME", style: TextStyle( color: Color(0xff001527)),),
+            Text(
+              "NAME",
+              style: TextStyle(color: Color(0xff001527)),
+            ),
             SizedBox(
               height: 5,
             ),
@@ -194,7 +214,9 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
                 contentPadding: EdgeInsets.all(10),
                 hintText: "Jiara Martins",
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,),
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.zero),
               ),
               validator: (username) {
@@ -207,7 +229,7 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
             SizedBox(
               height: 15,
             ),
-            Text("EMAIL", style: TextStyle( color: Color(0xff001527))),
+            Text("EMAIL", style: TextStyle(color: Color(0xff001527))),
             SizedBox(
               height: 5,
             ),
@@ -217,7 +239,9 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
                 isDense: true,
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,),
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.zero),
                 hintText: "hello@demo.com",
               ),
@@ -234,7 +258,7 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
             SizedBox(
               height: 5,
             ),
-            Text("Phone no.", style: TextStyle( color: Color(0xff001527))),
+            Text("Phone no.", style: TextStyle(color: Color(0xff001527))),
             SizedBox(
               height: 5,
             ),
@@ -244,7 +268,9 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
                 isDense: true,
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,),
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.zero),
                 hintText: "Phone number",
               ),
@@ -258,7 +284,7 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
             SizedBox(
               height: 15,
             ),
-            Text("PASSWORD", style: TextStyle( color: Color(0xff001527))),
+            Text("PASSWORD", style: TextStyle(color: Color(0xff001527))),
             SizedBox(
               height: 5,
             ),
@@ -268,7 +294,9 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
                 isDense: true,
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,),
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.zero),
                 hintText: "Password",
               ),
@@ -283,7 +311,7 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
             SizedBox(
               height: 15,
             ),
-            Text("DATE OF BIRTH", style: TextStyle( color: Color(0xff001527))),
+            Text("DATE OF BIRTH", style: TextStyle(color: Color(0xff001527))),
             SizedBox(
               height: 6,
             ),
@@ -297,7 +325,9 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
                 isDense: true,
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1,),
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.zero),
               ),
               readOnly: true,
@@ -340,31 +370,41 @@ class _signupfieldState extends State<signupfield> with InputValidationMixin {
             SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width * 0.8,
-              child: loader!=true?ElevatedButton(
-                  onPressed: () {
-                    if (regFormGlobalKey.currentState!.validate()) {
-                      regFormGlobalKey.currentState!.save();
-                      // use the email provided here
-                      register(UserName.text.toString(), Email.text.toString(),
-                          Dateinput.text.toString(), Password.text.toString(), Phone.text.toString());
-                    }
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => const LoginPage()),
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red.shade800,
-                    shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                  ),
-                  child: Text(
-                    "sign up",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  )):Center(child: CircularProgressIndicator(color: Colors.red,),),
+              child: loader != true
+                  ? ElevatedButton(
+                      onPressed: () {
+                        if (regFormGlobalKey.currentState!.validate()) {
+                          regFormGlobalKey.currentState!.save();
+                          // use the email provided here
+                          register(
+                              UserName.text.toString(),
+                              Email.text.toString(),
+                              Dateinput.text.toString(),
+                              Password.text.toString(),
+                              Phone.text.toString());
+                        }
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const LoginPage()),
+                        // );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red.shade800,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
+                      ),
+                      child: Text(
+                        "sign up",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ))
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                    ),
             ),
           ],
         ),

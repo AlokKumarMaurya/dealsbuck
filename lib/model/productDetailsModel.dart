@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-ProductDetailsResponseModel productDetailsResponseModelFromJson(String str) => ProductDetailsResponseModel.fromJson(json.decode(str));
+ProductDetailsResponseModel productDetailsResponseModelFromJson(String str) =>
+    ProductDetailsResponseModel.fromJson(json.decode(str));
 
-String productDetailsResponseModelToJson(ProductDetailsResponseModel data) => json.encode(data.toJson());
+String productDetailsResponseModelToJson(ProductDetailsResponseModel data) =>
+    json.encode(data.toJson());
 
 class ProductDetailsResponseModel {
   ProductDetailsResponseModel({
@@ -19,17 +21,18 @@ class ProductDetailsResponseModel {
   String message;
   Data data;
 
-  factory ProductDetailsResponseModel.fromJson(Map<String, dynamic> json) => ProductDetailsResponseModel(
-    status: json["status"],
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-  );
+  factory ProductDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
+      ProductDetailsResponseModel(
+        status: json["status"],
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": data.toJson(),
-  };
+        "status": status,
+        "message": message,
+        "data": data.toJson(),
+      };
 }
 
 class Data {
@@ -72,44 +75,46 @@ class Data {
   bool favorites;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    productName: json["product_name"],
-    price: json["price"],
-    description: json["description"],
-    specification: json["specification"],
-    couponCode: json["coupon_code"],
-    categoryName: json["category_name"],
-    brandName: json["brand_name"],
-    city: json["city"],
-    state: json["state"],
-    pinCode: json["pin_code"],
-    latitude: json["latitude"],
-    longitude: json["longitude"],
-    images: List<Imagee>.from(json["images"].map((x) => Imagee.fromJson(x))),
-    reviews: List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
-    avgRating: json["avg-rating"],
-    favorites: json["favorites"],
-  );
+        id: json["id"],
+        productName: json["product_name"],
+        price: json["price"],
+        description: json["description"],
+        specification: json["specification"],
+        couponCode: json["coupon_code"],
+        categoryName: json["category_name"],
+        brandName: json["brand_name"],
+        city: json["city"],
+        state: json["state"],
+        pinCode: json["pin_code"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        images:
+            List<Imagee>.from(json["images"].map((x) => Imagee.fromJson(x))),
+        reviews:
+            List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
+        avgRating: json["avg-rating"],
+        favorites: json["favorites"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "product_name": productName,
-    "price": price,
-    "description": description,
-    "specification": specification,
-    "coupon_code": couponCode,
-    "category_name": categoryName,
-    "brand_name": brandName,
-    "city": city,
-    "state": state,
-    "pin_code": pinCode,
-    "latitude": latitude,
-    "longitude": longitude,
-    "images": List<dynamic>.from(images.map((x) => x.toJson())),
-    "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),
-    "avg-rating": avgRating,
-    "favorites": favorites,
-  };
+        "id": id,
+        "product_name": productName,
+        "price": price,
+        "description": description,
+        "specification": specification,
+        "coupon_code": couponCode,
+        "category_name": categoryName,
+        "brand_name": brandName,
+        "city": city,
+        "state": state,
+        "pin_code": pinCode,
+        "latitude": latitude,
+        "longitude": longitude,
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
+        "reviews": List<dynamic>.from(reviews.map((x) => x.toJson())),
+        "avg-rating": avgRating,
+        "favorites": favorites,
+      };
 }
 
 class Imagee {
@@ -124,16 +129,16 @@ class Imagee {
   String productImagePath;
 
   factory Imagee.fromJson(Map<String, dynamic> json) => Imagee(
-    id: json["id"],
-    productImageName: json["product_image_name"],
-    productImagePath: json["product_image_path"],
-  );
+        id: json["id"],
+        productImageName: json["product_image_name"],
+        productImagePath: json["product_image_path"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "product_image_name": productImageName,
-    "product_image_path": productImagePath,
-  };
+        "id": id,
+        "product_image_name": productImageName,
+        "product_image_path": productImagePath,
+      };
 }
 
 class Review {
@@ -148,14 +153,14 @@ class Review {
   String name;
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
-    review: json["review"],
-    rating: json["rating"],
-    name: json["name"],
-  );
+        review: json["review"],
+        rating: json["rating"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "review": review,
-    "rating": rating,
-    "name": name,
-  };
+        "review": review,
+        "rating": rating,
+        "name": name,
+      };
 }

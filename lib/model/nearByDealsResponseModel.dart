@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-NearByDealsModel nearByDealsModelFromJson(String str) => NearByDealsModel.fromJson(json.decode(str));
+NearByDealsModel nearByDealsModelFromJson(String str) =>
+    NearByDealsModel.fromJson(json.decode(str));
 
-String nearByDealsModelToJson(NearByDealsModel data) => json.encode(data.toJson());
+String nearByDealsModelToJson(NearByDealsModel data) =>
+    json.encode(data.toJson());
 
 class NearByDealsModel {
   NearByDealsModel({
@@ -19,17 +21,18 @@ class NearByDealsModel {
   String message;
   List<Datum> data;
 
-  factory NearByDealsModel.fromJson(Map<String, dynamic> json) => NearByDealsModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+  factory NearByDealsModel.fromJson(Map<String, dynamic> json) =>
+      NearByDealsModel(
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -48,18 +51,18 @@ class Datum {
   double distance;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    productName: json["product_name"],
-    description: json["description"],
-    featuredImagePath: json["featured_image_path"],
-    distance: json["distance"].toDouble(),
-  );
+        id: json["id"],
+        productName: json["product_name"],
+        description: json["description"],
+        featuredImagePath: json["featured_image_path"],
+        distance: json["distance"].toDouble(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "product_name": productName,
-    "description": description,
-    "featured_image_path": featuredImagePath,
-    "distance": distance,
-  };
+        "id": id,
+        "product_name": productName,
+        "description": description,
+        "featured_image_path": featuredImagePath,
+        "distance": distance,
+      };
 }

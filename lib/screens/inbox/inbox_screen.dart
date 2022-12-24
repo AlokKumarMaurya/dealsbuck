@@ -1,7 +1,6 @@
 import 'package:dealsbuck/screens/inbox/inbox_controller.dart';
 import 'package:dealsbuck/screens/login_screen.dart';
 import 'package:dealsbuck/screens/notifications_screen.dart';
-import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/screens/wallet_screen.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter/cupertino.dart';

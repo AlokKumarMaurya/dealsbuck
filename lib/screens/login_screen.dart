@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'package:dealsbuck/screens/forgot_password_screen.dart';
-import 'package:dealsbuck/screens/homeScreens/home_page_screen.dart';
+
 import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/screens/signup_screen.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:flutter/material.dart';
-import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as Http;
 
@@ -86,7 +84,7 @@ class _bottomWidgetState extends State<bottomWidget> with InputValidationMixin {
       'password': loginPass.text.toString()
     };
 
-    try{
+    try {
       print("DATA----------------$data");
       var response = await Http.post(Uri.parse(loginUrl), body: data);
       print(response);
@@ -109,7 +107,7 @@ class _bottomWidgetState extends State<bottomWidget> with InputValidationMixin {
         await HelperFunction.saveUserName(username.toString());
         await HelperFunction.saveEmailId(email.toString());
         await HelperFunction.saveToken(token);
-        var temp =await HelperFunction.getToken();
+        var temp = await HelperFunction.getToken();
         print("tockennnnnnnnnnnnnnnnnnn$temp");
 
         setState(() {
@@ -125,7 +123,7 @@ class _bottomWidgetState extends State<bottomWidget> with InputValidationMixin {
           loginPass.clear();
         });
       }
-    }finally{
+    } finally {
       loader = false;
     }
   }
@@ -358,7 +356,6 @@ class _bottomWidgetState extends State<bottomWidget> with InputValidationMixin {
                         color: Colors.white,
                         fontWeight: FontWeight.w600),
                   ),
-
                   TextButton(
                     onPressed: () {
                       Navigator.push(

@@ -1,12 +1,11 @@
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:get/get.dart';
 
-class InboxController extends GetxController{
-
+class InboxController extends GetxController {
   final username = "Username".obs;
   final email = "Email@gmail.com".obs;
 
-  getUserDetails() async{
+  getUserDetails() async {
     var name = await HelperFunction.getUserName();
     var mail = await HelperFunction.getEmailId();
 
@@ -21,5 +20,4 @@ class InboxController extends GetxController{
     getUserDetails();
     super.onInit();
   }
-
 }

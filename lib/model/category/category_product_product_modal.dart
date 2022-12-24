@@ -4,14 +4,18 @@
 
 import 'dart:convert';
 
-CategoryProductProductDeatilModal categoryProductProductDeatilModalFromJson(String str) => CategoryProductProductDeatilModal.fromJson(json.decode(str));
+CategoryProductProductDeatilModal categoryProductProductDeatilModalFromJson(
+        String str) =>
+    CategoryProductProductDeatilModal.fromJson(json.decode(str));
 
-String categoryProductProductDeatilModalToJson(CategoryProductProductDeatilModal data) => json.encode(data.toJson());
+String categoryProductProductDeatilModalToJson(
+        CategoryProductProductDeatilModal data) =>
+    json.encode(data.toJson());
 
 class CategoryProductProductDeatilModal {
   CategoryProductProductDeatilModal({
-    required  this.status,
-    required  this.message,
+    required this.status,
+    required this.message,
     required this.data,
   });
 
@@ -19,17 +23,19 @@ class CategoryProductProductDeatilModal {
   String message;
   Data data;
 
-  factory CategoryProductProductDeatilModal.fromJson(Map<String, dynamic> json) => CategoryProductProductDeatilModal(
-    status: json["status"],
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-  );
+  factory CategoryProductProductDeatilModal.fromJson(
+          Map<String, dynamic> json) =>
+      CategoryProductProductDeatilModal(
+        status: json["status"],
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": data.toJson(),
-  };
+        "status": status,
+        "message": message,
+        "data": data.toJson(),
+      };
 }
 
 class Data {
@@ -40,7 +46,7 @@ class Data {
     required this.brandImagePath,
     required this.city,
     required this.state,
-    required  this.pinCode,
+    required this.pinCode,
     required this.latitude,
     required this.longitude,
     required this.products,
@@ -58,37 +64,38 @@ class Data {
   List<Product> products;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    categoryId: json["category_id"],
-    categoryName: json["category_name"],
-    brandName: json["brand_name"],
-    brandImagePath: json["brand_image_path"],
-    city: json["city"],
-    state: json["state"],
-    pinCode: json["pin_code"],
-    latitude: json["latitude"],
-    longitude: json["longitude"],
-    products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
-  );
+        categoryId: json["category_id"],
+        categoryName: json["category_name"],
+        brandName: json["brand_name"],
+        brandImagePath: json["brand_image_path"],
+        city: json["city"],
+        state: json["state"],
+        pinCode: json["pin_code"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        products: List<Product>.from(
+            json["products"].map((x) => Product.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "category_id": categoryId,
-    "category_name": categoryName,
-    "brand_name": brandName,
-    "brand_image_path": brandImagePath,
-    "city": city,
-    "state": state,
-    "pin_code": pinCode,
-    "latitude": latitude,
-    "longitude": longitude,
-    "products": List<dynamic>.from(products.map((x) => x.toJson())),
-  };
+        "category_id": categoryId,
+        "category_name": categoryName,
+        "brand_name": brandName,
+        "brand_image_path": brandImagePath,
+        "city": city,
+        "state": state,
+        "pin_code": pinCode,
+        "latitude": latitude,
+        "longitude": longitude,
+        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+      };
 }
 
 class Product {
   Product({
-    required  this.id,
+    required this.id,
     required this.productName,
-   required this.featuredImagePath,
+    required this.featuredImagePath,
   });
 
   int id;
@@ -96,14 +103,14 @@ class Product {
   String featuredImagePath;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-    id: json["id"],
-    productName: json["product_name"],
-    featuredImagePath: json["featured_image_path"],
-  );
+        id: json["id"],
+        productName: json["product_name"],
+        featuredImagePath: json["featured_image_path"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "product_name": productName,
-    "featured_image_path": featuredImagePath,
-  };
+        "id": id,
+        "product_name": productName,
+        "featured_image_path": featuredImagePath,
+      };
 }

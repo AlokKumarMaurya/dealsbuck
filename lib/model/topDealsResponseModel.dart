@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-TopDealsModel topDealsModelFromJson(String str) => TopDealsModel.fromJson(json.decode(str));
+TopDealsModel topDealsModelFromJson(String str) =>
+    TopDealsModel.fromJson(json.decode(str));
 
 String topDealsModelToJson(TopDealsModel data) => json.encode(data.toJson());
 
@@ -20,16 +21,16 @@ class TopDealsModel {
   List<Datum>? data;
 
   factory TopDealsModel.fromJson(Map<String, dynamic> json) => TopDealsModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -48,18 +49,18 @@ class Datum {
   double? distance;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    productName: json["product_name"],
-    description: json["description"],
-    featuredImagePath: json["featured_image_path"],
-    distance: json["distance"].toDouble(),
-  );
+        id: json["id"],
+        productName: json["product_name"],
+        description: json["description"],
+        featuredImagePath: json["featured_image_path"],
+        distance: json["distance"].toDouble(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "product_name": productName,
-    "description": description,
-    "featured_image_path": featuredImagePath,
-    "distance": distance,
-  };
+        "id": id,
+        "product_name": productName,
+        "description": description,
+        "featured_image_path": featuredImagePath,
+        "distance": distance,
+      };
 }

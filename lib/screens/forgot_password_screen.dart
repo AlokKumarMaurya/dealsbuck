@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'package:dealsbuck/screens/login_screen.dart';
+
 import 'package:dealsbuck/screens/verify_account_screen.dart';
 import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:flutter/material.dart';
-import 'package:dealsbuck/validation_check/validationCheck.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/sharedPreference.dart';
 import '../utils/urlsConstant.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -33,20 +31,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
     // };
     // await HelperFunction.saveEmailId(phone.text.toString());
     // print(data);
-    try{
-
-      var response = await http.post(Uri.parse("$request_otpUrl/${phone.text.toString()}"));
+    try {
+      var response = await http
+          .post(Uri.parse("$request_otpUrl/${phone.text.toString()}"));
       var res = await json.decode(response.body);
       var msg = res["message"].toString();
       if (msg == "OTP sent successfully") {
         Fluttertoast.showToast(msg: msg);
-        print("3785127635127"+phone.text.toString());
+        print("3785127635127" + phone.text.toString());
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    VerifyAccount(isFromForgetScreen: isFromForgetScreen, phone: phone.text.toString())));
-        Future.delayed(Duration(milliseconds: 500), (){
+                builder: (context) => VerifyAccount(
+                    isFromForgetScreen: isFromForgetScreen,
+                    phone: phone.text.toString())));
+        Future.delayed(Duration(milliseconds: 500), () {
           setState(() {
             loader = false;
             phone.clear();
@@ -56,16 +55,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
         Fluttertoast.showToast(msg: msg);
         setState(() {
           loader = false;
-         phone.clear();
+          phone.clear();
         });
       }
-    }catch(e){
+    } catch (e) {
       print(e);
       setState(() {
         loader = false;
       });
     }
-
   }
 
   @override
@@ -137,10 +135,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
               SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.8,
-                child:
-                loader != true ?
-                ElevatedButton(
-
+                child: loader != true
+                    ? ElevatedButton(
                         onPressed: () {
                           if (forgetPassFormGlobalKey.currentState!
                               .validate()) {

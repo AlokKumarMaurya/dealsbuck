@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-PopularBrandsResponseModel popularBrandsResponseModelFromJson(String str) => PopularBrandsResponseModel.fromJson(json.decode(str));
+PopularBrandsResponseModel popularBrandsResponseModelFromJson(String str) =>
+    PopularBrandsResponseModel.fromJson(json.decode(str));
 
-String popularBrandsResponseModelToJson(PopularBrandsResponseModel data) => json.encode(data.toJson());
+String popularBrandsResponseModelToJson(PopularBrandsResponseModel data) =>
+    json.encode(data.toJson());
 
 class PopularBrandsResponseModel {
   PopularBrandsResponseModel({
@@ -19,17 +21,18 @@ class PopularBrandsResponseModel {
   String message;
   List<Datum> data;
 
-  factory PopularBrandsResponseModel.fromJson(Map<String, dynamic> json) => PopularBrandsResponseModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+  factory PopularBrandsResponseModel.fromJson(Map<String, dynamic> json) =>
+      PopularBrandsResponseModel(
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -50,20 +53,20 @@ class Datum {
   double distance;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    brandName: json["brand_name"],
-    brandImagePath: json["brand_image_path"],
-    distance: json["distance"].toDouble(),
-  );
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        brandName: json["brand_name"],
+        brandImagePath: json["brand_image_path"],
+        distance: json["distance"].toDouble(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "email": email,
-    "brand_name": brandName,
-    "brand_image_path": brandImagePath,
-    "distance": distance,
-  };
+        "id": id,
+        "name": name,
+        "email": email,
+        "brand_name": brandName,
+        "brand_image_path": brandImagePath,
+        "distance": distance,
+      };
 }

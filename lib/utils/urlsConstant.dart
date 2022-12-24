@@ -1,6 +1,5 @@
-
 // const String baseUrl="https://sortedhome.in/api/";
-const String baseUrl="https://dealsbuck.com/api/";
+const String baseUrl = "https://dealsbuck.com/api/";
 const String registerUrl = '${baseUrl}registeruser';
 const String reset_passwordUrl = '${baseUrl}reset_password';
 const String request_otpUrl = '${baseUrl}request_otp';
@@ -24,12 +23,12 @@ const String getFavUrl = '${baseUrl}favorite/show';
 const String getNotificationUrl = '${baseUrl}notification/';
 const String searchUrl = '${baseUrl}search/';
 const String subCategoryUrl = '${baseUrl}brands/products/';
-const String categoryBrand="${baseUrl}category/brands";
-const String showPopularBarndDataList="${baseUrl}brands/products";
-const String getCategoryDataList="${baseUrl}category/brands/";
-const String getParticularPopularProductDetailApi="${baseUrl}product/show/";
-const String categoryParticularCategoryProductDetailApi="${baseUrl}product/showlist/";
+const String categoryBrand = "${baseUrl}category/brands";
+const String showPopularBarndDataList = "${baseUrl}brands/products";
+const String getCategoryDataList = "${baseUrl}category/brands/";
+const String getParticularPopularProductDetailApi = "${baseUrl}product/show/";
+const String categoryParticularCategoryProductDetailApi =
+    "${baseUrl}product/showlist/";
 // https://dealsbuck.com/api/product/showlist/8/15
 
-
-const String imagePath="https://dealsbuck.com/";
+const String imagePath = "https://dealsbuck.com/";

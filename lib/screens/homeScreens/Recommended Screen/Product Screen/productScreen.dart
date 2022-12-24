@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_indicator/carousel_indicator.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as Http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +13,6 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../model/claimCouponResponseModel.dart';
 import '../../../../model/productDetailsModel.dart';
-
 import '../../../../utils/internetNotConnected.dart';
 import '../../../../utils/urlsConstant.dart';
 
@@ -199,8 +197,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Future<ProductDetailsResponseModel?> getProduct() async {
     var token = await HelperFunction.getToken();
-    var response =
-        await Http.get(Uri.parse(productDetailsUrl + widget.id.toString()),headers: {
+    var response = await Http.get(
+        Uri.parse(productDetailsUrl + widget.id.toString()),
+        headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -215,47 +214,44 @@ class _ProductScreenState extends State<ProductScreen> {
         "_productDetailsResponseModel++++++++++++${_productDetailsResponseModel!}");
     return _productDetailsResponseModel;
   }
-  
-  
-  addFav() async{
-    print(addFavUrl + widget.id.toString());
-    try{
-      var token = await HelperFunction.getToken();
-      var response = await Http.post(Uri.parse(addFavUrl + widget.id.toString()), headers: {
-        'Authorization': 'Bearer $token'
-      });
 
-      print("favourite responce +++++++++ "+response.toString());
+  addFav() async {
+    print(addFavUrl + widget.id.toString());
+    try {
+      var token = await HelperFunction.getToken();
+      var response = await Http.post(
+          Uri.parse(addFavUrl + widget.id.toString()),
+          headers: {'Authorization': 'Bearer $token'});
+
+      print("favourite responce +++++++++ " + response.toString());
       var res = jsonDecode(response.body);
-      if(response.statusCode == 200){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res["message"])));
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(res["message"])));
       }
-    }
-    catch (e){
+    } catch (e) {
       print(e);
       print("dasdasd12");
     }
   }
 
-  removeFav() async{
-    try{
+  removeFav() async {
+    try {
       var token = await HelperFunction.getToken();
-      var response = await Http.post(Uri.parse(removeFavUrl + widget.id.toString()), headers: {
-        'Authorization': 'Bearer $token'
-      });
+      var response = await Http.post(
+          Uri.parse(removeFavUrl + widget.id.toString()),
+          headers: {'Authorization': 'Bearer $token'});
 
-      print("remove responce +++++++++ "+response.toString());
+      print("remove responce +++++++++ " + response.toString());
       var res = jsonDecode(response.body);
-      if(response.statusCode == 200){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res["message"])));
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(res["message"])));
       }
-    }
-    catch (e){
+    } catch (e) {
       print(e);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -298,9 +294,14 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                     ),
                     Text(
-                      _productDetailsResponseModel!=null?_productDetailsResponseModel!.data.productName:"",
+                      _productDetailsResponseModel != null
+                          ? _productDetailsResponseModel!.data.productName
+                          : "",
                       softWrap: true,
-                      style: TextStyle(color: Color(0xff001527), fontSize: 22,overflow: TextOverflow.ellipsis),
+                      style: TextStyle(
+                          color: Color(0xff001527),
+                          fontSize: 22,
+                          overflow: TextOverflow.ellipsis),
                     ),
                     IconButton(
                       onPressed: () {},
@@ -314,9 +315,12 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
             ),
             Visibility(
-                visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected??false,
+                visible: Provider.of<InternetConnectionStatus>(context) ==
+                        InternetConnectionStatus.disconnected ??
+                    false,
                 child: InternetNotAvailable()),
-            _productDetailsResponseModel != null && _productDetailsResponseModel!.data.images.length>=1
+            _productDetailsResponseModel != null &&
+                    _productDetailsResponseModel!.data.images.length >= 1
                 ? Slider()
                 : Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
@@ -413,9 +417,6 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-
-
-
   Widget sizeBox() {
     return SizedBox(
       height: 12,
@@ -431,6 +432,7 @@ class _ProductScreenState extends State<ProductScreen> {
   // ];
 
   int itemIndex = 0;
+
   // bool isFav = _productDetailsResponseModel!.data.favorites;
   Widget Slider() {
     return Stack(
@@ -491,26 +493,32 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.width*0.05,
-            right: MediaQuery.of(context).size.width*0.1,
+            top: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.1,
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
-                  _productDetailsResponseModel!.data.favorites = !(_productDetailsResponseModel!.data.favorites??true);
-                  if(_productDetailsResponseModel!.data.favorites){
+                  _productDetailsResponseModel!.data.favorites =
+                      !(_productDetailsResponseModel!.data.favorites ?? true);
+                  if (_productDetailsResponseModel!.data.favorites) {
                     addFav();
-                  }
-                  else{
+                  } else {
                     removeFav();
                   }
                 });
               },
-          child: _productDetailsResponseModel!.data.favorites??false ? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
-        ))
+              child: _productDetailsResponseModel!.data.favorites ?? false
+                  ? Icon(
+                      Icons.favorite,
+                      color: Color(0xffed1b24),
+                    )
+                  : Icon(
+                      Icons.favorite_border,
+                    ),
+            ))
       ],
     );
   }
-
 
   Widget bodyWidget() {
     return Padding(
@@ -531,7 +539,9 @@ class _ProductScreenState extends State<ProductScreen> {
                     width: 5,
                   ),
                   Text(
-                    _productDetailsResponseModel!.data.avgRating!= null?"${double.parse(_productDetailsResponseModel!.data.avgRating).toStringAsFixed(1)} Rates":"0 Rates",
+                    _productDetailsResponseModel!.data.avgRating != null
+                        ? "${double.parse(_productDetailsResponseModel!.data.avgRating).toStringAsFixed(1)} Rates"
+                        : "0 Rates",
                     style: TextStyle(fontSize: 12, color: Color(0xff001527)),
                   )
                 ],
@@ -672,8 +682,4 @@ class _ProductScreenState extends State<ProductScreen> {
       ),
     );
   }
-
-
-
-
 }

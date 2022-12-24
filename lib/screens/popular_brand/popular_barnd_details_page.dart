@@ -5,24 +5,27 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dealsbuck/api_config/api_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as Http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../../model/claimCouponResponseModel.dart';
 import '../../model/popular_brand/paroduct_detal_modal.dart';
 import '../../utils/internetNotConnected.dart';
 import '../../utils/sharedPreference.dart';
-import 'package:http/http.dart' as Http;
-
 import '../../utils/urlsConstant.dart';
 
 class PopularBrandDetailsPage extends StatefulWidget {
   String id;
   String title;
-   PopularBrandDetailsPage({Key? key,required this.id,required this.title}) : super(key: key);
+
+  PopularBrandDetailsPage({Key? key, required this.id, required this.title})
+      : super(key: key);
 
   @override
-  State<PopularBrandDetailsPage> createState() => _PopularBrandDetailsPageState();
+  State<PopularBrandDetailsPage> createState() =>
+      _PopularBrandDetailsPageState();
 }
 
 class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
@@ -37,172 +40,179 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                // CustomAppBar("Product", IconButton(
-                // onPressed: () {},
-                // icon: Icon(
-                // CupertinoIcons.ellipsis_vertical,
-                // color: Colors.white,
-                // ),
-                // ),),
-                PreferredSize(
-                  preferredSize: Size.fromHeight(80.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    width: MediaQuery.of(context).size.width,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff8faf7),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(15)),
+        child: Column(
+          children: [
+            // CustomAppBar("Product", IconButton(
+            // onPressed: () {},
+            // icon: Icon(
+            // CupertinoIcons.ellipsis_vertical,
+            // color: Colors.white,
+            // ),
+            // ),),
+            PreferredSize(
+              preferredSize: Size.fromHeight(80.0),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Color(0xfff8faf7),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_sharp,
+                        color: Color(0xff001527),
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_sharp,
-                            color: Color(0xff001527),
-                          ),
-                        ),
-                        Text(
-                          widget.title,
-                          softWrap: true,
-                          style: TextStyle(color: Color(0xff001527), fontSize: 22,overflow: TextOverflow.ellipsis),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            CupertinoIcons.ellipsis_vertical,
-                            color: Color(0xff001527),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      widget.title,
+                      softWrap: true,
+                      style: TextStyle(
+                          color: Color(0xff001527),
+                          fontSize: 22,
+                          overflow: TextOverflow.ellipsis),
                     ),
-                  ),
-                ),
-                Visibility(
-                    visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
-                    child: InternetNotAvailable()),
-                _populareBrandParticularProductDeatil != null && _populareBrandParticularProductDeatil!.data.images.length>0
-                    ? Slider()
-                    : Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                    height: 250,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _populareBrandParticularProductDeatil != null
-                    ? bodyWidget()
-                    : Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                  height: 20, width: 80, color: Colors.white),
-                              SizedBox(
-                                width: 55,
-                              ),
-                              Container(
-                                  height: 20, width: 80, color: Colors.white),
-                            ]),
-                        sizeBox(),
-                        Container(
-                            height: 22,
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            color: Colors.white),
-                        sizeBox(),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: 50,
-                          color: Colors.white,
-                        ),
-                        sizeBox(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.75,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        sizeBox(),
-                        Container(
-                          width: 150,
-                          height: 40,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Container(
-                          height: 20,
-                          width: 70,
-                          color: Colors.white,
-                        ),
-                        sizeBox(),
-                        sizeBox()
-                      ],
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        CupertinoIcons.ellipsis_vertical,
+                        color: Color(0xff001527),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          )),
+            Visibility(
+                visible: Provider.of<InternetConnectionStatus>(context) ==
+                    InternetConnectionStatus.disconnected,
+                child: InternetNotAvailable()),
+            _populareBrandParticularProductDeatil != null &&
+                    _populareBrandParticularProductDeatil!.data.images.length >
+                        0
+                ? Slider()
+                : Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                      height: 250,
+                      color: Colors.white,
+                    ),
+                  ),
+            SizedBox(
+              height: 10,
+            ),
+            _populareBrandParticularProductDeatil != null
+                ? bodyWidget()
+                : Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                    height: 20, width: 80, color: Colors.white),
+                                SizedBox(
+                                  width: 55,
+                                ),
+                                Container(
+                                    height: 20, width: 80, color: Colors.white),
+                              ]),
+                          sizeBox(),
+                          Container(
+                              height: 22,
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              color: Colors.white),
+                          sizeBox(),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: 50,
+                            color: Colors.white,
+                          ),
+                          sizeBox(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          sizeBox(),
+                          Container(
+                            width: 150,
+                            height: 40,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Container(
+                            height: 20,
+                            width: 70,
+                            color: Colors.white,
+                          ),
+                          sizeBox(),
+                          sizeBox()
+                        ],
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+      )),
     );
   }
 
-  void getData() async{
+  void getData() async {
     debugPrint("1111111111111111111111111111111");
-    var response =await ApiConfig().getParticularPopularProductDetail(widget.id);
+    var response =
+        await ApiConfig().getParticularPopularProductDetail(widget.id);
     debugPrint("1111111111111111111111111111111");
     debugPrint(response.toString());
-    if(response!=null){
+    if (response != null) {
       debugPrint("1111111111111111111111111111111");
       setState(() {
-        _populareBrandParticularProductDeatil=response;
+        _populareBrandParticularProductDeatil = response;
       });
-      debugPrint(_populareBrandParticularProductDeatil!.data.productName.toString());
+      debugPrint(
+          _populareBrandParticularProductDeatil!.data.productName.toString());
     }
   }
 
@@ -216,7 +226,6 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
 
   CarouselController buttonCarouselController = CarouselController();
 
-
   Widget Slider() {
     return Stack(
       children: [
@@ -225,24 +234,24 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
           itemCount: _populareBrandParticularProductDeatil!.data.images.length,
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) =>
-              Container(
-                height: 100,
-                width: 100,
-                child: FittedBox(
+                  Container(
+            height: 100,
+            width: 100,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image.network(
+                  "https://dealsbuck.com/" +
+                      _populareBrandParticularProductDeatil!
+                          .data.images[itemIndex].productImagePath,
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrase) {
+                return Image.asset(
+                  "assets/defaultImage.png",
                   fit: BoxFit.cover,
-                  child: Image.network(
-                      "https://dealsbuck.com/" +
-                          _populareBrandParticularProductDeatil!
-                              .data.images[itemIndex].productImagePath,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrase) {
-                        return Image.asset(
-                          "assets/defaultImage.png",
-                          fit: BoxFit.cover,
-                        );
-                      }),
-                ),
-              ),
+                );
+              }),
+            ),
+          ),
           options: CarouselOptions(
             height: 250.0,
             onPageChanged: (index, pageViewIndex) {
@@ -315,7 +324,10 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                     width: 5,
                   ),
                   Text(
-                    _populareBrandParticularProductDeatil!.data.avgRating!= null?"${double.parse(_populareBrandParticularProductDeatil!.data.avgRating).toStringAsFixed(1)} Rates":"0 Rates",
+                    _populareBrandParticularProductDeatil!.data.avgRating !=
+                            null
+                        ? "${double.parse(_populareBrandParticularProductDeatil!.data.avgRating).toStringAsFixed(1)} Rates"
+                        : "0 Rates",
                     style: TextStyle(fontSize: 12, color: Color(0xff001527)),
                   )
                 ],
@@ -343,7 +355,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
           ),
           sizeBox(),
           Text(
-            _populareBrandParticularProductDeatil!.data.productName??"",
+            _populareBrandParticularProductDeatil!.data.productName ?? "",
             style: TextStyle(
                 color: Color(0xff001527),
                 fontSize: 22,
@@ -439,7 +451,8 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10)),
               onPressed: () {
                 // showCouponMenu();
-                _askedToLead(_populareBrandParticularProductDeatil!.data.couponCode);
+                _askedToLead(
+                    _populareBrandParticularProductDeatil!.data.couponCode);
               },
               child: Text(
                 "Redeem Now",
@@ -456,7 +469,6 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
       ),
     );
   }
-
 
   Future<void> _askedToLead(String couponCode) async {
     String _couponCode = couponCode;
@@ -526,14 +538,13 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
         });
   }
 
-
   Future<ClaimCouponModel?> claimCoupon() async {
     var token = await HelperFunction.getToken();
     print(token);
     print(widget.id.toString());
     Map data = {"product_id": widget.id.toString()};
     var response =
-    await Http.post(Uri.parse(claimCouponUrl), body: data, headers: {
+        await Http.post(Uri.parse(claimCouponUrl), body: data, headers: {
       'Authorization': 'Bearer $token',
       // 'Accept': 'application/json',
       // 'Content-Type': 'application/json'
@@ -565,5 +576,4 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
     }
     return _claimCouponModel;
   }
-
 }

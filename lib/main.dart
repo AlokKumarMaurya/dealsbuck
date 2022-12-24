@@ -3,14 +3,12 @@ import 'package:dealsbuck/screens/favourite_screen.dart';
 import 'package:dealsbuck/screens/feed_screen.dart';
 import 'package:dealsbuck/screens/homeScreens/home_page_screen.dart';
 import 'package:dealsbuck/screens/inbox/inbox_screen.dart';
-import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
-
 
 //updatetetettette
 //dsajhgdhsajd
@@ -47,4 +45,3 @@ class DealsBuck extends StatelessWidget {
     );
   }
 }
-

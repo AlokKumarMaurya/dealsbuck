@@ -1,5 +1,4 @@
 import 'package:dealsbuck/screens/appBar.dart';
-import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +7,8 @@ class CategoriesProductScreen extends StatefulWidget {
   final String title;
 
   @override
-  State<CategoriesProductScreen> createState() => _CategoriesProductScreenState();
+  State<CategoriesProductScreen> createState() =>
+      _CategoriesProductScreenState();
 }
 
 class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
@@ -19,8 +19,10 @@ class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
         body: Column(
           children: [
             Container(
-              child: CustomAppBar(widget.title,
-                  Container(),IconButton(
+              child: CustomAppBar(
+                  widget.title,
+                  Container(),
+                  IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -28,13 +30,9 @@ class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
                       CupertinoIcons.arrow_left,
                       color: Color(0xff001527),
                     ),
-                  )
-              ),
+                  )),
             ),
-
             Flexible(child: bodyWidget())
-
-
           ],
         ),
       ),
@@ -47,7 +45,7 @@ class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -66,13 +64,13 @@ class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Image.asset(
                       'assets/pizza.png',
-                      width:MediaQuery.of(context).size.width*0.20,
+                      width: MediaQuery.of(context).size.width * 0.20,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SizedBox(
-                      width:MediaQuery.of(context).size.width*0.67,
+                      width: MediaQuery.of(context).size.width * 0.67,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -143,6 +141,4 @@ class _CategoriesProductScreenState extends State<CategoriesProductScreen> {
           );
         });
   }
-
 }
-

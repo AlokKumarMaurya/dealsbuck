@@ -1,38 +1,37 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dealsbuck/model/bannerResponseModel.dart';
 import 'package:dealsbuck/model/nearByDealsResponseModel.dart';
 import 'package:dealsbuck/model/topDealsResponseModel.dart';
 import 'package:dealsbuck/screens/drawer_screen.dart';
 import 'package:dealsbuck/screens/homeScreens/homeScreen_controller.dart';
 import 'package:dealsbuck/screens/homeScreens/search_widget.dart';
-
-
 import 'package:dealsbuck/utils/internetNotConnected.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:dealsbuck/utils/urlsConstant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
-import 'package:dealsbuck/model/bannerResponseModel.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as Http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+
 import '../../location_getter/get_usser_current_location.dart';
 import '../../model/categoriesResponseModel.dart';
 import '../../model/popularBrandsResponseModel.dart';
-
 import '../products_grid_list.dart';
 import '../store_screen.dart';
 import '../subCategory.dart';
 import 'Recommended Screen/Product Screen/productScreen.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:provider/provider.dart';
+
 List? address;
+
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({Key? key}) : super(key: key);
 
@@ -43,7 +42,7 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   CarouselController buttonCarouselController = CarouselController();
   final homeController = Get.put(HomeController());
-  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
+  GetUserCurrentLocaton _getLocaton = Get.put(GetUserCurrentLocaton());
   int itemIndex = 0;
   CategoriesModel? _categoriesModel;
   TopDealsModel? _topDealsModel;
@@ -56,25 +55,22 @@ class _HomePageScreenState extends State<HomePageScreen> {
   String? _currentAddress;
   Position? _currentPosition;
 
-void refresh(bool test){
-  print("homeController.isSearch.value");
-  if(test){
-    getPopularBrands();
-    _getCurrentPosition();
-    getbanner();
-    getcategories();
-    getTopDeals();
-    getNearByDeals();
-
+  void refresh(bool test) {
+    print("homeController.isSearch.value");
+    if (test) {
+      getPopularBrands();
+      _getCurrentPosition();
+      getbanner();
+      getcategories();
+      getTopDeals();
+      getNearByDeals();
+    }
   }
-
-}
-
 
   void initState() {
     print(homeController.isSearch.value);
     _getCurrentPosition().then((value) => refresh(true));
-    _getLocaton.getLocation().then((val)=>refresh(true));
+    _getLocaton.getLocation().then((val) => refresh(true));
     getbanner();
     getcategories();
     getTopDeals();
@@ -125,21 +121,23 @@ void refresh(bool test){
         _currentPosition = position;
         HelperFunction.saveLongitude(_currentPosition!.longitude.toString());
         HelperFunction.saveLatitude(_currentPosition!.latitude.toString());
-      } );
+      });
       _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {
       debugPrint(e);
     });
     print("${_currentPosition!.latitude}");
     print("${_currentPosition!.longitude}");
-    print("getLongitude>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${await HelperFunction.getLongitude()}");
-    print("getLatitude>>>>>>>>>>>>>>>>>>>>>>>>>>>>${await HelperFunction.getLatitude()}");
+    print(
+        "getLongitude>>>>>>>>>>>>>>>>>>>>>>>>>>>> ${await HelperFunction.getLongitude()}");
+    print(
+        "getLatitude>>>>>>>>>>>>>>>>>>>>>>>>>>>>${await HelperFunction.getLatitude()}");
     return true;
   }
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
-        _getLocaton.lat.value, _getLocaton.long.value)
+            _getLocaton.lat.value, _getLocaton.long.value)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
@@ -182,32 +180,36 @@ void refresh(bool test){
 
   Future<TopDealsModel?> getTopDeals() async {
     print("222222222222222222222222222222222");
-    var response = await Http.get(Uri.parse(topDealsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
+    var response = await Http.get(Uri.parse(
+        topDealsUrl + "${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
-var temp=jsonDecode(response.body);
-var message=temp["message"];
+    var temp = jsonDecode(response.body);
+    var message = temp["message"];
     setState(() {
-      if(message !="No Top Deals")
-      _topDealsModel = TopDealsModel.fromJson(jsonDecode(response.body));
+      if (message != "No Top Deals")
+        _topDealsModel = TopDealsModel.fromJson(jsonDecode(response.body));
     });
 
     return _topDealsModel;
   }
 
   Future<NearByDealsModel?> getNearByDeals() async {
-    var response = await Http.get(Uri.parse(nearByDealsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
+    var response = await Http.get(Uri.parse(
+        nearByDealsUrl + "${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
-    var temp=jsonDecode(response.body);
-    var message=temp["message"];
+    var temp = jsonDecode(response.body);
+    var message = temp["message"];
     setState(() {
-      if(message != "No Nearby Deals")
-      _nearByDealsModel = NearByDealsModel.fromJson(jsonDecode(response.body));
+      if (message != "No Nearby Deals")
+        _nearByDealsModel =
+            NearByDealsModel.fromJson(jsonDecode(response.body));
     });
     return _nearByDealsModel;
   }
 
   Future<PopularBrandsResponseModel?> getPopularBrands() async {
-    var response = await Http.get(Uri.parse(popularBrandsUrl+"${_getLocaton.lat.value}/${_getLocaton.long.value}"));
+    var response = await Http.get(Uri.parse(popularBrandsUrl +
+        "${_getLocaton.lat.value}/${_getLocaton.long.value}"));
     print(response.body);
 
     setState(() {
@@ -221,7 +223,7 @@ var message=temp["message"];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         return exit(0);
       },
       child: Scaffold(
@@ -264,14 +266,15 @@ var message=temp["message"];
                           children: [
                             InkWell(
                                 onTap: () {
-                                  _getLocaton.searchLoacation().then((r)=>refresh(true));
+                                  _getLocaton
+                                      .searchLoacation()
+                                      .then((r) => refresh(true));
                                   _getLocaton.getLocation();
                                   refresh(true);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        backgroundColor: Color(0xff001527),
-                                          content:
-                                              Text("Location Updated")));
+                                          backgroundColor: Color(0xff001527),
+                                          content: Text("Location Updated")));
                                 },
                                 child: Icon(
                                   Icons.place_outlined,
@@ -285,7 +288,7 @@ var message=temp["message"];
                                     address![1].toString(),
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
+                                        overflow: TextOverflow.ellipsis,
                                         fontSize: 18,
                                         color: Color(0xff001527),
                                         fontWeight: FontWeight.w500),
@@ -310,40 +313,40 @@ var message=temp["message"];
                         ),
                       ],
                     ),
-                    SearchBox(contextt: context,),
+                    SearchBox(
+                      contextt: context,
+                    ),
                   ],
                 )),
           ),
           body: RefreshIndicator(
-            onRefresh:() async{
-                  refresh(true);
-            } ,
+            onRefresh: () async {
+              refresh(true);
+            },
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   Visibility(
-                      visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
+                      visible: Provider.of<InternetConnectionStatus>(context) ==
+                          InternetConnectionStatus.disconnected,
                       child: InternetNotAvailable()),
                   SizedBox(height: 15),
-
                   _bannerModel != null
                       ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Slider(),
-                  )
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Slider(),
+                        )
                       : Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                      height: 150,
-                      color: Colors.white,
-                    ),
-                  ),
-
-
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Container(
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            //decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                            height: 150,
+                            color: Colors.white,
+                          ),
+                        ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -388,11 +391,19 @@ var message=temp["message"];
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ProductsGridListScreen(title: 'Categories', nearByDealsModel: _nearByDealsModel!, topDealsModel: _topDealsModel!, categoriesModel: _categoriesModel!)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProductsGridListScreen(
+                            title: 'Categories',
+                            nearByDealsModel: _nearByDealsModel!,
+                            topDealsModel: _topDealsModel!,
+                            categoriesModel: _categoriesModel!)));
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
                 child: Text(
                   "View More",
                   style: TextStyle(fontSize: 12, color: Colors.red),
@@ -414,8 +425,14 @@ var message=temp["message"];
             itemCount: _categoriesModel?.data.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> SubCategory(id: _categoriesModel!.data[index].id,title: _categoriesModel!.data[index].name,)));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SubCategory(
+                                id: _categoriesModel!.data[index].id,
+                                title: _categoriesModel!.data[index].name,
+                              )));
                 },
                 child: Column(
                   children: [
@@ -429,11 +446,17 @@ var message=temp["message"];
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network("https://dealsbuck.com/" +
-                            _categoriesModel!.data[index].imagePath,
-                          errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                            return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                          },),
+                        child: Image.network(
+                          "https://dealsbuck.com/" +
+                              _categoriesModel!.data[index].imagePath,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrase) {
+                            return Image.asset(
+                              "assets/defaultImage.png",
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -476,11 +499,19 @@ var message=temp["message"];
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ProductsGridListScreen(title: 'TopDeals', nearByDealsModel: _nearByDealsModel!, topDealsModel: _topDealsModel!, categoriesModel: _categoriesModel!)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProductsGridListScreen(
+                            title: 'TopDeals',
+                            nearByDealsModel: _nearByDealsModel!,
+                            topDealsModel: _topDealsModel!,
+                            categoriesModel: _categoriesModel!)));
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                ),
                 child: Text(
                   "View More",
                   style: TextStyle(fontSize: 12, color: Colors.red),
@@ -539,14 +570,17 @@ var message=temp["message"];
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                "https://dealsbuck.com/" +
-                                    _topDealsModel!
-                                        .data![index].featuredImagePath!,
-                                fit: BoxFit.fill,
-                                  errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                                    return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                                  }
-                              ),
+                                  "https://dealsbuck.com/" +
+                                      _topDealsModel!
+                                          .data![index].featuredImagePath!,
+                                  fit: BoxFit.fill, errorBuilder:
+                                      (BuildContext context, Object exception,
+                                          StackTrace? stackTrase) {
+                                return Image.asset(
+                                  "assets/defaultImage.png",
+                                  fit: BoxFit.cover,
+                                );
+                              }),
                             ),
                           ),
                           // SizedBox(
@@ -619,8 +653,14 @@ var message=temp["message"];
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ProductsGridListScreen(title: 'Nearby Deals', nearByDealsModel: _nearByDealsModel!, topDealsModel: _topDealsModel!, categoriesModel: _categoriesModel!)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProductsGridListScreen(
+                            title: 'Nearby Deals',
+                            nearByDealsModel: _nearByDealsModel!,
+                            topDealsModel: _topDealsModel!,
+                            categoriesModel: _categoriesModel!)));
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -683,14 +723,17 @@ var message=temp["message"];
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                "https://dealsbuck.com/" +
-                                    _nearByDealsModel!
-                                        .data[index].featuredImagePath,
-                                fit: BoxFit.fill,
-                                  errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                                    return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                                  }
-                              ),
+                                  "https://dealsbuck.com/" +
+                                      _nearByDealsModel!
+                                          .data[index].featuredImagePath,
+                                  fit: BoxFit.fill, errorBuilder:
+                                      (BuildContext context, Object exception,
+                                          StackTrace? stackTrase) {
+                                return Image.asset(
+                                  "assets/defaultImage.png",
+                                  fit: BoxFit.cover,
+                                );
+                              }),
                             ),
                           ),
                           Text(
@@ -736,72 +779,84 @@ var message=temp["message"];
   }
 
   Widget PopularDeals() {
-    return (_popularBrandsResponseModel!.data.length!=0)?Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Popular Brands",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xff001527)),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 2 / 2,
-                  crossAxisSpacing: 18,
-                  crossAxisCount: 4),
-              itemCount: _popularBrandsResponseModel!.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    print(_popularBrandsResponseModel!.data[index].id.toString());
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShopScreen(popularBrandsResponseModel: _popularBrandsResponseModel!.data[index])));
-                  },
-                  child: Container(
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        "https://dealsbuck.com/" +
-                            _popularBrandsResponseModel!
-                                .data[index].brandImagePath,
-                        fit: BoxFit.fill,
-                          errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                            return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                          }
-                      ),
-                    ),
-                  ),
-                );
-              }),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
-          child: Text(
-            "View More",
-            style: TextStyle(color: Colors.grey),
-          ),
-        )
-      ],
-    ):Container();
+    return (_popularBrandsResponseModel!.data.length != 0)
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Popular Brands",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff001527)),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 2 / 2,
+                        crossAxisSpacing: 18,
+                        crossAxisCount: 4),
+                    itemCount: _popularBrandsResponseModel!.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () {
+                          print(_popularBrandsResponseModel!.data[index].id
+                              .toString());
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ShopScreen(
+                                      popularBrandsResponseModel:
+                                          _popularBrandsResponseModel!
+                                              .data[index])));
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                                "https://dealsbuck.com/" +
+                                    _popularBrandsResponseModel!
+                                        .data[index].brandImagePath,
+                                fit: BoxFit.fill, errorBuilder:
+                                    (BuildContext context, Object exception,
+                                        StackTrace? stackTrase) {
+                              return Image.asset(
+                                "assets/defaultImage.png",
+                                fit: BoxFit.cover,
+                              );
+                            }),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Text(
+                  "View More",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )
+            ],
+          )
+        : Container();
   }
 
   BannerModel? _bannerModel;
@@ -820,8 +875,12 @@ var message=temp["message"];
             "https://dealsbuck.com/" +
                 _bannerModel!.data[itemIndex].bannerImagePath,
             fit: BoxFit.fitWidth,
-            errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-              return Image.asset("assets/defaultImage.png", fit: BoxFit.fitWidth,);
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrase) {
+              return Image.asset(
+                "assets/defaultImage.png",
+                fit: BoxFit.fitWidth,
+              );
             },
           ),
         ),

@@ -2,8 +2,6 @@ import 'package:dealsbuck/model/categoriesResponseModel.dart';
 import 'package:dealsbuck/model/nearByDealsResponseModel.dart';
 import 'package:dealsbuck/model/topDealsResponseModel.dart';
 import 'package:dealsbuck/screens/appBar.dart';
-import 'package:dealsbuck/screens/homeScreens/home_page_screen.dart';
-import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/screens/subCategory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +9,16 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/internetNotConnected.dart';
-import 'categories_product.dart';
 import 'homeScreens/Recommended Screen/Product Screen/productScreen.dart';
 
 class ProductsGridListScreen extends StatefulWidget {
-  ProductsGridListScreen({Key? key, required this.title, required this.nearByDealsModel, required this.topDealsModel, required this.categoriesModel}) : super(key: key);
+  ProductsGridListScreen(
+      {Key? key,
+      required this.title,
+      required this.nearByDealsModel,
+      required this.topDealsModel,
+      required this.categoriesModel})
+      : super(key: key);
   final String title;
   NearByDealsModel nearByDealsModel;
   TopDealsModel topDealsModel;
@@ -25,8 +28,7 @@ class ProductsGridListScreen extends StatefulWidget {
   State<ProductsGridListScreen> createState() => _ProductsGridListScreenState();
 }
 
-class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
-
+class _ProductsGridListScreenState extends State<ProductsGridListScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -40,23 +42,31 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
         body: Column(
           children: [
             Container(
-              child: CustomAppBar(widget.title, Container(width: 20,),IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  CupertinoIcons.arrow_left,
-                  color: Color(0xff001527),
-                ),
-              )),
+              child: CustomAppBar(
+                  widget.title,
+                  Container(
+                    width: 20,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      CupertinoIcons.arrow_left,
+                      color: Color(0xff001527),
+                    ),
+                  )),
             ),
             Visibility(
-                visible: Provider.of<InternetConnectionStatus>(context) == InternetConnectionStatus.disconnected,
+                visible: Provider.of<InternetConnectionStatus>(context) ==
+                    InternetConnectionStatus.disconnected,
                 child: InternetNotAvailable()),
-
-            Flexible(child: widget.title == "Nearby Deals"? NearByDeals():widget.title == "Categories"? Categories():TopDeals())
-
-
+            Flexible(
+                child: widget.title == "Nearby Deals"
+                    ? NearByDeals()
+                    : widget.title == "Categories"
+                        ? Categories()
+                        : TopDeals())
           ],
         ),
       ),
@@ -83,7 +93,11 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                 return InkWell(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => ProductScreen(id: widget.nearByDealsModel.data[index].id,)));
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductScreen(
+                                  id: widget.nearByDealsModel.data[index].id,
+                                )));
                   },
                   child: Container(
                     child: Card(
@@ -97,9 +111,9 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                         children: [
                           Container(
                             // height: 65,
-                            height: MediaQuery.of(context).size.height/10,
+                            height: MediaQuery.of(context).size.height / 10,
                             // width: 85,
-                            width: MediaQuery.of(context).size.width/4,
+                            width: MediaQuery.of(context).size.width / 4,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.red, width: 0.5),
                               borderRadius: BorderRadius.circular(10),
@@ -108,12 +122,17 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                "https://dealsbuck.com/"+widget.nearByDealsModel.data[index].featuredImagePath,
-                                fit: BoxFit.fill,
-                                  errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                                    return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                                  }
-                              ),
+                                  "https://dealsbuck.com/" +
+                                      widget.nearByDealsModel.data[index]
+                                          .featuredImagePath,
+                                  fit: BoxFit.fill, errorBuilder:
+                                      (BuildContext context, Object exception,
+                                          StackTrace? stackTrase) {
+                                return Image.asset(
+                                  "assets/defaultImage.png",
+                                  fit: BoxFit.cover,
+                                );
+                              }),
                             ),
                           ),
                           Text(
@@ -130,7 +149,8 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                             endIndent: 5,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               widget.nearByDealsModel.data[index].description,
                               textAlign: TextAlign.center,
@@ -179,7 +199,12 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                 return InkWell(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => ProductScreen(id: widget.topDealsModel.data![index].id!,)));                  },
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductScreen(
+                                  id: widget.topDealsModel.data![index].id!,
+                                )));
+                  },
                   child: Container(
                     child: Card(
                       elevation: 1,
@@ -192,9 +217,9 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                         children: [
                           Container(
                             // height: 65,
-                            height: MediaQuery.of(context).size.height/10,
+                            height: MediaQuery.of(context).size.height / 10,
                             // width: 85,
-                            width: MediaQuery.of(context).size.width/4,
+                            width: MediaQuery.of(context).size.width / 4,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.red, width: 0.5),
                               borderRadius: BorderRadius.circular(10),
@@ -203,13 +228,17 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                "https://dealsbuck.com/" +
-                                    widget.topDealsModel.data![index].featuredImagePath!,
-                                fit: BoxFit.fill,
-                                  errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                                    return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                                  }
-                              ),
+                                  "https://dealsbuck.com/" +
+                                      widget.topDealsModel.data![index]
+                                          .featuredImagePath!,
+                                  fit: BoxFit.fill, errorBuilder:
+                                      (BuildContext context, Object exception,
+                                          StackTrace? stackTrase) {
+                                return Image.asset(
+                                  "assets/defaultImage.png",
+                                  fit: BoxFit.cover,
+                                );
+                              }),
                             ),
                           ),
                           Text(
@@ -225,9 +254,9 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                             indent: 5,
                             endIndent: 5,
                           ),
-
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               widget.topDealsModel.data![index].description!,
                               textAlign: TextAlign.center,
@@ -268,14 +297,18 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
             itemCount: widget.categoriesModel.data.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) =>SubCategory(title: widget.categoriesModel.data[index].name, id: widget.categoriesModel.data[index].id,)));
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => SubCategory(
+                                title: widget.categoriesModel.data[index].name,
+                                id: widget.categoriesModel.data[index].id,
+                              )));
                 },
                 child: Column(
                   children: [
                     Container(
-
                       height: 57,
                       width: 58,
                       decoration: BoxDecoration(
@@ -285,12 +318,17 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network("https://dealsbuck.com/" +
-                            widget.categoriesModel.data[index].imagePath, fit: BoxFit.fill,
-                            errorBuilder: (BuildContext context,Object exception, StackTrace? stackTrase){
-                              return Image.asset("assets/defaultImage.png", fit: BoxFit.cover,);
-                            }),
-
+                        child: Image.network(
+                            "https://dealsbuck.com/" +
+                                widget.categoriesModel.data[index].imagePath,
+                            fit: BoxFit.fill, errorBuilder:
+                                (BuildContext context, Object exception,
+                                    StackTrace? stackTrase) {
+                          return Image.asset(
+                            "assets/defaultImage.png",
+                            fit: BoxFit.cover,
+                          );
+                        }),
                       ),
                     ),
                     SizedBox(
@@ -313,7 +351,4 @@ class _ProductsGridListScreenState extends State<ProductsGridListScreen>{
       ],
     );
   }
-
-
 }
-

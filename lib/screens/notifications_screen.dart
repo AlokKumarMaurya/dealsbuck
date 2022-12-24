@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
 import '../model/getNotificationResponseModel.dart';
 import '../utils/convertTimeToAgo.dart';
 import '../utils/urlsConstant.dart';
@@ -18,38 +19,40 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
   GetNotificationModel? _getNotificationModel;
   String dropdownvalue = 'Short by time';
-  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
+  GetUserCurrentLocaton _getLocaton = Get.put(GetUserCurrentLocaton());
+
   // List of items in our dropdown menu
   var items = [
     'Short by time',
     'Short by name',
   ];
 
-  Future<GetNotificationModel?> getNotification() async{
+  Future<GetNotificationModel?> getNotification() async {
     var lati = await HelperFunction.getLatitude();
     var longi = await HelperFunction.getLongitude();
     var token = await HelperFunction.getToken();
 
-    try{
+    try {
       // var response = await http.get(Uri.parse(getNotificationUrl+lati+longi), headers: {
       //   'Authorization': 'Bearer $token'
       // });
 
-      var response = await http.get(Uri.parse(getNotificationUrl+"${_getLocaton.lat}/${_getLocaton.long}"), headers: {
-        'Authorization': 'Bearer $token'
-      });
+      var response = await http.get(
+          Uri.parse(
+              getNotificationUrl + "${_getLocaton.lat}/${_getLocaton.long}"),
+          headers: {'Authorization': 'Bearer $token'});
 
       // var res = GetNotificationModel.fromJson(jsonDecode(response.body));
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         setState(() {
-          _getNotificationModel = GetNotificationModel.fromJson(jsonDecode(response.body));
+          _getNotificationModel =
+              GetNotificationModel.fromJson(jsonDecode(response.body));
         });
         return _getNotificationModel;
       }
-    }catch (e){
+    } catch (e) {
       print(e);
     }
   }
@@ -75,8 +78,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               bottom: 0,
               right: 0,
               child: SizedBox(
-                height: MediaQuery.of(context).size.width * 0.45,
-                child: Image.asset("assets/cornerImageRedBottom.png")),),
+                  height: MediaQuery.of(context).size.width * 0.45,
+                  child: Image.asset("assets/cornerImageRedBottom.png")),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 30, right: 30, left: 30, bottom: 0),
               child: Column(
@@ -90,9 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             color: Colors.white,
                           ),
                           child: GestureDetector(
-                              onTap: () {
-
-                              },
+                              onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Icon(
@@ -101,15 +103,30 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   size: 20,
                                 ),
                               ))),
-                      Text("Notifications", style: TextStyle(fontSize: 24),)
+                      Text(
+                        "Notifications",
+                        style: TextStyle(fontSize: 24),
+                      )
                     ],
                   ),
-                  SizedBox(height: 20,),
-                  Divider(color: Colors.black,indent: 100,),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    indent: 100,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(onPressed: (){}, child: Text("Mark all read", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),)),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Mark all read",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400),
+                          )),
                       DropdownButtonHideUnderline(
                         child: DropdownButton(
                           elevation: 0,
@@ -119,7 +136,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           items: items.map((String items) {
                             return DropdownMenuItem(
                               value: items,
-                              child: Text(items, style: TextStyle( color: Colors.black, fontSize: 12),),
+                              child: Text(
+                                items,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 12),
+                              ),
                             );
                           }).toList(),
                           onChanged: (String? newValue) {
@@ -131,28 +152,48 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ),
                     ],
                   ),
-                 _getNotificationModel!= null? Expanded(child: ListView.builder(itemCount:_getNotificationModel!.data.length,itemBuilder: (BuildContext context,int index){
-                    return  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          maxRadius: 30,
-                          backgroundColor: Colors.orange,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.network("https://dealsbuck.com/"+_getNotificationModel!.data[index].brandImagePath, errorBuilder: (BuildContext context, Object exception, StackTrace? stacktrace){
-                              return Image.asset("assets/defaultImage.png");
-                            },),
+                  _getNotificationModel != null
+                      ? Expanded(
+                          child: ListView.builder(
+                              itemCount: _getNotificationModel!.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      maxRadius: 30,
+                                      backgroundColor: Colors.orange,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image.network(
+                                          "https://dealsbuck.com/" +
+                                              _getNotificationModel!
+                                                  .data[index].brandImagePath,
+                                          errorBuilder: (BuildContext context,
+                                              Object exception,
+                                              StackTrace? stacktrace) {
+                                            return Image.asset(
+                                                "assets/defaultImage.png");
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(_getNotificationModel!
+                                        .data[index].title),
+                                    subtitle: Text(_getNotificationModel!
+                                        .data[index].body),
+                                    trailing: Text(TimeToAgo().convertToAgo(
+                                        _getNotificationModel!
+                                            .data[index].notificationTime)),
+                                    tileColor: Colors.white,
+                                  ),
+                                );
+                              }))
+                      : Container(
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        title: Text(_getNotificationModel!.data[index].title),
-                        subtitle: Text(_getNotificationModel!.data[index].body),
-                        trailing: Text(TimeToAgo().convertToAgo(_getNotificationModel!.data[index].notificationTime)),
-                        tileColor: Colors.white,
-                      ),
-                    );
-                  })) : Container(child: Center(child: CircularProgressIndicator(),),)
-
+                        )
                 ],
               ),
             ),

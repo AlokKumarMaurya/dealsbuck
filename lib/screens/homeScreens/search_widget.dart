@@ -5,6 +5,7 @@ import 'package:dealsbuck/screens/homeScreens/homeScreen_controller.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as Http;
+
 import '../../model/searchResponseModel.dart';
 import '../../utils/urlsConstant.dart';
 import '../notifications_screen.dart';
@@ -138,7 +139,11 @@ class _SearchBoxState extends State<SearchBox> {
                         //     fit: BoxFit.cover,),
                         //   ),
                         // );
-                        return SearchTile(product: p, index: index,cont: widget.contextt,);
+                        return SearchTile(
+                          product: p,
+                          index: index,
+                          cont: widget.contextt,
+                        );
                       }),
                 );
               },
@@ -166,10 +171,15 @@ class _SearchBoxState extends State<SearchBox> {
 }
 
 class SearchTile extends StatelessWidget {
-  SearchTile({Key? key, required this.product, required this.index,required this.cont})
+  SearchTile(
+      {Key? key,
+      required this.product,
+      required this.index,
+      required this.cont})
       : super(key: key);
   Product product;
-  int index;BuildContext cont;
+  int index;
+  BuildContext cont;
 
   @override
   Widget build(BuildContext cont) {

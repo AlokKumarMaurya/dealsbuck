@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:dealsbuck/screens/login_screen.dart';
 import 'package:dealsbuck/screens/persistent_tab.dart';
 import 'package:dealsbuck/utils/sharedPreference.dart';
-import 'package:flutter_circular_text/circular_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_text/circular_text.dart';
 import 'package:get/get.dart';
 
 import '../location_getter/get_usser_current_location.dart';
@@ -17,9 +18,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isuserLog = false;
-  GetUserCurrentLocaton _getLocaton=Get.put(GetUserCurrentLocaton());
-  void isLog() async{
-    isuserLog =await HelperFunction().getuserLoggedInSharedPreference();
+  GetUserCurrentLocaton _getLocaton = Get.put(GetUserCurrentLocaton());
+
+  void isLog() async {
+    isuserLog = await HelperFunction().getuserLoggedInSharedPreference();
   }
 
   @override
@@ -121,23 +123,27 @@ class _SplashScreenState extends State<SplashScreen> {
                         color: Color(0xff001527)))
               ],
             ),
-
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Made With "),
-                    Icon(Icons.favorite, color: Colors.red,size: 20,),
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 20,
+                    ),
                     Text(" In "),
-                    Image.asset("assets/Flag.png", scale: 20,)
-
+                    Image.asset(
+                      "assets/Flag.png",
+                      scale: 20,
+                    )
                   ],
                 ),
                 Text("Developed by Rank Super Hero ")
               ],
             ),
-            
           ],
         ),
       ),

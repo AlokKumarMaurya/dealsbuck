@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-GetNotificationModel getNotificationModelFromJson(String str) => GetNotificationModel.fromJson(json.decode(str));
+GetNotificationModel getNotificationModelFromJson(String str) =>
+    GetNotificationModel.fromJson(json.decode(str));
 
-String getNotificationModelToJson(GetNotificationModel data) => json.encode(data.toJson());
+String getNotificationModelToJson(GetNotificationModel data) =>
+    json.encode(data.toJson());
 
 class GetNotificationModel {
   GetNotificationModel({
@@ -19,17 +21,18 @@ class GetNotificationModel {
   String message;
   List<Datum> data;
 
-  factory GetNotificationModel.fromJson(Map<String, dynamic> json) => GetNotificationModel(
-    status: json["status"],
-    message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-  );
+  factory GetNotificationModel.fromJson(Map<String, dynamic> json) =>
+      GetNotificationModel(
+        status: json["status"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "status": status,
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -52,22 +55,22 @@ class Datum {
   double distance;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    title: json["title"],
-    body: json["body"],
-    brandName: json["brand_name"],
-    brandImagePath: json["brand_image_path"],
-    city: json["city"],
-    notificationTime: DateTime.parse(json["notification_time"]),
-    distance: json["distance"].toDouble(),
-  );
+        title: json["title"],
+        body: json["body"],
+        brandName: json["brand_name"],
+        brandImagePath: json["brand_image_path"],
+        city: json["city"],
+        notificationTime: DateTime.parse(json["notification_time"]),
+        distance: json["distance"].toDouble(),
+      );
 
   Map<String, dynamic> toJson() => {
-    "title": title,
-    "body": body,
-    "brand_name": brandName,
-    "brand_image_path": brandImagePath,
-    "city": city,
-    "notification_time": notificationTime.toIso8601String(),
-    "distance": distance,
-  };
+        "title": title,
+        "body": body,
+        "brand_name": brandName,
+        "brand_image_path": brandImagePath,
+        "city": city,
+        "notification_time": notificationTime.toIso8601String(),
+        "distance": distance,
+      };
 }

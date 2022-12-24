@@ -16,7 +16,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 10),
+        padding:
+            const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 10),
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
@@ -127,17 +128,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
               },
             ),
             Padding(
-                padding: EdgeInsets.symmetric(
-              vertical: 15,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(width: 0.5, color: Colors.grey))
+              padding: EdgeInsets.symmetric(
+                vertical: 15,
               ),
-            ),),
-
-
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(width: 0.5, color: Colors.grey))),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(
@@ -149,7 +148,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               leading: Icon(Icons.notifications_rounded),
               minLeadingWidth: 1,
               title: Text("Notification"),
@@ -161,7 +160,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               minLeadingWidth: 1,
               minVerticalPadding: 1,
               leading: Icon(Icons.people_alt),
@@ -174,7 +173,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               minLeadingWidth: 1,
               minVerticalPadding: 1,
               leading: Icon(Icons.wallet),
@@ -187,7 +186,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               minLeadingWidth: 1,
               minVerticalPadding: 1,
               leading: Icon(Icons.reviews),
@@ -200,7 +199,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               minLeadingWidth: 1,
               minVerticalPadding: 1,
               leading: Icon(Icons.card_membership),
@@ -208,7 +207,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MembershipScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const MembershipScreen()),
                 );
               },
             ),
@@ -219,11 +219,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
               child: Container(
                 decoration: BoxDecoration(
                     border: Border(
-                        bottom: BorderSide(width: 0.5, color: Colors.grey))
-                ),
-              ),),
-
-
+                        bottom: BorderSide(width: 0.5, color: Colors.grey))),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(
@@ -235,7 +233,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               leading: Icon(Icons.help),
               minLeadingWidth: 1,
               title: Text("Help Center"),
@@ -250,7 +248,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               contentPadding:
-              EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                  EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               minLeadingWidth: 1,
               minVerticalPadding: 1,
               leading: Icon(Icons.logout),
