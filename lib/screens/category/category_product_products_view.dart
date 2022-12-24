@@ -587,6 +587,7 @@ import "package:http/http.dart" as http;
 import '../../api_config/api_config.dart';
 import '../../location_getter/get_usser_current_location.dart';
 import '../../model/category/category_product_product_modal.dart';
+import '../homeScreens/home_page_screen.dart';
 
 class CategoryProductProductDetailsPage extends StatefulWidget {
   CategoryProductProductDetailsPage({Key? key, required this.catid,required this.proid,required this.title})
@@ -665,7 +666,7 @@ class _CategoryProductProductDetailsPageState extends State<CategoryProductProdu
                                       color: Color(0xff001527),
                                     ),
                                     Text(
-                                      "address![1]",
+                                      "$address",
                                       style: TextStyle(
                                           color: Color(0xff001527),
                                           fontWeight: FontWeight.w500),
@@ -1146,20 +1147,24 @@ class _CategoryProductProductDetailsPageState extends State<CategoryProductProdu
       debugPrint("1111111111111111111111111111111");
       setState(() {
         _populareBrandParticularProductDeatil=response;
+        dataList.value=_populareBrandParticularProductDeatil!.data.products;
       });
-      // debugPrint(_populareBrandParticularProductDeatil!.data.productName.toString());
+      getAddrress(_populareBrandParticularProductDeatil!);
+      debugPrint(_populareBrandParticularProductDeatil!.data.products.toString());
     }
   }
 
 
-  // void getAddrress(ParticularBrandList modal) async{
-  //   await placemarkFromCoordinates(
-  //       double.parse(modal.data.latitude), double.parse(modal.data.longitude))
-  //       .then((List<Placemark> placemarks) {
-  //     Placemark place = placemarks[0];
-  //     long="${place.street},${place.subLocality},${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
-  //   });
-  // }
+  void getAddrress(CategoryProductProductDeatilModal modal) async{
+    await placemarkFromCoordinates(
+        double.parse(modal.data.latitude), double.parse(modal.data.longitude))
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState((){
+        long="${place.street},${place.subLocality},${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
+      });
+    });
+  }
 
 
 

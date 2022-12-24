@@ -129,9 +129,9 @@ RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
                           //     style: TextStyle(color: Colors.white),
                           //   ),
                           // ));
-                          // Navigator.push(context,MaterialPageRoute(builder:
-                          //     (context)=>
-                          //         CategoryProductProductDetailsPage(catid:widget.id.toString(),proid:dataList.value[index].id.toString(),title: dataList.value[index].brandName,)));
+                          Navigator.push(context,MaterialPageRoute(builder:
+                              (context)=>
+                                  CategoryProductProductDetailsPage(catid:widget.id.toString(),proid:dataList.value[index].id.toString(),title: dataList.value[index].brandName,)));
                         },
                         child: Column(
                           children: [
@@ -178,12 +178,7 @@ RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
                       SizedBox(height: 20,),
                       Text("Sorry no data found",style: TextStyle(fontSize: 22,),)
                     ],
-                  ),))
-
-
-
-
-                ),
+                  ),))),
               ],
             ),
           )));
@@ -196,4 +191,5 @@ RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
       dataList.value=modal.data.vendors;
     }
   }
+
 }

@@ -23,7 +23,8 @@ class ApiConfig extends GetConnect{
       }
     }catch(e){
 debugPrint(e.toString());
-      Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));}
+      // Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));
+      }
 
   }
 
@@ -37,7 +38,8 @@ debugPrint(e.toString());
    }
     }catch(e){
       debugPrint(e.toString());
-      Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));}
+      // Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));
+      }
   }
 
   getParticularPopularProductDetail(String id)async{
@@ -52,7 +54,8 @@ debugPrint(e.toString());
       }
     }catch(e){
       debugPrint(e.toString());
-      Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));}
+      // Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));
+    }
   }
 
 
@@ -60,6 +63,7 @@ debugPrint(e.toString());
 
   categoryParticularCategoryProductDetail(String Catid,String proId)async{
     try{
+      debugPrint("$categoryParticularCategoryProductDetailApi$Catid/$proId");
       var response =await get("$categoryParticularCategoryProductDetailApi$Catid/$proId");
       // debugPrint("$getParticularPopularProductDetailApi/$id");
       debugPrint(response.statusCode.toString());
@@ -70,7 +74,8 @@ debugPrint(e.toString());
       }
     }catch(e){
       debugPrint(e.toString());
-      Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));}
+      // Get.showSnackbar(GetSnackBar(messageText: Text(e.toString()),duration: Duration(seconds: 2),));
+    }
   }
 
 }
