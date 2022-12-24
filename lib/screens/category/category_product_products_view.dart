@@ -668,6 +668,7 @@ class _CategoryProductProductDetailsPageState extends State<CategoryProductProdu
                                     Text(
                                       "$address",
                                       style: TextStyle(
+
                                           color: Color(0xff001527),
                                           fontWeight: FontWeight.w500),
                                     )
