@@ -22,6 +22,8 @@ import '../../../../utils/urlsConstant.dart';
 import '../api_config/api_config.dart';
 import '../model/category/particular_category_list.dart';
 import 'package:dealsbuck/screens/popular_brand/popular_barnd_details_page.dart';
+
+import 'category/category_product_products_view.dart';
 class SubCategory extends StatefulWidget {
   SubCategory({Key? key, required this.id, required this.title}) : super(key: key);
   final int id;
@@ -119,17 +121,17 @@ RxList<Vendor> dataList=List<Vendor>.empty(growable: true).obs;
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: (){
-                          Get.showSnackbar(GetSnackBar(
-                            backgroundColor: Colors.red,
-                            duration: Duration(seconds: 2),
-                            messageText: Text(
-                              "No api implemented",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ));
+                          // Get.showSnackbar(GetSnackBar(
+                          //   backgroundColor: Colors.red,
+                          //   duration: Duration(seconds: 2),
+                          //   messageText: Text(
+                          //     "No api implemented",
+                          //     style: TextStyle(color: Colors.white),
+                          //   ),
+                          // ));
                           // Navigator.push(context,MaterialPageRoute(builder:
                           //     (context)=>
-                          //     PopularBrandDetailsPage(id:dataList.value[index].id.toString(),title: dataList.value[index].brandName,)));
+                          //         CategoryProductProductDetailsPage(catid:widget.id.toString(),proid:dataList.value[index].id.toString(),title: dataList.value[index].brandName,)));
                         },
                         child: Column(
                           children: [
