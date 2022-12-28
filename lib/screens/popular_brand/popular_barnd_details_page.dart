@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dealsbuck/api_config/api_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as Http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
@@ -472,70 +473,120 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
 
   Future<void> _askedToLead(String couponCode) async {
     String _couponCode = couponCode;
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            titlePadding: EdgeInsets.only(top: 6),
-            contentPadding: EdgeInsets.symmetric(vertical: 0),
-            insetPadding: EdgeInsets.symmetric(horizontal: 100),
-            title: Text(
-              "Coupons",
-              textAlign: TextAlign.center,
-            ),
+    await Get.dialog(
+      Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12)
+          ),
+          width: 300,
+          height: 200,
+          alignment: Alignment.center,
+          child: Column(
             children: [
-              SizedBox(
-                height: 40,
+              SizedBox(height: 15,),
+              Text("Coupons",style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+              ),),
+              SizedBox(height: 10,),
+              InkWell(
+                onTap: (){
+                  // Navigator.pop(context);
+                  // claimCoupon();
+                  //
+                },
                 child: ListTile(
                   onTap: () {
+                    Get.back();
+                    // Navigator.pop(context);
                     claimCoupon();
-                    Navigator.pop(context);
+
                   },
                   tileColor: Color(0xff001527),
                   dense: true,
                   contentPadding: EdgeInsets.all(0),
-                  title: Text(
-                    _couponCode,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white),
+                  title: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 200,
+                      color: Color(0xff001527),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+                        child: Text(
+                          _couponCode,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-              // ListView.builder(
-              //   padding: EdgeInsets.symmetric(vertical: 6),
-              //   shrinkWrap: true,
-              //   itemCount: _showCouponModel!.data.length,
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return InkWell(
-              //       onTap: () async {
-              //         setState(() {
-              //           Coupontext = _showCouponModel!.data[index].couponCode;
-              //           Couponid = _showCouponModel!.data[index].id;
-              //         });
-              //
-              //         await claimCoupon();
-              //         Fluttertoast.showToast(msg: _claimCouponModel!.message);
-              //         Navigator.pop(context);
-              //
-              //       },
-              //       child: SizedBox(
-              //         height: 40,
-              //         child: ListTile(
-              //           tileColor: Color(0xffed1b24),
-              //           dense: true,
-              //           contentPadding: EdgeInsets.all(0),
-              //           title: Text(_showCouponModel!.data[index].couponCode, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),),
-              //         ),
-              //       ),
-              //     );
-              //   },
-              // ),
             ],
-          );
-        });
+          ),
+        ),
+      ),
+
+
+
+      // context: context,
+      // builder: (BuildContext context) {
+      //   return
+      //     SimpleDialog(
+      //       titlePadding: EdgeInsets.only(top: 6),
+      //       contentPadding: EdgeInsets.symmetric(vertical: 0),
+      //       insetPadding: EdgeInsets.symmetric(horizontal: 100),
+      //       title: Padding(
+      //         padding: const EdgeInsets.symmetric(vertical: 18.0,horizontal: 30),
+      //         child: Container(
+      //           width: MediaQuery.of(context).size.width,
+      //           color:Colors.white,
+      //           child: Text(
+      //             "Coupons",
+      //             textAlign: TextAlign.center,
+      //           ),
+      //         ),
+      //       ),
+      //       children: [
+      //
+      //         // ListView.builder(
+      //         //   padding: EdgeInsets.symmetric(vertical: 6),
+      //         //   shrinkWrap: true,
+      //         //   itemCount: _showCouponModel!.data.length,
+      //         //   itemBuilder: (BuildContext context, int index) {
+      //         //     return InkWell(
+      //         //       onTap: () async {
+      //         //         setState(() {
+      //         //           Coupontext = _showCouponModel!.data[index].couponCode;
+      //         //           Couponid = _showCouponModel!.data[index].id;
+      //         //         });
+      //         //
+      //         //         await claimCoupon();
+      //         //         Fluttertoast.showToast(msg: _claimCouponModel!.message);
+      //         //         Navigator.pop(context);
+      //         //
+      //         //       },
+      //         //       child: SizedBox(
+      //         //         height: 40,
+      //         //         child: ListTile(
+      //         //           tileColor: Color(0xffed1b24),
+      //         //           dense: true,
+      //         //           contentPadding: EdgeInsets.all(0),
+      //         //           title: Text(_showCouponModel!.data[index].couponCode, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),),
+      //         //         ),
+      //         //       ),
+      //         //     );
+      //         //   },
+      //         // ),
+      //       ],
+      //     )
+    );
   }
 
   Future<ClaimCouponModel?> claimCoupon() async {
