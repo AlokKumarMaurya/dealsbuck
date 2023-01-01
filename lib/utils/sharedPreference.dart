@@ -7,6 +7,7 @@ class HelperFunction {
   static String sharedPreferenceLongitude = "longitude";
   static String sharedPreferenceLatitude = "latitude";
   static String sharedPreferenceUserName = "UserName";
+  static String firstTimeKey = "FirstTime";
 
   static Future saveEmailId(String email) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,6 +34,20 @@ class HelperFunction {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setBool(sharedPreferenceUserLoggedInKey, isuserLoggedIn);
   }
+
+
+
+  void saveFirstTime()async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    preferences.setBool(firstTimeKey, true);
+  }
+
+
+  Future<bool> getFirstTime()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.getBool(firstTimeKey)??false;
+  }
+
 
   Future<bool> getuserLoggedInSharedPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

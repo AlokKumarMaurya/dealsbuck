@@ -8,6 +8,7 @@ import 'package:flutter_circular_text/circular_text.dart';
 import 'package:get/get.dart';
 
 import '../location_getter/get_usser_current_location.dart';
+import '../slider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,10 +19,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isuserLog = false;
+  bool isFirstTime=true;
   GetUserCurrentLocaton _getLocaton = Get.put(GetUserCurrentLocaton());
 
   void isLog() async {
     isuserLog = await HelperFunction().getuserLoggedInSharedPreference();
+    isFirstTime=await HelperFunction().getFirstTime();
   }
 
   @override
@@ -37,7 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    isuserLog ? PersistentTab() : LoginPage())));
+                    isuserLog ? PersistentTab() :
+                IntroSliderPage()
+            )));
   }
 
   @override
