@@ -30,7 +30,7 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
             child: Image.asset("assets/page1.jpg"),
           ),
           SizedBox(height: MediaQuery.of(context).size.height/8,),
-          const Text('Discover restaurants\n near you',
+          const Text('Discover Delas Near \nYou',
             style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w700
@@ -40,7 +40,7 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
           const SizedBox(
             height: 20,
           ),
-          const Text('We make it simple to find a food for you.\n enter your address and let us do the rest.',
+          const Text('We make it simple to find a deal for you.\n enter your address and let us do the rest.',
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400
@@ -83,54 +83,65 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
           SizedBox(
               height:  MediaQuery.of(context).size.height/13
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(onPressed: (){
+                Get.offAll(LoginPage());
+              }, child:Text("Continue",style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.red
+              ),),
+              ),
+              SizedBox(width:MediaQuery.of(context).size.width/3 ,)
+            ],          )
         ],
       ),
 
       //Page 3
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height/6,),
-          SizedBox(
-            height: MediaQuery.of(context).size.height/3,
-            child: Image.asset("assets/fast_delivery.gif"),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height/8,),
-          const Text('Delivered quickly at \n your place',
-            style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w700
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text('We provide door to door services in mean \n time with best quality of food.',
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-              height:  MediaQuery.of(context).size.height/13
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-children: [
-  TextButton(onPressed: (){
-    Get.offAll(LoginPage());
-  }, child:Text("Continue",style: TextStyle(
-    fontSize: 22,
-    color: Colors.red
-  ),),
-  ),
-  SizedBox(width:MediaQuery.of(context).size.width/3 ,)
-],          )
-        ],
-      ),
+//       Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           SizedBox(height: MediaQuery.of(context).size.height/6,),
+//           SizedBox(
+//             height: MediaQuery.of(context).size.height/3,
+//             child: Image.asset("assets/fast_delivery.gif"),
+//           ),
+//           SizedBox(height: MediaQuery.of(context).size.height/8,),
+//           const Text('Delivered quickly at \n your place',
+//             style: TextStyle(
+//                 fontSize: 23,
+//                 fontWeight: FontWeight.w700
+//             ),
+//             textAlign: TextAlign.center,
+//           ),
+//           const SizedBox(
+//             height: 20,
+//           ),
+//           const Text('We provide door to door services in mean \n time with best quality of food.',
+//             style: TextStyle(
+//                 fontSize: 14,
+//                 fontWeight: FontWeight.w400
+//             ),
+//             textAlign: TextAlign.center,
+//           ),
+//           SizedBox(
+//               height:  MediaQuery.of(context).size.height/13
+//           ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.end,
+// children: [
+//   TextButton(onPressed: (){
+//     Get.offAll(LoginPage());
+//   }, child:Text("Continue",style: TextStyle(
+//     fontSize: 22,
+//     color: Colors.red
+//   ),),
+//   ),
+//   SizedBox(width:MediaQuery.of(context).size.width/3 ,)
+// ],          )
+//         ],
+//       ),
     ];
     return Scaffold(
       body: Stack(

@@ -232,7 +232,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(120.0),
             child: Container(
-                padding: EdgeInsets.only(top: 25, left: 20, right: 20),
+                padding: EdgeInsets.only(top: 15, left: 20, right: 20),
                 width: MediaQuery.of(context).size.width,
                 height: 120,
                 decoration: BoxDecoration(
@@ -248,74 +248,79 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 5,
+                      height: 0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                          padding: EdgeInsets.only(bottom: 10),
                             //color: Colors.black,
-                            height: 40,
+                            height: 70,
                             child: Image.asset(
                               "assets/dealbuckText.png",
                               fit: BoxFit.fitWidth,
                               width: 120,
                               height: 50,
                             )),
-                        Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  _getLocaton
-                                      .searchLoacation()
-                                      .then((r) => refresh(true));
-                                  _getLocaton.getLocation();
-                                  refresh(true);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          backgroundColor: Color(0xff001527),
-                                          content: Text("Location Updated")));
-                                },
-                                child: Icon(
-                                  Icons.place_outlined,
-                                  color: Color(0xff001527),
-                                )),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            address != null
-                                ? Text(
-                                    address![1].toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        fontSize: 18,
-                                        color: Color(0xff001527),
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                : Text(""),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  color: Colors.transparent,
-                                ),
-                                child: GestureDetector(
-                                    onTap: () {},
-                                    child: Icon(
-                                      CupertinoIcons.chevron_down,
-                                      size: 18,
-                                      color: Color(0xffed1b24),
-                                    ))),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 18.0),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    _getLocaton
+                                        .searchLoacation()
+                                        .then((r) => refresh(true));
+                                    _getLocaton.getLocation();
+                                    refresh(true);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor: Color(0xff001527),
+                                            content: Text("Location Updated")));
+                                  },
+                                  child: Icon(
+                                    Icons.place_outlined,
+                                    color: Color(0xff001527),
+                                  )),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              address != null
+                                  ? Text(
+                                      address![1].toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          fontSize: 18,
+                                          color: Color(0xff001527),
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  : Text(""),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: GestureDetector(
+                                      onTap: () {},
+                                      child: Icon(
+                                        CupertinoIcons.chevron_down,
+                                        size: 18,
+                                        color: Color(0xffed1b24),
+                                      ))),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                     SearchBox(
                       contextt: context,
                     ),
+
                   ],
                 )),
           ),

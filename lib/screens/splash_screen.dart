@@ -55,22 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Text(
-                //   'Hello Brenda',
-                //   style: TextStyle(
-                //       color: Colors.red,
-                //       fontSize: 30,
-                //       fontWeight: FontWeight.bold),
-                // ),
-                // Text(
-                //   'How are you today?',
-                //   style: TextStyle(fontSize: 15, color: Color(0xff001527)),
-                // )
-              ],
-            ),
+           SizedBox(),
             Column(
               children: [
                 Image.asset("assets/dealbuckText.png"),
@@ -110,22 +95,29 @@ class _SplashScreenState extends State<SplashScreen> {
                 )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 60,
-                  child: Image.asset(
-                    "assets/deal.png",
-                    fit: BoxFit.cover,
-                  ),
+            Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 60,
+                      child: Image.asset(
+                        "assets/deal.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width/1.7,
+                      child: Text("Discover Delas Near You With",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff001527))),
+                    )
+                  ],
                 ),
-                Text("Your Deal Partner",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff001527)))
+                Container(child: Image.asset("assets/icon/icon.png",scale: 6,),),
               ],
             ),
             Column(
