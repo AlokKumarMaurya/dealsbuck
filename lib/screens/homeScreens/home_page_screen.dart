@@ -25,6 +25,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../location_getter/get_usser_current_location.dart';
 import '../../model/categoriesResponseModel.dart';
 import '../../model/popularBrandsResponseModel.dart';
+import '../notifications_screen.dart';
 import '../products_grid_list.dart';
 import '../store_screen.dart';
 import '../subCategory.dart';
@@ -54,12 +55,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   String? _currentAddress;
   Position? _currentPosition;
-
+int a=0;
   void refresh(bool test) {
     print("homeController.isSearch.value");
     if (test) {
       getPopularBrands();
-      _getCurrentPosition();
+      // _getAddressFromLatLng();
+      _getCurrentPosition(122);
+      // _getLocaton.getLocation().then((val) => refresh(true))
       getbanner();
       getcategories();
       getTopDeals();
@@ -69,8 +72,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   void initState() {
     print(homeController.isSearch.value);
-    _getCurrentPosition().then((value) => refresh(true));
-    _getLocaton.getLocation().then((val) => refresh(true));
+    a==0?_getCurrentPosition(1).then((value) => refresh(true)):debugPrint("");
+    a++==0?_getLocaton.getLocation().then((val) => refresh(true)):debugPrint("");
     getbanner();
     getcategories();
     getTopDeals();
@@ -98,7 +101,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         SystemNavigator.pop();
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Location permissions are denied")));
-        _getCurrentPosition();
+        _getCurrentPosition(1);
         return false;
       }
     }
@@ -112,17 +115,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return true;
   }
 
-  Future<bool> _getCurrentPosition() async {
+  Future<bool> _getCurrentPosition(int asa) async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return false;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() {
+      asa==1?setState(() {
         _currentPosition = position;
         HelperFunction.saveLongitude(_currentPosition!.longitude.toString());
         HelperFunction.saveLatitude(_currentPosition!.latitude.toString());
-      });
-      _getAddressFromLatLng(_currentPosition!);
+      }):debugPrint("not updating location");
+      asa!=1?_getAddressFromLatLng(_currentPosition!):debugPrint("fdfd");
     }).catchError((e) {
       debugPrint(e);
     });
@@ -234,7 +237,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             child: Container(
                 padding: EdgeInsets.only(top: 15, left: 20, right: 20),
                 width: MediaQuery.of(context).size.width,
-                height: 120,
+                height: 105,
                 decoration: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
@@ -256,70 +259,111 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         Container(
                           padding: EdgeInsets.only(bottom: 10),
                             //color: Colors.black,
-                            height: 70,
+                            height: 60,
                             child: Image.asset(
                               "assets/dealbuckText.png",
                               fit: BoxFit.fitWidth,
                               width: 120,
-                              height: 50,
+                              height: 40,
                             )),
                         Padding(
                           padding: const EdgeInsets.only(top: 18.0),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                  onTap: () {
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const NotificationScreen()),
+                                );
+                              },
+                              child: Icon(
+                                Icons.notifications,
+                                color: Color(0xffed1b24),
+                              )),
+                        )
+
+                      ],
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                              onTap: () {
+                                _getLocaton
+                                    .searchLoacation()
+                                    .then((r) => refresh(true));
+                                _getLocaton.getLocation();
+                                refresh(true);
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //         backgroundColor: Color(0xff001527),
+                                //         content: Text("Location Updated")));
+                              },
+                              child: Icon(
+                                Icons.place_outlined,
+                                color: Color(0xff001527),
+                              )),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          address != null
+                              ? InkWell(
+                            onTap: () {
+                              _getLocaton
+                                  .searchLoacation()
+                                  .then((r) => refresh(true));
+                              _getLocaton.getLocation();
+                              refresh(true);
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     SnackBar(
+                              //         backgroundColor: Color(0xff001527),
+                              //         content: Text("Location Updated")));
+                            },
+                                child: Text(
+                            address![1].toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 18,
+                                  color: Color(0xff001527),
+                                  fontWeight: FontWeight.w500),
+                          ),
+                              )
+                              : Text(""),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Colors.transparent,
+                              ),
+                              child: GestureDetector(
+                                  onTap:() {
                                     _getLocaton
                                         .searchLoacation()
                                         .then((r) => refresh(true));
                                     _getLocaton.getLocation();
                                     refresh(true);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            backgroundColor: Color(0xff001527),
-                                            content: Text("Location Updated")));
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //     SnackBar(
+                                    //         backgroundColor: Color(0xff001527),
+                                    //         content: Text("Location Updated")));
                                   },
                                   child: Icon(
-                                    Icons.place_outlined,
-                                    color: Color(0xff001527),
-                                  )),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              address != null
-                                  ? Text(
-                                      address![1].toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          overflow: TextOverflow.ellipsis,
-                                          fontSize: 18,
-                                          color: Color(0xff001527),
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  : Text(""),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: Colors.transparent,
-                                  ),
-                                  child: GestureDetector(
-                                      onTap: () {},
-                                      child: Icon(
-                                        CupertinoIcons.chevron_down,
-                                        size: 18,
-                                        color: Color(0xffed1b24),
-                                      ))),
-                            ],
-                          ),
-                        ),
-                      ],
+                                    CupertinoIcons.chevron_down,
+                                    size: 18,
+                                    color: Color(0xffed1b24),
+                                  ))),
+                        ],
+                      ),
                     ),
-                    SearchBox(
-                      contextt: context,
-                    ),
+                    // SearchBox(
+                    //   contextt: context,
+                    // ),
 
                   ],
                 )),

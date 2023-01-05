@@ -99,22 +99,22 @@ class _ShopScreenState extends State<ShopScreen> {
                           ),
                         ],
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        margin: EdgeInsets.only(top: 60, right: 35, left: 35),
-                        height: 45,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "What are you looking for",
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Color(0xffC60808),
-                              )),
-                        ),
-                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.circular(5)),
+                      //   margin: EdgeInsets.only(top: 60, right: 35, left: 35),
+                      //   height: 45,
+                      //   child: TextField(
+                      //     decoration: InputDecoration(
+                      //         border: InputBorder.none,
+                      //         hintText: "What are you looking for",
+                      //         prefixIcon: Icon(
+                      //           Icons.search,
+                      //           color: Color(0xffC60808),
+                      //         )),
+                      //   ),
+                      // ),
                       // Padding(
                       //   padding: const EdgeInsets.only(top: 130.0),
                       //   child: Center(child: Text("Offers & Deals",style:  TextStyle(color: Colors.black,fontSize: 25,fontWeight: FontWeight.bold),)),

@@ -19,22 +19,22 @@ class _FeedScreenState extends State<FeedScreen> {
               children: [
                 Image.asset("assets/backGround.png"),
                 CustomAppBar("Single Pizza Shop", Container(), Container()),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)),
-                  margin: EdgeInsets.only(top: 60, right: 35, left: 35),
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "What are you looking for",
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Color(0xffC60808),
-                        )),
-                  ),
-                ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(15)),
+                //   margin: EdgeInsets.only(top: 60, right: 35, left: 35),
+                //   height: 45,
+                //   child: TextField(
+                //     decoration: InputDecoration(
+                //         border: InputBorder.none,
+                //         hintText: "What are you looking for",
+                //         prefixIcon: Icon(
+                //           Icons.search,
+                //           color: Color(0xffC60808),
+                //         )),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 130.0),
                   child: Center(

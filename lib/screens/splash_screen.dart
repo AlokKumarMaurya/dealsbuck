@@ -49,21 +49,75 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(width * 0.10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           SizedBox(),
+           // SizedBox(),
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset("assets/dealbuckText.png"),
+                // Container(
+                //   height: 300,
+                //   alignment: Alignment.center,
+                //   decoration: BoxDecoration(
+                //     image: DecorationImage(image: AssetImage( "assets/dealbuckText.png"))
+                //   ),
+                //   child:Column(
+                //     // mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       SizedBox(height: 140,),
+                //       Text("Discover Delas Near You With",
+                //           style: TextStyle(
+                //               fontSize: 15,
+                //               fontWeight: FontWeight.bold,
+                //               color: Color(0xff001527))),
+                //
+                //       CircularText(
+                //         children: [
+                //           TextItem(
+                //             text: Text(
+                //               "loading...",
+                //               style: TextStyle(
+                //                   fontSize: 12,
+                //                   color: Color(0xff001527),
+                //                   fontWeight: FontWeight.w500),
+                //             ),
+                //             space: 8,
+                //             startAngle: 90,
+                //             startAngleAlignment: StartAngleAlignment.center,
+                //             direction: CircularTextDirection.anticlockwise,
+                //           ),
+                //         ],
+                //         radius: 105,
+                //         position: CircularTextPosition.inside,
+                //         //backgroundPaint: Paint()..color = Colors.grey.shade200,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: 100,),
+
+                Stack(children:[
+                  Image.asset("assets/dealbuckText.png"),
+                  Positioned(
+                    left: 50,
+                    top: 90,
+                    child: Text("Discover Delas Near You With",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff001527))),
+                  ),
+                ] ),
                 Stack(
                   children: [
                     Container(
-                      height: 70,
-                      color: Color(0xfff8faf7),
+                      height: 50,
+                      // color: Color(0xfff8faf7),
                     ),
                     Positioned(
                       //top: 1,
@@ -95,31 +149,33 @@ class _SplashScreenState extends State<SplashScreen> {
                 )
               ],
             ),
-            Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 60,
-                      child: Image.asset(
-                        "assets/deal.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width/1.7,
-                      child: Text("Discover Delas Near You With",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff001527))),
-                    )
-                  ],
-                ),
-                Container(child: Image.asset("assets/icon/icon.png",scale: 6,),),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         // Container(
+            //         //   height: 60,
+            //         //   child: Image.asset(
+            //         //     "assets/deal.png",
+            //         //     fit: BoxFit.cover,
+            //         //   ),
+            //         // ),
+            //         Container(
+            //           width: MediaQuery.of(context).size.width/1.7,
+            //           child: Text("Discover Delas Near You With",
+            //               style: TextStyle(
+            //                   fontSize: 15,
+            //                   fontWeight: FontWeight.bold,
+            //                   color: Color(0xff001527))),
+            //         )
+            //       ],
+            //     ),
+            //     Container(child: Image.asset("assets/icon/icon.png",scale: 6,),),
+            //   ],
+            // ),
+            SizedBox(height: 100,),
             Column(
               children: [
                 Row(
