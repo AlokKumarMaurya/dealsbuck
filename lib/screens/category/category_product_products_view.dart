@@ -754,7 +754,7 @@ class _CategoryProductProductDetailsPageState
                                         Container(
                                           width: MediaQuery.of(context).size.width/2,
                                           child: Text(
-                                            "--- Open Now 10 am - 10 pm (Today)",
+                                            "Location :${_populareBrandParticularProductDeatil!.data.city}, ${_populareBrandParticularProductDeatil!.data.state}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xff108038)),
@@ -763,23 +763,23 @@ class _CategoryProductProductDetailsPageState
                                         SizedBox(
                                           height: 3,
                                         ),
-                                        Container(
-                                          height: 20,
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              itemCount: 5,
-                                              itemBuilder: (BuildContext contex,
-                                                  int index) {
-                                                return Icon(
-                                                  Icons.star,
-                                                  color: Colors.orange,
-                                                  size: 18,
-                                                );
-                                              }),
-                                        )
+                                        // Container(
+                                        //   height: 20,
+                                        //   child: ListView.builder(
+                                        //       scrollDirection: Axis.horizontal,
+                                        //       shrinkWrap: true,
+                                        //       physics:
+                                        //           NeverScrollableScrollPhysics(),
+                                        //       itemCount: 5,
+                                        //       itemBuilder: (BuildContext contex,
+                                        //           int index) {
+                                        //         return Icon(
+                                        //           Icons.star,
+                                        //           color: Colors.orange,
+                                        //           size: 18,
+                                        //         );
+                                        //       }),
+                                        // )
                                       ],
                                     )
                                   ],
@@ -990,30 +990,30 @@ class _CategoryProductProductDetailsPageState
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xffC60808)),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.all(5),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      height: 14,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: Colors.black),
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount: 5,
-                                          itemBuilder:
-                                              (BuildContext contex, int index) {
-                                            return Icon(
-                                              Icons.star,
-                                              color: Colors.orange,
-                                              size: 12,
-                                            );
-                                          }),
-                                    )
+                                    // Container(
+                                    //   margin: EdgeInsets.all(5),
+                                    //   padding:
+                                    //       EdgeInsets.symmetric(horizontal: 5),
+                                    //   height: 14,
+                                    //   decoration: BoxDecoration(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(15),
+                                    //       color: Colors.black),
+                                    //   child: ListView.builder(
+                                    //       scrollDirection: Axis.horizontal,
+                                    //       shrinkWrap: true,
+                                    //       physics:
+                                    //           NeverScrollableScrollPhysics(),
+                                    //       itemCount: 5,
+                                    //       itemBuilder:
+                                    //           (BuildContext contex, int index) {
+                                    //         return Icon(
+                                    //           Icons.star,
+                                    //           color: Colors.orange,
+                                    //           size: 12,
+                                    //         );
+                                    //       }),
+                                    // )
                                   ],
                                 ),
                                 Text(
@@ -1040,26 +1040,21 @@ class _CategoryProductProductDetailsPageState
 
   Widget about() {
     return Container(
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
       height: 100,
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 20,
+            SizedBox(height: 10,),
+            CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.white,
+              backgroundImage: NetworkImage(
+                  "https://dealsbuck.com/" +
+                      _populareBrandParticularProductDeatil!.data.brandImagePath,),
             ),
-            Image.network(
-                "https://dealsbuck.com/" +
-                    _populareBrandParticularProductDeatil!.data.brandImagePath,
-                fit: BoxFit.fill, errorBuilder: (BuildContext context,
-                    Object exception, StackTrace? stackTrase) {
-              return Image.asset(
-                "assets/defaultImage.png",
-                fit: BoxFit.cover,
-              );
-            }),
             SizedBox(
               height: 20,
             ),
@@ -1096,14 +1091,14 @@ class _CategoryProductProductDetailsPageState
                 SizedBox(
                   width: 30,
                 ),
-                Text("Product name : ",
+                Text("Category : ",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis)),
                 Text(
-                  _populareBrandParticularProductDeatil!.data.brandName,
+                  _populareBrandParticularProductDeatil!.data.categoryName,
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 18,

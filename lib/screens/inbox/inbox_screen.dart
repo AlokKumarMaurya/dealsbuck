@@ -48,7 +48,7 @@ class _InboxScreenState extends State<InboxScreen> {
                       backgroundColor: Colors.orange,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
-                        child:(_getPersonalDetailController.userPersonalDetailModal.value!.user!.brandImagePath !=null)? Image.network(_getPersonalDetailController.userPersonalDetailModal.value!.user!.brandImagePath!??"",
+                        child:(_getPersonalDetailController.userPersonalDetailModal.value !=null)? Image.network(_getPersonalDetailController.userPersonalDetailModal.value!.user!.brandImagePath!??"",
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset("assets/icon/icon.png");
                         },
