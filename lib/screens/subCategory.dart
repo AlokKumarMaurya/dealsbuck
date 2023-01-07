@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../../utils/internetNotConnected.dart';
 import '../../../../utils/urlsConstant.dart';
 import '../api_config/api_config.dart';
+import '../getx_controller/file_share_controller.dart';
 import '../model/category/particular_category_list.dart';
 import 'category/category_product_products_view.dart';
 
@@ -29,6 +30,7 @@ class _SubCategoryState extends State<SubCategory> {
   SubCategoryModel? _subCategoryModel;
   bool loader = true;
   RxList<Vendor> dataList = List<Vendor>.empty(growable: true).obs;
+  FileShareController _fileShareController=Get.put(FileShareController());
 
   Future<SubCategoryModel?> getSubCategory() async {
     try {
@@ -91,9 +93,11 @@ class _SubCategoryState extends State<SubCategory> {
                     style: TextStyle(color: Color(0xff001527), fontSize: 22),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _fileShareController.shareFileFunction();
+                    },
                     icon: Icon(
-                      CupertinoIcons.ellipsis_vertical,
+                      Icons.share,
                       color: Color(0xff001527),
                     ),
                   ),

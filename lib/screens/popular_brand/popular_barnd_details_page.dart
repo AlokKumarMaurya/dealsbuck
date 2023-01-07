@@ -11,6 +11,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../getx_controller/file_share_controller.dart';
 import '../../model/claimCouponResponseModel.dart';
 import '../../model/popular_brand/paroduct_detal_modal.dart';
 import '../../utils/internetNotConnected.dart';
@@ -33,6 +34,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
   PopulareBrandParticularProductDeatil? _populareBrandParticularProductDeatil;
   String Coupontext = "";
   ClaimCouponModel? _claimCouponModel;
+  FileShareController _fileShareController=Get.put(FileShareController());
 
   @override
   void initState() {
@@ -88,9 +90,11 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                           overflow: TextOverflow.ellipsis),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _fileShareController.shareFileFunction();
+                      },
                       icon: Icon(
-                        CupertinoIcons.ellipsis_vertical,
+                        Icons.share,
                         color: Color(0xff001527),
                       ),
                     ),
@@ -285,23 +289,23 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
             ),
           ),
         ),
-        // Positioned(
-        //     top: MediaQuery.of(context).size.width*0.05,
-        //     right: MediaQuery.of(context).size.width*0.1,
-        //     child: InkWell(
-        //       onTap: (){
-        //         setState(() {
-        //           _populareBrandParticularProductDeatil!.data = !_productDetailsResponseModel!.data.favorites;
-        //           if(_productDetailsResponseModel!.data.favorites){
-        //             addFav();
-        //           }
-        //           else{
-        //             removeFav();
-        //           }
-        //         });
-        //       },
-        //       child: _populareBrandParticularProductDeatil!.data.favorites? Icon(Icons.favorite, color: Color(0xffed1b24),): Icon(Icons.favorite_border,),
-        //     ))
+        Positioned(
+            top: MediaQuery.of(context).size.width*0.05,
+            right: MediaQuery.of(context).size.width*0.1,
+            child: InkWell(
+              onTap: (){
+                setState(() {
+                  // _populareBrandParticularProductDeatil!.data = !_productDetailsResponseModel!.data;
+                  // if(_productDetailsResponseModel!.data.favorites){
+                    addFav();
+                  // }
+                  // else{
+                  //   removeFav();
+                  // }
+                });
+              },
+              child: Icon(Icons.favorite, color: Color(0xffed1b24),),
+            ))
       ],
     );
   }
@@ -347,7 +351,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                     width: 12,
                   ),
                   Text(
-                    "₹${_populareBrandParticularProductDeatil!.data.price}",
+                    "₹ ${_populareBrandParticularProductDeatil!.data.price}",
                     style: TextStyle(fontSize: 12, color: Color(0xff001527)),
                   )
                 ],
@@ -367,13 +371,13 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                "Select Outlet",
+                "Outlet",
                 style: TextStyle(
                     color: Color(0xff001527),
                     fontSize: 17,
                     fontWeight: FontWeight.w500),
               ),
-              ElevatedButton(
+              TextButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -383,13 +387,15 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                       // fixedSize: Size(100, 40),
                       padding: const EdgeInsets.fromLTRB(20, 10, 10, 10)),
                   onPressed: () {},
-                  child: Text(
-                    _populareBrandParticularProductDeatil!.data.city,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        color: Color(0xffed1b24),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                  child: Center(
+                    child: Text(
+                      _populareBrandParticularProductDeatil!.data.city,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: Color(0xffed1b24),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   )),
             ],
           ),
@@ -627,4 +633,52 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
     }
     return _claimCouponModel;
   }
+
+
+
+
+
+  addFav() async {
+    print(addFavUrl + widget.id.toString());
+    try {
+      var token = await HelperFunction.getToken();
+      var response = await Http.post(
+          Uri.parse(addFavUrl + widget.id.toString()),
+          headers: {'Authorization': 'Bearer $token'});
+
+      print("favourite responce +++++++++ " + response.toString());
+      var res = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(res["message"])));
+      }
+    } catch (e) {
+      print(e);
+      print("dasdasd12");
+    }
+  }
+
+  removeFav() async {
+    try {
+      var token = await HelperFunction.getToken();
+      var response = await Http.post(
+          Uri.parse(removeFavUrl + widget.id.toString()),
+          headers: {'Authorization': 'Bearer $token'});
+
+      print("remove responce +++++++++ " + response.toString());
+      var res = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(res["message"])));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
+
+
 }

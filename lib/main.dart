@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dealsbuck/screens/Deal%20Buck%20Screen/dealsBuckScreen.dart';
 import 'package:dealsbuck/screens/favourite_screen.dart';
 import 'package:dealsbuck/screens/feed_screen.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 //dsajhgdhsajd
 ///dharmendra sir chnages
 void main() {
+  DartPluginRegistrant.ensureInitialized();
   runApp(const DealsBuck());
 }
 

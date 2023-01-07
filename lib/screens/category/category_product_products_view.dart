@@ -665,7 +665,7 @@ class _CategoryProductProductDetailsPageState
                                       color: Color(0xff001527),
                                     ),
                                     Text(
-                                      "$address",
+                                      "${address![1]}",
                                       style: TextStyle(
                                           color: Color(0xff001527),
                                           fontWeight: FontWeight.w500),
@@ -732,23 +732,27 @@ class _CategoryProductProductDetailsPageState
                                           _populareBrandParticularProductDeatil!
                                               .data.brandName,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Text(
-                                          _populareBrandParticularProductDeatil!
-                                              .data.brandName,
-                                          style: TextStyle(
-                                            fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                          fontSize:18,
+                                            letterSpacing: 1.2
                                           ),
                                         ),
                                         SizedBox(
                                           height: 3,
                                         ),
                                         Text(
-                                          "Open Now 10 am - 10 pm (Today)",
+                                          "Category type : "+_populareBrandParticularProductDeatil!
+                                              .data.categoryName,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          "--- Open Now 10 am - 10 pm (Today)",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xff108038)),
@@ -934,9 +938,12 @@ class _CategoryProductProductDetailsPageState
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Image.network(
-                            imagePath + dataList.value[index].featuredImagePath,
-                            width: MediaQuery.of(context).size.width * 0.20,
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: NetworkImage(
+                              imagePath + dataList.value[index].featuredImagePath,
+                              // width: MediaQuery.of(context).size.width * 0.20,
+                            ),
                           ),
                         ),
                         Padding(
@@ -953,7 +960,10 @@ class _CategoryProductProductDetailsPageState
                                     Text(
                                       dataList.value[index].productName,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                        letterSpacing: 1.1
+                                      ),
                                     ),
                                     Icon(
                                       Icons.favorite,

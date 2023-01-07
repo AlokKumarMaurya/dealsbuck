@@ -12,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../getx_controller/file_share_controller.dart';
 import '../../../../model/claimCouponResponseModel.dart';
 import '../../../../model/productDetailsModel.dart';
 import '../../../../utils/internetNotConnected.dart';
@@ -27,7 +28,7 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   ProductDetailsResponseModel? _productDetailsResponseModel;
-
+  FileShareController _fileShareController=Get.put(FileShareController());
   // ShowCouponModel? _showCouponModel;
   ClaimCouponModel? _claimCouponModel;
   String Coupontext = "";
@@ -355,9 +356,12 @@ class _ProductScreenState extends State<ProductScreen> {
                           overflow: TextOverflow.ellipsis),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _fileShareController.shareFileFunction();
+                      },
                       icon: Icon(
-                        CupertinoIcons.ellipsis_vertical,
+                        Icons.share,
+                        //ellipsis_vertical,
                         color: Color(0xff001527),
                       ),
                     ),
@@ -611,7 +615,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     width: 12,
                   ),
                   Text(
-                    "₹${_productDetailsResponseModel!.data.price}",
+                    "₹ ${_productDetailsResponseModel!.data.price}",
                     style: TextStyle(fontSize: 12, color: Color(0xff001527)),
                   )
                 ],
@@ -631,13 +635,13 @@ class _ProductScreenState extends State<ProductScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                "Select Outlet",
+                "Outlet",
                 style: TextStyle(
                     color: Color(0xff001527),
                     fontSize: 17,
                     fontWeight: FontWeight.w500),
               ),
-              ElevatedButton(
+              TextButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
+import '../getx_controller/file_share_controller.dart';
 import '../utils/internetNotConnected.dart';
 import 'appBar.dart';
 
@@ -15,6 +17,7 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   String dropdownvalue = 'Today';
+  FileShareController _fileShareController=Get.put(FileShareController());
 
   // List of items in our dropdown menu
   var items = [
@@ -32,9 +35,11 @@ class _WalletScreenState extends State<WalletScreen> {
         CustomAppBar(
             "Wallet",
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _fileShareController.shareFileFunction();
+              },
               icon: Icon(
-                CupertinoIcons.ellipsis_vertical,
+                Icons.share,
                 color: Color(0xff001527),
               ),
             ),

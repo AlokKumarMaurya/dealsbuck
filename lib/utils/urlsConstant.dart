@@ -27,8 +27,9 @@ const String categoryBrand = "${baseUrl}category/brands";
 const String showPopularBarndDataList = "${baseUrl}brands/products";
 const String getCategoryDataList = "${baseUrl}category/brands/";
 const String getParticularPopularProductDetailApi = "${baseUrl}product/show/";
-const String categoryParticularCategoryProductDetailApi =
-    "${baseUrl}product/showlist/";
+const String categoryParticularCategoryProductDetailApi = "${baseUrl}product/showlist/";
 // https://dealsbuck.com/api/product/showlist/8/15
+
+const String getPersonalDetailUrl="${baseUrl}user_deatil";
 
 const String imagePath = "https://dealsbuck.com/";

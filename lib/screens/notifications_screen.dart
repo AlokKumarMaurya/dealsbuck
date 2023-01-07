@@ -105,7 +105,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ))),
                       Text(
                         "Notifications",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff001527)),
                       )
                     ],
                   ),
@@ -124,8 +127,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           child: Text(
                             "Mark all read",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff001527)),
                           )),
                       DropdownButtonHideUnderline(
                         child: DropdownButton(
@@ -139,7 +143,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               child: Text(
                                 items,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff001527)),
                               ),
                             );
                           }).toList(),

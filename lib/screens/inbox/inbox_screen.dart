@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../getx_controller/get_personal_details_controller.dart';
 import '../contact_us_screen.dart';
 import '../invite_screen.dart';
 import '../membership_screen.dart';
@@ -20,6 +21,8 @@ class InboxScreen extends StatefulWidget {
 }
 
 class _InboxScreenState extends State<InboxScreen> {
+  GetPersonalDetailController _getPersonalDetailController=Get.find<GetPersonalDetailController>();
+
   final inboxController = Get.put(InboxController());
 
   @override
@@ -45,7 +48,11 @@ class _InboxScreenState extends State<InboxScreen> {
                       backgroundColor: Colors.orange,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
-                        child: Image.asset('assets/profile1.png'),
+                        child:(_getPersonalDetailController.userPersonalDetailModal.value!.user!.brandImagePath !=null)? Image.network(_getPersonalDetailController.userPersonalDetailModal.value!.user!.brandImagePath!??"",
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset("assets/icon/icon.png");
+                        },
+                        ):Image.asset("assets/icon/icon.png"),
                       ),
                     ),
                     SizedBox(
