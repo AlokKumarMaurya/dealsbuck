@@ -751,11 +751,14 @@ class _CategoryProductProductDetailsPageState
                                         SizedBox(
                                           height: 3,
                                         ),
-                                        Text(
-                                          "--- Open Now 10 am - 10 pm (Today)",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff108038)),
+                                        Container(
+                                          width: MediaQuery.of(context).size.width/2,
+                                          child: Text(
+                                            "--- Open Now 10 am - 10 pm (Today)",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff108038)),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 3,

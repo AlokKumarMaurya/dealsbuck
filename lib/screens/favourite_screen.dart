@@ -130,90 +130,95 @@ debugPrint("009090909090909090909090909090909090909090");
                             color: Colors.grey.shade300
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                        SizedBox(width: MediaQuery.of(context).size.width /
-                            44,),
+                        Row(
+                          children: [
+                            SizedBox(width: MediaQuery.of(context).size.width /
+                                44,),
                       CircleAvatar(
-                        radius: 35,
-                        backgroundImage:NetworkImage(
-                          "https://dealsbuck.com/${_getFavModel!.data[index]
-                              .featuredImagePath}"),
+                            radius: 35,
+                            backgroundImage:NetworkImage(
+                              "https://dealsbuck.com/${_getFavModel!.data[index]
+                                  .featuredImagePath}"),
                       ),
                       SizedBox(width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 44,),
+                              .of(context)
+                              .size
+                              .width / 44,),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width:MediaQuery.of(context).size.width/3.5,
-                            // color: Colors.pink,
-                            child: Text(_getFavModel!.data[index].name, style: TextStyle(
-                                color: Colors.black,
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                            ),),
-                          ),
-                          SizedBox(height: 3,),
-                          Container(
-                            width: MediaQuery.of(context).size.width/3.5,
-                            // color: Colors.pink,
-                            child: Text(_getFavModel!.data[index].description,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:MediaQuery.of(context).size.width/3.5,
+                                // color: Colors.pink,
+                                child: Text(_getFavModel!.data[index].name, style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600
-                                )),
-                          ),
-                          SizedBox(height: 3,),
-                          Container(
-                            width: MediaQuery.of(context).size.width/3.5,
-                            child: Text(_getFavModel!.data[index].specification,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400
-                                )),
-                          ),
-                        ],
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold
+                                ),),
+                              ),
+                              SizedBox(height: 3,),
+                              Container(
+                                width: MediaQuery.of(context).size.width/3.5,
+                                // color: Colors.pink,
+                                child: Text(_getFavModel!.data[index].description,
+                                    style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600
+                                    )),
+                              ),
+                              SizedBox(height: 3,),
+                              Container(
+                                width: MediaQuery.of(context).size.width/3.5,
+                                child: Text(_getFavModel!.data[index].specification,
+                                    style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400
+                                    )),
+                              ),
+                            ],
                       ),
                       SizedBox(width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 10,),
+                              .of(context)
+                              .size
+                              .width / 40,),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("Price", style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold
-                          )),
-                          Text("₹ " + _getFavModel!.data[index].price,
-                              style: TextStyle(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Price", style: TextStyle(
                                   color: Colors.black54,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold
-                              ))
-                        ],
+                              )),
+                              Text("₹" + _getFavModel!.data[index].price,
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold
+                                  ))
+                            ],
                       ),
-                      IconButton(
-                    icon:  !_getFavModel!.data.contains(
-                          _getFavModel!.data[index].id)
-                          ? Icon(Icons.favorite)
-                          : Icon(Icons.favorite_border),
-                      color: Color(0xffC60808),
-                      onPressed: () {
-                        removeFav(_getFavModel!.data[index].id);
-                        getfav();
-                      },
-                    )
+                          ],
+                        ),
+                              IconButton(
+                                icon:  !_getFavModel!.data.contains(
+                                    _getFavModel!.data[index].id)
+                                    ? Icon(Icons.favorite)
+                                    : Icon(Icons.favorite_border),
+                                color: Color(0xffC60808),
+                                onPressed: () {
+                                  removeFav(_getFavModel!.data[index].id);
+                                  getfav();
+                                },
+                              )
                     ],
                   ),)
                   ,
