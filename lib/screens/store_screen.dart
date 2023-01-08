@@ -154,47 +154,49 @@ class _ShopScreenState extends State<ShopScreen> {
                                           widget
                                               .popularBrandsResponseModel.name,
                                           style: TextStyle(
+                                            fontSize: 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: 3,
                                         ),
                                         Text(
-                                          widget.popularBrandsResponseModel
+                                        "Brand : "+  widget.popularBrandsResponseModel
                                               .brandName,
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold
                                           ),
                                         ),
                                         SizedBox(
                                           height: 3,
                                         ),
-                                        Text(
-                                          "Open Now 10 am - 10 pm (Today)",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff108038)),
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Container(
-                                          height: 20,
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              shrinkWrap: true,
-                                              physics:
-                                                  NeverScrollableScrollPhysics(),
-                                              itemCount: 5,
-                                              itemBuilder: (BuildContext contex,
-                                                  int index) {
-                                                return Icon(
-                                                  Icons.star,
-                                                  color: Colors.orange,
-                                                  size: 18,
-                                                );
-                                              }),
-                                        )
+                                        // Text(
+                                        //   widget.popularBrandsResponseModel,
+                                        //   style: TextStyle(
+                                        //       fontWeight: FontWeight.bold,
+                                        //       color: Color(0xff108038)),
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 3,
+                                        // ),
+                                        // Container(
+                                        //   height: 20,
+                                        //   child: ListView.builder(
+                                        //       scrollDirection: Axis.horizontal,
+                                        //       shrinkWrap: true,
+                                        //       physics:
+                                        //           NeverScrollableScrollPhysics(),
+                                        //       itemCount: 5,
+                                        //       itemBuilder: (BuildContext contex,
+                                        //           int index) {
+                                        //         return Icon(
+                                        //           Icons.star,
+                                        //           color: Colors.orange,
+                                        //           size: 18,
+                                        //         );
+                                        //       }),
+                                        // )
                                       ],
                                     )
                                   ],
@@ -449,7 +451,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Widget about() {
     return Container(
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
       height: 100,
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
@@ -459,16 +461,20 @@ class _ShopScreenState extends State<ShopScreen> {
             SizedBox(
               height: 20,
             ),
-            Image.network(
-                "https://dealsbuck.com/" +
-                    widget.popularBrandsResponseModel.brandImagePath,
-                fit: BoxFit.fill, errorBuilder: (BuildContext context,
-                    Object exception, StackTrace? stackTrase) {
-              return Image.asset(
-                "assets/defaultImage.png",
-                fit: BoxFit.cover,
-              );
-            }),
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.white,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.red)
+                  // color: Colors.te\,
+                ),
+              ),
+              backgroundImage: NetworkImage(
+                  "https://dealsbuck.com/" +
+                      widget.popularBrandsResponseModel.brandImagePath,scale: 1),
+            ),
             SizedBox(
               height: 20,
             ),

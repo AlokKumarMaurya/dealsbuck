@@ -961,10 +961,10 @@ class _CategoryProductProductDetailsPageState
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      dataList.value[index]!.productName!,
+                                      dataList.value[index]!.productName!.capitalize!,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 18,
                                         letterSpacing: 1.1
                                       ),
                                     ),
@@ -973,7 +973,7 @@ class _CategoryProductProductDetailsPageState
                                         Text(
                                           "₹ ${dataList.value[index]!.price!}",
                                           style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.end,
                                         ),
@@ -988,46 +988,46 @@ class _CategoryProductProductDetailsPageState
                                   ],
                                 ),
                                 Text(
-                                  "${dataList.value[index]!.description!}",
+                                  "${dataList.value[index]!.description!.capitalizeFirst}",
                                   style: TextStyle(fontSize: 12),
                                   textAlign: TextAlign.start,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
                                     Text(
-                                      "${dataList.value[index]!.specification!}",
+                                      "Added on : ${dataList.value[index]!.createdAt!.year}-${dataList.value[index]!.createdAt!.month}-${dataList.value[index]!.createdAt!.day}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xffC60808)),
                                     ),
-                                    // Container(
-                                    //   margin: EdgeInsets.all(5),
-                                    //   padding:
-                                    //       EdgeInsets.symmetric(horizontal: 5),
-                                    //   height: 14,
-                                    //   decoration: BoxDecoration(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(15),
-                                    //       color: Colors.black),
-                                    //   child: ListView.builder(
-                                    //       scrollDirection: Axis.horizontal,
-                                    //       shrinkWrap: true,
-                                    //       physics:
-                                    //           NeverScrollableScrollPhysics(),
-                                    //       itemCount: 5,
-                                    //       itemBuilder:
-                                    //           (BuildContext contex, int index) {
-                                    //         return Icon(
-                                    //           Icons.star,
-                                    //           color: Colors.orange,
-                                    //           size: 12,
-                                    //         );
-                                    //       }),
-                                    // )
-                                  ],
-                                ),
+                                //     // Container(
+                                //     //   margin: EdgeInsets.all(5),
+                                //     //   padding:
+                                //     //       EdgeInsets.symmetric(horizontal: 5),
+                                //     //   height: 14,
+                                //     //   decoration: BoxDecoration(
+                                //     //       borderRadius:
+                                //     //           BorderRadius.circular(15),
+                                //     //       color: Colors.black),
+                                //     //   child: ListView.builder(
+                                //     //       scrollDirection: Axis.horizontal,
+                                //     //       shrinkWrap: true,
+                                //     //       physics:
+                                //     //           NeverScrollableScrollPhysics(),
+                                //     //       itemCount: 5,
+                                //     //       itemBuilder:
+                                //     //           (BuildContext contex, int index) {
+                                //     //         return Icon(
+                                //     //           Icons.star,
+                                //     //           color: Colors.orange,
+                                //     //           size: 12,
+                                //     //         );
+                                //     //       }),
+                                //     // )
+                                //   ],
+                                // ),
                                 // Text(
                                 //   "₹ ${dataList.value[index]!.price!}",
                                 //   style: TextStyle(

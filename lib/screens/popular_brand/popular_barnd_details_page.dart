@@ -35,6 +35,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
   String Coupontext = "";
   ClaimCouponModel? _claimCouponModel;
   FileShareController _fileShareController=Get.put(FileShareController());
+  List termesAndConditons=List.empty(growable: true);
 
   @override
   void initState() {
@@ -215,6 +216,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
       debugPrint("1111111111111111111111111111111");
       setState(() {
         _populareBrandParticularProductDeatil = response;
+        termesAndConditons=_populareBrandParticularProductDeatil!.data.specification.split(",");
       });
       debugPrint(
           _populareBrandParticularProductDeatil!.data.productName.toString());
@@ -351,8 +353,8 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                     width: 12,
                   ),
                   Text(
-                    "₹ ${_populareBrandParticularProductDeatil!.data.price}",
-                    style: TextStyle(fontSize: 12, color: Color(0xff001527)),
+                    "${_populareBrandParticularProductDeatil!.data.description}",
+                    style: TextStyle(fontSize: 14, color: Color(0xff001527)),
                   )
                 ],
               )
@@ -419,27 +421,18 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text("1. Demo"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("2. Guaranted"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("3. Custom Shoelace"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("4. Free Shipping"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("5. Comfortable"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("6. Custom Shoelace"),
+                   SizedBox(
+                     width:MediaQuery.of(context).size.width-100,
+                     child: ListView.builder(
+                       shrinkWrap: true,
+                       // scrollDirection: Axis.vertical,
+                       physics: NeverScrollableScrollPhysics(),
+                       itemCount: termesAndConditons.length,
+                       itemBuilder: (context,index){
+                         return Text("${index+1}. ${termesAndConditons[index].toString().capitalizeFirst}");
+                       },
+                     ),
+                   )
                   ],
                 ),
               ],
@@ -483,7 +476,7 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
       Center(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color(0xffFAE6E8FF),
               borderRadius: BorderRadius.circular(12)
           ),
           width: 300,
@@ -491,49 +484,75 @@ class _PopularBrandDetailsPageState extends State<PopularBrandDetailsPage> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              SizedBox(height: 15,),
-              Text("Coupons",style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20
-              ),),
               SizedBox(height: 10,),
+              // Text("Redeem Coupon",style: TextStyle(
+              //     color: Colors.black,
+              //     fontWeight: FontWeight.bold,
+              //     fontSize: 20
+              // ),),
+              SizedBox(height: 10,),
+              Text("A little offer just for you",style: TextStyle(
+                fontSize: 20
+              ),),
+              SizedBox(
+                height: 10,
+              ),
               InkWell(
                 onTap: (){
                   // Navigator.pop(context);
                   // claimCoupon();
                   //
                 },
-                child: ListTile(
-                  onTap: () {
-                    Get.back();
-                    // Navigator.pop(context);
-                    claimCoupon();
-
-                  },
-                  tileColor: Color(0xff001527),
-                  dense: true,
-                  contentPadding: EdgeInsets.all(0),
-                  title: Padding(
+                child: Container(
+                  // color: Colors.white,
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 200,
-                      color: Color(0xff001527),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
-                        child: Text(
-                          _couponCode,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.white),
-                        ),
+                    child: Text(
+                      _couponCode,style: TextStyle(
+                      color: Colors.red,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 30,
+                        letterSpacing: 2
+                    ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              InkWell(
+                onTap: (){
+                  Get.back();
+                  claimCoupon();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(30)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Redeem Now",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),
                 ),
               ),
+SizedBox(height: 10,),
+              InkWell(
+                onTap: ()=>Get.back(),
+                child: Text(
+                  "No , not now",
+                  style:TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17
+                  )
+                ),
+              )
             ],
           ),
         ),
