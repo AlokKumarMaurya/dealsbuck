@@ -601,7 +601,7 @@ class _CategoryProductProductDetailsPageState
     extends State<CategoryProductProductDetailsPage> {
   CategoryProductProductDeatilModal? _populareBrandParticularProductDeatil;
 
-  RxList<Product> dataList = List<Product>.empty(growable: true).obs;
+  RxList<Product?> dataList = List<Product>.empty(growable: true).obs;
   bool isLoading = true;
   bool isDataPresent = true; ////api not implemented
   GetUserCurrentLocaton _getUserCurrentLocaton =
@@ -715,7 +715,7 @@ class _CategoryProductProductDetailsPageState
                                     Image.network(
                                       "https://dealsbuck.com/" +
                                           _populareBrandParticularProductDeatil!
-                                              .data.brandImagePath,
+                                              .data!.brandImagePath!,
                                       height: 90,
                                       width: 100,
                                     ),
@@ -730,7 +730,7 @@ class _CategoryProductProductDetailsPageState
                                       children: [
                                         Text(
                                           _populareBrandParticularProductDeatil!
-                                              .data.brandName,
+                                              .data!.brandName!,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                           fontSize:18,
@@ -742,7 +742,7 @@ class _CategoryProductProductDetailsPageState
                                         ),
                                         Text(
                                           "Category type : "+_populareBrandParticularProductDeatil!
-                                              .data.categoryName,
+                                              .data!.categoryName!,
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold
@@ -754,7 +754,7 @@ class _CategoryProductProductDetailsPageState
                                         Container(
                                           width: MediaQuery.of(context).size.width/2,
                                           child: Text(
-                                            "Location :${_populareBrandParticularProductDeatil!.data.city}, ${_populareBrandParticularProductDeatil!.data.state}",
+                                            "Location :${_populareBrandParticularProductDeatil!.data!.city}, ${_populareBrandParticularProductDeatil!.data!.state}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xff108038)),
@@ -918,8 +918,8 @@ class _CategoryProductProductDetailsPageState
                       context,
                       MaterialPageRoute(
                           builder: (context) => PopularBrandDetailsPage(
-                                id: dataList.value[index].id.toString(),
-                                title: dataList.value[index].productName,
+                                id: dataList.value[index]!.id.toString(),
+                                title: dataList.value[index]!.productName!,
                               )));
                 },
                 child: Padding(
@@ -944,7 +944,7 @@ class _CategoryProductProductDetailsPageState
                           child: CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(
-                              imagePath + dataList.value[index].featuredImagePath,
+                              imagePath + dataList.value[index]!.featuredImagePath!,
                               // width: MediaQuery.of(context).size.width * 0.20,
                             ),
                           ),
@@ -961,22 +961,34 @@ class _CategoryProductProductDetailsPageState
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      dataList.value[index].productName,
+                                      dataList.value[index]!.productName!,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                       fontSize: 16,
                                         letterSpacing: 1.1
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.favorite,
-                                      color: Color(0xffC60808),
-                                      size: 16,
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "₹ ${dataList.value[index]!.price!}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.end,
+                                        ),
+
+                                        // Icon(
+                                        //   Icons.favorite,
+                                        //   color: Color(0xffC60808),
+                                        //   size: 16,
+                                        // ),
+                                      ],
                                     )
                                   ],
                                 ),
                                 Text(
-                                  "Any Menu Item.",
+                                  "${dataList.value[index]!.description!}",
                                   style: TextStyle(fontSize: 12),
                                   textAlign: TextAlign.start,
                                 ),
@@ -985,7 +997,7 @@ class _CategoryProductProductDetailsPageState
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "BUY 1 GET 1 FREE",
+                                      "${dataList.value[index]!.specification!}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xffC60808)),
@@ -1016,13 +1028,13 @@ class _CategoryProductProductDetailsPageState
                                     // )
                                   ],
                                 ),
-                                Text(
-                                  "Dine - in Only",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.end,
-                                )
+                                // Text(
+                                //   "₹ ${dataList.value[index]!.price!}",
+                                //   style: TextStyle(
+                                //       fontSize: 10,
+                                //       fontWeight: FontWeight.bold),
+                                //   textAlign: TextAlign.end,
+                                // )
                               ],
                             ),
                           ),
@@ -1053,7 +1065,7 @@ class _CategoryProductProductDetailsPageState
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
                   "https://dealsbuck.com/" +
-                      _populareBrandParticularProductDeatil!.data.brandImagePath,),
+                      _populareBrandParticularProductDeatil!.data!.brandImagePath!,),
             ),
             SizedBox(
               height: 20,
@@ -1071,7 +1083,7 @@ class _CategoryProductProductDetailsPageState
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis)),
                 Text(
-                  _populareBrandParticularProductDeatil!.data.brandName,
+                  _populareBrandParticularProductDeatil!.data!.brandName!,
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 18,
@@ -1098,7 +1110,7 @@ class _CategoryProductProductDetailsPageState
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis)),
                 Text(
-                  _populareBrandParticularProductDeatil!.data.categoryName,
+                  _populareBrandParticularProductDeatil!.data!.categoryName!,
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 18,
@@ -1203,17 +1215,17 @@ class _CategoryProductProductDetailsPageState
       debugPrint("1111111111111111111111111111111");
       setState(() {
         _populareBrandParticularProductDeatil = response;
-        dataList.value = _populareBrandParticularProductDeatil!.data.products;
+        dataList.value = _populareBrandParticularProductDeatil!.data!.products!;
       });
       getAddrress(_populareBrandParticularProductDeatil!);
       debugPrint(
-          _populareBrandParticularProductDeatil!.data.products.toString());
+          _populareBrandParticularProductDeatil!.data!.products.toString());
     }
   }
 
   void getAddrress(CategoryProductProductDeatilModal modal) async {
-    await placemarkFromCoordinates(double.parse(modal.data.latitude),
-            double.parse(modal.data.longitude))
+    await placemarkFromCoordinates(double.parse(modal.data!.latitude!),
+            double.parse(modal.data!.longitude!))
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
