@@ -970,8 +970,8 @@ class _CategoryProductProductDetailsPageState
                                     ),
                                     Column(
                                       children: [
-                                        Text(
-                                          "₹ ${dataList.value[index]!.price!}",
+                                        Text("",
+                                          // "₹ ${dataList.value[index]!.price??""}",
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
