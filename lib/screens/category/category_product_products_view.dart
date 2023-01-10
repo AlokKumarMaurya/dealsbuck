@@ -733,26 +733,28 @@ class _CategoryProductProductDetailsPageState
                                               .data!.brandName!,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                          fontSize:18,
-                                            letterSpacing: 1.2
-                                          ),
+                                              fontSize: 18,
+                                              letterSpacing: 1.2),
                                         ),
                                         SizedBox(
                                           height: 3,
                                         ),
                                         Text(
-                                          "Category type : "+_populareBrandParticularProductDeatil!
-                                              .data!.categoryName!,
+                                          "Category type : " +
+                                              _populareBrandParticularProductDeatil!
+                                                  .data!.categoryName!,
                                           style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold
-                                          ),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
                                           height: 3,
                                         ),
                                         Container(
-                                          width: MediaQuery.of(context).size.width/2,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
                                           child: Text(
                                             "Location :${_populareBrandParticularProductDeatil!.data!.city}, ${_populareBrandParticularProductDeatil!.data!.state}",
                                             style: TextStyle(
@@ -944,7 +946,8 @@ class _CategoryProductProductDetailsPageState
                           child: CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(
-                              imagePath + dataList.value[index]!.featuredImagePath!,
+                              imagePath +
+                                  dataList.value[index]!.featuredImagePath!,
                               // width: MediaQuery.of(context).size.width * 0.20,
                             ),
                           ),
@@ -961,16 +964,17 @@ class _CategoryProductProductDetailsPageState
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      dataList.value[index]!.productName!.capitalize!,
+                                      dataList.value[index]!.productName!
+                                          .capitalize!,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                        letterSpacing: 1.1
-                                      ),
+                                          fontSize: 18,
+                                          letterSpacing: 1.1),
                                     ),
                                     Column(
                                       children: [
-                                        Text("",
+                                        Text(
+                                          "",
                                           // "₹ ${dataList.value[index]!.price??""}",
                                           style: TextStyle(
                                               fontSize: 16,
@@ -996,12 +1000,12 @@ class _CategoryProductProductDetailsPageState
                                 //   mainAxisAlignment:
                                 //       MainAxisAlignment.spaceBetween,
                                 //   children: [
-                                    Text(
-                                      "Added on : ${dataList.value[index]!.createdAt!.year}-${dataList.value[index]!.createdAt!.month}-${dataList.value[index]!.createdAt!.day}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xffC60808)),
-                                    ),
+                                Text(
+                                  "Added on : ${dataList.value[index]!.createdAt!.year}-${dataList.value[index]!.createdAt!.month}-${dataList.value[index]!.createdAt!.day}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xffC60808)),
+                                ),
                                 //     // Container(
                                 //     //   margin: EdgeInsets.all(5),
                                 //     //   padding:
@@ -1059,126 +1063,162 @@ class _CategoryProductProductDetailsPageState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             CircleAvatar(
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.red)
+                    // color: Colors.te\,
+                    ),
+              ),
               radius: 50,
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
-                  "https://dealsbuck.com/" +
-                      _populareBrandParticularProductDeatil!.data!.brandImagePath!,),
+                "https://dealsbuck.com/" +
+                    _populareBrandParticularProductDeatil!
+                        .data!.brandImagePath!,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: _populareBrandParticularProductDeatil!
+                          .data!.brandName!,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    TextSpan(
+                      text:
+                          ''' is Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.''',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          // fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                  ],
                 ),
-                Text("Brand : ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis)),
-                Text(
-                  _populareBrandParticularProductDeatil!.data!.brandName!,
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ],
+              ),
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     SizedBox(
+            //       width: 30,
+            //     ),
+            //     Text("Brand : ",
+            //         style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold,
+            //             overflow: TextOverflow.ellipsis)),
+            //     Text(
+            //       _populareBrandParticularProductDeatil!.data!.brandName!,
+            //       style: TextStyle(
+            //           color: Colors.red,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //           overflow: TextOverflow.ellipsis),
+            //     ),
+            //   ],
+            // ),
+            //
+            // SizedBox(
+            //   height: 20,
+            // ),
+            //
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     SizedBox(
+            //       width: 30,
+            //     ),
+            //     Text("Category : ",
+            //         style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold,
+            //             overflow: TextOverflow.ellipsis)),
+            //     Text(
+            //       _populareBrandParticularProductDeatil!.data!.categoryName!,
+            //       style: TextStyle(
+            //           color: Colors.red,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //           overflow: TextOverflow.ellipsis),
+            //     ),
+            //   ],
+            // ),
+            //
+            // SizedBox(
+            //   height: 20,
+            // ),
 
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Address : ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis)),
+                  Expanded(
+                    child: Text(
+                      long ?? "-",
+                      maxLines: 4,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
-              height: 20,
+              height: 0,
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text("Category : ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis)),
-                Text(
-                  _populareBrandParticularProductDeatil!.data!.categoryName!,
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text("Address : ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis)),
-                Expanded(
-                  child: Text(
-                    long ?? "-",
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("E-mail : ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis)),
+                  Text(
+                    "dummytest3344@gmail.com",
                     maxLines: 4,
                     style: TextStyle(
                         color: Colors.red,
-                        fontSize: 18,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text("Total Products : ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis)),
-                Expanded(
-                  child: Text(
-                    "${dataList.value.length}",
-                    maxLines: 4,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
             SizedBox(
               height: 350,
@@ -1230,7 +1270,7 @@ class _CategoryProductProductDetailsPageState
       Placemark place = placemarks[0];
       setState(() {
         long =
-            "${place.street},${place.subLocality},${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
+            "${place.locality},${place.administrativeArea},${place.country},${place.postalCode}";
       });
     });
   }

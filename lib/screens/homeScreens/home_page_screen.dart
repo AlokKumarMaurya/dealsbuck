@@ -27,7 +27,6 @@ import '../../getx_controller/get_personal_details_controller.dart';
 import '../../location_getter/get_usser_current_location.dart';
 import '../../model/categoriesResponseModel.dart';
 import '../../model/popularBrandsResponseModel.dart';
-import '../notifications_screen.dart';
 import '../products_grid_list.dart';
 import '../store_screen.dart';
 import '../subCategory.dart';
@@ -43,9 +42,9 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-
-  GetPersonalDetailController _getPersonalDetailController=Get.put(GetPersonalDetailController());
-  FileShareController  _fileShareController=Get.put(FileShareController());
+  GetPersonalDetailController _getPersonalDetailController =
+      Get.put(GetPersonalDetailController());
+  FileShareController _fileShareController = Get.put(FileShareController());
   CarouselController buttonCarouselController = CarouselController();
   final homeController = Get.put(HomeController());
   GetUserCurrentLocaton _getLocaton = Get.put(GetUserCurrentLocaton());
@@ -60,7 +59,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   String? _currentAddress;
   Position? _currentPosition;
-int a=0;
+  int a = 0;
   void refresh(bool test) {
     print("homeController.isSearch.value");
     if (test) {
@@ -77,8 +76,12 @@ int a=0;
 
   void initState() {
     print(homeController.isSearch.value);
-    a==0?_getCurrentPosition(1).then((value) => refresh(true)):debugPrint("");
-    a++==0?_getLocaton.getLocation().then((val) => refresh(true)):debugPrint("");
+    a == 0
+        ? _getCurrentPosition(1).then((value) => refresh(true))
+        : debugPrint("");
+    a++ == 0
+        ? _getLocaton.getLocation().then((val) => refresh(true))
+        : debugPrint("");
     getbanner();
     getcategories();
     getTopDeals();
@@ -125,12 +128,16 @@ int a=0;
     if (!hasPermission) return false;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      asa==1?setState(() {
-        _currentPosition = position;
-        HelperFunction.saveLongitude(_currentPosition!.longitude.toString());
-        HelperFunction.saveLatitude(_currentPosition!.latitude.toString());
-      }):debugPrint("not updating location");
-      asa!=1?_getAddressFromLatLng(_currentPosition!):debugPrint("fdfd");
+      asa == 1
+          ? setState(() {
+              _currentPosition = position;
+              HelperFunction.saveLongitude(
+                  _currentPosition!.longitude.toString());
+              HelperFunction.saveLatitude(
+                  _currentPosition!.latitude.toString());
+            })
+          : debugPrint("not updating location");
+      asa != 1 ? _getAddressFromLatLng(_currentPosition!) : debugPrint("fdfd");
     }).catchError((e) {
       debugPrint(e);
     });
@@ -263,9 +270,9 @@ int a=0;
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: ()=>_fileShareController.shareFileFunction(),
+                          onTap: () => _fileShareController.shareFileFunction(),
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.only(bottom: 13),
                               //color: Colors.black,
                               height: 60,
                               child: Image.asset(
@@ -292,7 +299,7 @@ int a=0;
                         // )
 
                         Padding(
-                          padding: const EdgeInsets.only(top: 0),
+                          padding: const EdgeInsets.only(top: 17),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -317,27 +324,27 @@ int a=0;
                               ),
                               address != null
                                   ? InkWell(
-                                onTap: () {
-                                  _getLocaton
-                                      .searchLoacation()
-                                      .then((r) => refresh(true));
-                                  _getLocaton.getLocation();
-                                  refresh(true);
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     SnackBar(
-                                  //         backgroundColor: Color(0xff001527),
-                                  //         content: Text("Location Updated")));
-                                },
-                                child: Text(
-                                  address![1].toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 18,
-                                      color: Color(0xff001527),
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )
+                                      onTap: () {
+                                        _getLocaton
+                                            .searchLoacation()
+                                            .then((r) => refresh(true));
+                                        _getLocaton.getLocation();
+                                        refresh(true);
+                                        // ScaffoldMessenger.of(context).showSnackBar(
+                                        //     SnackBar(
+                                        //         backgroundColor: Color(0xff001527),
+                                        //         content: Text("Location Updated")));
+                                      },
+                                      child: Text(
+                                        address![1].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            fontSize: 18,
+                                            color: Color(0xff001527),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )
                                   : Text(""),
                               SizedBox(
                                 width: 5,
@@ -348,7 +355,7 @@ int a=0;
                                     color: Colors.transparent,
                                   ),
                                   child: GestureDetector(
-                                      onTap:() {
+                                      onTap: () {
                                         _getLocaton
                                             .searchLoacation()
                                             .then((r) => refresh(true));
@@ -367,15 +374,11 @@ int a=0;
                             ],
                           ),
                         ),
-
                       ],
                     ),
-
-
                     SearchBox(
                       contextt: context,
                     ),
-
                   ],
                 )),
           ),
@@ -618,7 +621,7 @@ int a=0;
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            margin:EdgeInsets.symmetric(horizontal: 6),
+                            margin: EdgeInsets.symmetric(horizontal: 6),
                             // height: 65,
                             height: MediaQuery.of(context).size.height / 10,
                             // width: 85,
@@ -772,7 +775,7 @@ int a=0;
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            margin:EdgeInsets.symmetric(horizontal: 6),
+                            margin: EdgeInsets.symmetric(horizontal: 6),
                             // height: 65,
                             height: MediaQuery.of(context).size.height / 10,
                             // width: 85,

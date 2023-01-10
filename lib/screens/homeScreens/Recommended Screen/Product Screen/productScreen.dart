@@ -675,7 +675,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       side: BorderSide(color: Color(0xffed1b24), width: 1),
-                      backgroundColor: Colors.white,
+                      // backgroundColor: Colors.white,
                       // fixedSize: Size(100, 40),
                       padding: const EdgeInsets.fromLTRB(20, 10, 10, 10)),
                   onPressed: () {},
@@ -731,7 +731,7 @@ class _ProductScreenState extends State<ProductScreen> {
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0)),
-                  backgroundColor: Colors.white,
+                  // backgroundColor: Colors.white,
                   side: BorderSide(color: Color(0xffed1b24), width: 1),
                   fixedSize: Size(150, 40),
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10)),
